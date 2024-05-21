@@ -1,0 +1,346 @@
+@font-face {
+  font-family: sahel;
+  src: url(/resources/fonts/SAHEL.TTF);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: sahel;
+  src: url(/resources/fonts/SAHEL-BOLD.TTF);
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  --bg-color: rgb(29, 34, 61);
+  --input-bg-color: rgb(24, 28, 46);
+}
+
+button,
+input,
+textarea,
+label {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: transparent;
+  color: inherit;
+  outline: none;
+  font-weight: inherit;
+}
+
+a {
+  text-decoration: none;
+  font-style: normal;
+  color: inherit;
+}
+
+body {
+  direction: rtl;
+  font-family: sahel, '2 Yekan', 'b nazanin', 'Times New Roman', Times, serif;
+  color: rgb(214, 214, 214);
+  background-color: var(--bg-color);
+  max-width: 1080px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 50px 0;
+  position: relative;
+}
+
+/* 
+   =====================================
+               HEADER STYLES
+   =====================================
+*/
+
+header#header {
+  margin: 0 10px 50px 10px;
+  background-color: rgb(30, 39, 70);
+  padding: 20px 10px;
+  border-radius: 10px;
+}
+.publishers {
+  text-align: center;
+  font-weight: bold;
+}
+
+.header-title {
+  text-align: center;
+}
+
+.logos {
+  display: flex;
+  justify-content: space-around;
+}
+.header-logos {
+  background-color: rgb(250, 250, 250);
+  padding: 0 50px;
+}
+
+.header-logos img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+/* 
+   ===========================================================
+               MAIN JOURNAL FORM STYLES
+   ===========================================================
+*/
+
+main#main {
+  padding: 10px;
+}
+
+#form-wrapper {
+  position: relative;
+}
+
+.waiting-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(200, 179, 224, 0.507);
+  z-index: 110;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  filter: blur(3px);
+}
+
+.address-hints {
+  font-size: 0.9em;
+  background-color: #1e2746;
+  padding: 10px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.address-hints .en-in-fa {
+  position: relative;
+  font-weight: bold;
+}
+
+.address-hints .en-in-fa::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #af3939;
+  height: 3px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.address-hint-list {
+  padding: 0px 30px;
+}
+.address-hint-list li {
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.extract-btn-wrapper {
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.103);
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+#extract-btn {
+  padding: 5px 30px;
+  border-radius: 5px;
+  background-color: rgb(39, 130, 74);
+  margin: 10px;
+}
+
+#extract-btn:hover {
+  background-color: rgb(29, 88, 52);
+}
+
+form.journal-form {
+  margin: 10px auto;
+}
+
+.journal-form-header {
+  text-align: center;
+  position: relative;
+  padding: 15px 30px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.journal-form-header::after {
+  display: block;
+  content: '';
+  background-color: #111522;
+  height: 5px;
+  border-radius: 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.journal-url-row {
+  margin: 5px;
+}
+
+.journal-main-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.journal-url-index {
+  width: 30px;
+  text-align: center;
+}
+
+.journal-url-input {
+  background-color: var(--input-bg-color);
+  border-radius: 5px;
+  padding: 3px 10px;
+  width: 80%;
+  margin: 0 5px;
+  position: relative;
+}
+.journal-url-input input {
+  width: 100%;
+  height: 100%;
+}
+
+.remove-url-btn path {
+  fill: rgb(201, 64, 64);
+}
+.remove-url-btn:hover path {
+  fill: rgb(207, 29, 29);
+}
+
+.journal-url-input span {
+  position: absolute;
+  right: 5px;
+  font-size: 0.8em;
+  top: 5px;
+  color: rgba(214, 213, 213, 0.5);
+}
+
+.journal-url-hint {
+  color: rgb(194, 194, 194);
+  margin-right: calc(10% + 5px);
+  margin-top: 5px;
+  font-size: 0.9em;
+  direction: rtl;
+}
+.journal-url-hint span {
+  background-color: rgb(173, 56, 56);
+  display: block;
+  border-radius: 3px;
+  width: fit-content;
+  margin-top: 5px;
+}
+
+#add-new-url-btn {
+  background-color: #21688a;
+  border-radius: 5px;
+  display: block;
+  margin: 10px auto;
+  padding: 5px 10px;
+}
+
+#add-new-url-btn:hover {
+  background-color: #235972;
+}
+
+.btn {
+  position: relative;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn::after {
+  display: block;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
+
+.en-in-fa {
+  direction: ltr;
+  text-align: left;
+  display: inline-block;
+}
+
+/*
+  ===================================================
+                    Footer Styles
+  ===================================================
+*/
+
+.ack {
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+}
+
+.ack a {
+  font-weight: bold;
+  color: rgb(125, 199, 115);
+}
+
+/*
+  ===================================================
+                  Animations
+  ===================================================
+*/
+
+.highligt-input-animation {
+  position: relative;
+  animation: hia 0.6s ease-in-out infinite;
+}
+
+.highligt-input-animation::before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes hia {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    background-color: rgb(211, 70, 70);
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
