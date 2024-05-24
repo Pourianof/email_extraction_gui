@@ -1,9 +1,9 @@
 import { IPCMessage } from './IPCMessage';
-import Author from '../shared/models/author';
+import ExtractionProgressState from './extractionsProgressState';
 export default interface ContextApi {
   extractURLs: (urls: string[]) => Promise<IPCMessage>;
   listenToExtractionProgress: (
-    cb: (state: { author: Author; totalAuthorRecieved: number }) => any
+    cb: (state: ExtractionProgressState) => any
   ) => void;
   listenToExtractionEnd: (cb?: () => any) => void;
 }

@@ -10,6 +10,8 @@ import extractURLS from './scraper';
 import path from 'path';
 import { CHROME_DIR, CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
+import { AuthorsProgressStateNotifier } from './scraper/progressState';
+import ExtractionProgressState from '../shared/extractionsProgressState';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -35,7 +37,19 @@ export default class IPCEventHandler {
 
     try {
       let filePath: string;
-      const report = await extractURLS(data, {
+      const progressListener = new AuthorsProgressStateNotifier((state) => {
+        this.win.webContents.send(
+          Events.EXTRACT_PROGRESS,
+          JSON.stringify({
+            author: state.newAuthorData,
+            totalAuthorRecieved: state.totalAuthorRecieved,
+          } as ExtractionProgressState)
+        );
+      });
+
+      await extractURLS(data, {
+        progressMonitor: progressListener,
+        saveOnEveryItem: true,
         ouputPath: async () => {
           const res = await dialog.showSaveDialog(this.win, {
             message: 'مسیر ذخیره سازی فایل اکسل را انتخاب کنید',
