@@ -18,17 +18,44 @@ export default class IPCEventHandler {
     this.handle();
   }
 
-  private static handleInvokation(callback: (data: any) => any) {
+  private static handleInvokation(callback: (data: any) => Promise<any>) {
     return (event: IpcMainInvokeEvent, d: string) => {
       const data = JSON.parse(d);
-      callback(data);
+      return callback(data);
     };
   }
 
   private async handle() {
     ipcMain.handle(
       Events.EXTRACT_URLS,
-      IPCEventHandler.handleInvokation(this.handleExtract)
+      IPCEventHandler.handleInvokation(
+        //  this.handleExtract
+        async (data) => {
+          return new Promise<void>((res, rej) => {
+            let counter = 1;
+            const sendProgress = () => {
+              this.win.webContents.send(
+                Events.EXTRACT_PROGRESS,
+                JSON.stringify({
+                  author: {
+                    firstName: Math.round(Math.random() * 1000) + '-First name',
+                    lastName: Math.round(Math.random() * 1000) + '-Last name',
+                  },
+                  totalAuthorRecieved: counter++,
+                } as ExtractionProgressState)
+              );
+              if (counter > data?.options?.authorsCount ?? 10) {
+                res();
+              } else {
+                setTimeout(sendProgress, 1000);
+              }
+            };
+
+            setTimeout(sendProgress, 1000);
+          });
+        }
+        //
+      )
     );
   }
 

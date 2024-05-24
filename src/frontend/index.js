@@ -281,7 +281,6 @@ function checkURLInValidation() {
         }
         break;
     }
-    console.log(extractionOptions);
   });
 
   extractBtn.addEventListener('click', () =>

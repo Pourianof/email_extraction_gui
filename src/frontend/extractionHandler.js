@@ -60,8 +60,7 @@ export default class ExtractionHandler {
 
   _waitForResponse() {
     const journalForm = document.forms['journal-form'];
-    const waitingViewElmnt =
-      journalForm.previousElementSibling.previousElementSibling;
+    const waitingViewElmnt = journalForm.parentElement.firstElementChild;
 
     waitingViewElmnt.classList.remove('hidden');
   }
