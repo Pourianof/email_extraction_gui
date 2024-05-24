@@ -7,16 +7,20 @@ export default class ExtracterUtilsAPI implements ExcelExtracterAPI {
   constructor(
     private extracterId: string,
     private tempDirPath: string,
-    private readonly excelAPI: ExcelExtracterAPI
+    private readonly excelAPI: ExcelExtracterAPI,
+    private opts?: { saveOnAdd?: boolean }
   ) {}
   save(): Promise<void> {
-    return this.excelAPI.save();
+    return this.excelAPI.save(true);
   }
 
   addEmail(emails: string[]): Promise<void>;
   addEmail(email: string): Promise<void>;
-  addEmail(emails: any): Promise<void> {
-    return this.excelAPI.addEmail(emails);
+  async addEmail(emails: any): Promise<void> {
+    await this.excelAPI.addEmail(emails);
+    if (this.opts?.saveOnAdd) {
+      await this.save();
+    }
   }
 
   downloadFile(url: string, fileName: string) {

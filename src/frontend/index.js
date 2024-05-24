@@ -1,4 +1,5 @@
 import PN from 'persian-number';
+import ExtractionHandler from './extractionHandler';
 
 const temp = document.getElementById('journal-url-template');
 /**
@@ -6,7 +7,7 @@ const temp = document.getElementById('journal-url-template');
  */
 const journalForm = document.forms['journal-form'];
 const extractBtn =
-  journalForm.previousElementSibling.previousElementSibling.firstElementChild;
+  journalForm.previousElementSibling.previousElementSibling.lastElementChild;
 
 function focusOnURLInput(e) {
   const inputElmnt = this.firstElementChild;
@@ -241,87 +242,79 @@ function checkURLInValidation() {
 
   let isExtracting = false;
 
-  extractBtn.addEventListener('click', (e) => {
-    let invalidURL;
+  const extractionOptions = {};
+
+  const extractOptionsForm = extractBtn.previousElementSibling;
+
+  extractOptionsForm['author-count'].addEventListener('keydown', function (e) {
+    const newDigit = Number.parseInt(e.key);
     if (
-      !journalForm.firstElementChild ||
-      (invalidURL = checkURLInValidation())
+      (Number.isNaN(newDigit) && e.keyCode > 31) ||
+      (!this.value.length && newDigit === 0)
     ) {
-      // Display error, at least 1 url must be provided
-      if (invalidURL.type == 'empty') {
-        const inputElmt = reachFromTemplateTo(invalidURL.elmnt, 'input');
-        const highlightAnimationClassName = 'highligt-input-animation';
-        inputElmt.classList.add(highlightAnimationClassName);
-
-        setTimeout((e) => {
-          inputElmt.classList.remove(highlightAnimationClassName);
-        }, 600);
-      }
-
-      invalidURL.elmnt.classList.add();
-      reachFromTemplateTo(invalidURL.elmnt, 'URL').focus();
-
+      e.preventDefault();
       return;
     }
-
-    // If all is ok
-    const urls = [];
-    for (let input of journalForm.children) {
-      const url = reachFromTemplateTo(input, 'URL').value.trim();
-      if (url) urls.push(url);
-    }
-
-    window.context.extractURLs(urls).then((res) => {
-      // Extracting resolved
-      if (res.status.code > 0) {
-        succefulExtractionHandler(res.data);
-      } else {
-        failedExtractionHandler(res.status.message);
-      }
-
-      isExtracting = false;
-    });
-    isExtracting = true;
-    waitForResponse();
   });
+  extractOptionsForm?.addEventListener('change', (e) => {
+    const input = e.target;
+
+    switch (input.name) {
+      case 'only-email':
+        {
+          extractionOptions.isOnlyEmail = input.checked;
+        }
+        break;
+      case 'only-main':
+        {
+          extractionOptions.isOnlyMail = input.checked;
+        }
+        break;
+      case 'author-count':
+        {
+          const newVal = input.value?.trim();
+          if (newVal) {
+            extractionOptions.authorsCount = Number.parseInt(newVal);
+          } else {
+            delete extractionOptions.authorsCount;
+          }
+        }
+        break;
+    }
+    console.log(extractionOptions);
+  });
+
+  extractBtn.addEventListener('click', () =>
+    startExtraction(extractionOptions)
+  );
 })();
 
-function waitForResponse() {
-  const waitingViewElmnt =
-    journalForm.previousElementSibling.previousElementSibling;
+function startExtraction(options) {
+  let invalidURL;
+  if (!journalForm.firstElementChild || (invalidURL = checkURLInValidation())) {
+    // Display error, at least 1 url must be provided
+    if (invalidURL.type == 'empty') {
+      const inputElmt = reachFromTemplateTo(invalidURL.elmnt, 'input');
+      const highlightAnimationClassName = 'highligt-input-animation';
+      inputElmt.classList.add(highlightAnimationClassName);
 
-  waitingViewElmnt.classList.remove('hidden');
-}
+      setTimeout(() => {
+        inputElmt.classList.remove(highlightAnimationClassName);
+      }, 600);
+    }
 
-function succefulExtractionHandler(result) {
-  const { filePath } = result;
+    invalidURL.elmnt.classList.add();
+    reachFromTemplateTo(invalidURL.elmnt, 'URL').focus();
 
-  const extractedContainer = document.getElementById('extracted-excels');
+    return;
+  }
 
-  const newExtracted = createNewExtractedItem(filePath);
-  newExtracted.classList.add('newly-extracted');
+  // If all is ok
+  const urls = [];
+  for (let input of journalForm.children) {
+    const url = reachFromTemplateTo(input, 'URL').value.trim();
+    if (url) urls.push(url);
+  }
 
-  extractedContainer.appendChild(newExtracted);
-}
-
-function createNewExtractedItem(extractedPath, fileName) {
-  const temp = document.getElementById('extracted-excel-item-template');
-  const tempNode = document.importNode(temp, true).content;
-
-  // set index
-  const descriptionElement = tempNode.lastElementChild;
-  const createTimeElmnt = descriptionElement.firstElementChild;
-  createTimeElmnt.textContent = new Date().toString();
-  const fileNameElmnt = createTimeElmnt.nextElementSibling;
-  fileNameElmnt.textContent = fileName;
-  descriptionElement.lastElementChild.textContent = extractedPath;
-
-  return tempNode;
-}
-
-function failedExtractionHandler(message) {
-  const extractionHintElmnt = document.getElementById('extraction-hint');
-  extractionHintElmnt.textContent = message;
-  extractionHintElmnt.classList.remove('hidden');
-  setTimeout(() => extractionHintElmnt.classList.add('hidden'), 5000);
+  const extractionHandler = ExtractionHandler.start(urls, options);
 }

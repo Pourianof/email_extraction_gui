@@ -76,7 +76,7 @@ header#header {
   justify-content: space-around;
 }
 .header-logos {
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(235, 235, 235);
   padding: 0 50px;
 }
 
@@ -151,8 +151,9 @@ main#main {
 .extract-btn-wrapper {
   display: flex;
   z-index: 100;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.103);
+  justify-content: space-between;
+  background-color: #1a1f37;
+  padding: 10px 20px;
   width: 80%;
   margin: 0 auto;
   position: relative;
@@ -292,6 +293,14 @@ form.journal-form {
   direction: ltr;
   text-align: left;
   display: inline-block;
+}
+
+.author-count {
+  background-color: rgba(43, 70, 121, 0.226);
+  text-align: center;
+  padding: 3px 5px;
+  width: 60px;
+  border-radius: 5px;
 }
 
 /*

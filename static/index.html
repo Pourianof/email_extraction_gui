@@ -121,6 +121,29 @@
             <img src="/resources/images/loading.gif" />
           </div>
           <div class="extract-btn-wrapper">
+            <form id="extraction-options">
+              <div>
+                <input type="checkbox" id="only-main-author" name="only-main" />
+                <label for="only-main-author">فقط نویسنده اصلی مقاله</label>
+              </div>
+              <div>
+                <input id="only-email" type="checkbox" name="only-email" />
+                <label for="only-email">فقط نویسندگان دارای ایمیل</label>
+              </div>
+              <div>
+                <label>اتمام جمع آوری پس از یافتن </label>
+                <input
+                  dir="ltr"
+                  class="author-count"
+                  type="text"
+                  pattern="[\d]+"
+                  min="0"
+                  name="author-count"
+                  inputmode="numeric"
+                />
+                <label> نویسنده</label>
+              </div>
+            </form>
             <button id="extract-btn" class="hidden btn">شروع استخراج</button>
           </div>
           <div id="extraction-hint hidden"></div>

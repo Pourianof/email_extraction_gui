@@ -2,7 +2,7 @@ import XLSX from 'exceljs';
 import path from 'path';
 export default class ExcelAPI {
   constructor(
-    protected readonly path: string | (() => string | Promise<string>),
+    protected readonly actualPath: string | (() => string | Promise<string>),
     private tempPath: string
   ) {
     this.init();
@@ -16,7 +16,9 @@ export default class ExcelAPI {
   provideSheet(sheetName: string) {
     const sheet = this.workBook.addWorksheet(sheetName);
     sheet.columns = [{ header: 'Email', key: 'email' }];
-    return new EmailToExcel(sheet, () => this.save());
+    return new EmailToExcel(sheet, (saveToMain?: boolean) =>
+      this.save(saveToMain)
+    );
   }
 
   private async write() {
@@ -24,25 +26,29 @@ export default class ExcelAPI {
   }
 
   async end() {
-    this.write();
+    await this.write();
     let p: string;
-    if (typeof this.path == 'string') {
-      p = this.path;
+    if (typeof this.actualPath == 'string') {
+      p = this.actualPath;
     } else {
-      p = await this.path();
+      p = await this.actualPath();
     }
     (await import('fs')).copyFileSync(this.tempPath, p);
   }
 
-  async save() {
-    return this.write();
+  async save(writeMain: boolean = false) {
+    if (writeMain) {
+      await this.end();
+      return;
+    }
+    await this.write();
   }
 }
 
 class EmailToExcel implements ExcelExtracterAPI {
   constructor(
     private readonly sheet: XLSX.Worksheet,
-    protected saveThisSheet: () => Promise<void>,
+    protected saveThisSheet: (saveToMain?: boolean) => Promise<void>,
     protected saveAfter: number = 10
   ) {}
 
@@ -71,8 +77,9 @@ class EmailToExcel implements ExcelExtracterAPI {
       });
     }
   }
-  save(): Promise<void> {
-    return this.saveThisSheet();
+  async save(saveToMain?: boolean): Promise<void> {
+    await this.saveThisSheet(saveToMain);
+    this.addedEmailsCounter = 0;
   }
 }
 
@@ -80,5 +87,5 @@ export interface ExcelExtracterAPI {
   addEmail(emails: string[]): Promise<void>;
   addEmail(email: string): Promise<void>;
   addEmail(emails: any): Promise<void>;
-  save(): Promise<void>;
+  save(saveToMain?: boolean): Promise<void>;
 }
