@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { downloadFile } from './fetch';
 import { ExcelExtracterAPI } from './excelAPI';
+import Author from '../models/author';
 
 export default class ExtracterUtilsAPI implements ExcelExtracterAPI {
   constructor(
@@ -10,14 +11,17 @@ export default class ExtracterUtilsAPI implements ExcelExtracterAPI {
     private readonly excelAPI: ExcelExtracterAPI,
     private opts?: { saveOnAdd?: boolean }
   ) {}
+  onNewAuthor(handler: (newAuthor: Author) => any): void {
+    this.excelAPI.onNewAuthor(handler);
+  }
   save(): Promise<void> {
     return this.excelAPI.save(true);
   }
 
-  addEmail(emails: string[]): Promise<void>;
-  addEmail(email: string): Promise<void>;
-  async addEmail(emails: any): Promise<void> {
-    await this.excelAPI.addEmail(emails);
+  addAuthor(authroData: Author[]): Promise<void>;
+  addAuthor(authroData: Author): Promise<void>;
+  async addAuthor(authroData: any): Promise<void> {
+    await this.excelAPI.addAuthor(authroData);
     if (this.opts?.saveOnAdd) {
       await this.save();
     }

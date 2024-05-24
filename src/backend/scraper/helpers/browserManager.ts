@@ -1,7 +1,6 @@
 import { Browser, Page } from 'puppeteer';
 // import * as puppeteer from 'puppeteer-core';
 import puppeteer from '../helpers/puppeteer';
-import path from 'path';
 
 enum BrowserManagerState {
   NOT_OPENED,
@@ -76,6 +75,12 @@ import {
   type PRBConnectNewPageZoneSetter,
   connect,
 } from '../puppeteer-real-browser';
+import {
+  onDocumentLoadNavigationPage,
+  onNetworkIdleNavigationPage,
+  pageCaptchaHandler,
+  pageLogin,
+} from './pagePlugin';
 
 const CUSTOM_UA = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36`;
 
@@ -100,14 +105,15 @@ export class RealBrowserMimicker extends BaseBrowser {
     }
 
     const { browser, page, setTarget } = await connect({
-      turnstile: true,
+      turnstile: false,
       headless: false,
       customConfig: {
         userDataDir: this.browserUserDataDirPath,
+        slowMo: 200,
+        defaultViewport: null,
       },
       args: [
         '--no-sandbox',
-        '--start-fullscreen',
         '--disable-gpu',
         '--disable-setuid-sandbox',
         '--disable-blink-features=AutomationControlled',
@@ -124,18 +130,23 @@ export class RealBrowserMimicker extends BaseBrowser {
       throw new Error('There is some problem with browser initializing...');
     }
 
+    let newPage: Page;
     if (!this.cachedPageDelivered) {
       this.cachedPageDelivered = true;
       this.cachedPage.setUserAgent(CUSTOM_UA);
-      return this.cachedPage;
+      newPage = this.cachedPage;
+    } else {
+      this.newPageZoneMaker({ status: false });
+
+      newPage = await this.browser.newPage();
+
+      this.newPageZoneMaker({ status: true });
+      newPage.setUserAgent(CUSTOM_UA);
     }
 
-    this.newPageZoneMaker({ status: false });
-
-    const newPage = await this.browser.newPage();
-
-    this.newPageZoneMaker({ status: true });
-    newPage.setUserAgent(CUSTOM_UA);
+    await pageLogin(newPage);
+    pageCaptchaHandler(newPage);
+    onDocumentLoadNavigationPage(newPage);
 
     return newPage;
   }

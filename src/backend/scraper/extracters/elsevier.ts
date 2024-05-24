@@ -2,6 +2,7 @@ import { Page } from 'puppeteer';
 import BaseExtracter from './baseExtracter';
 import { ConstrainedBrowser } from '../helpers/browserManager';
 import ExtracterUtilsAPI from '../helpers/ExtracterUtils';
+import Author from '../models/author';
 
 export default class ElsevierExtracter extends BaseExtracter {
   static ELSEVIER_BASE_URL = 'https://www.sciencedirect.com';
@@ -60,51 +61,101 @@ class ElsevierJournalExtracter {
         '.author-group span.button-link-text'
       );
 
-      const emails: string[] = [];
-
       for (let at of authorTitles) {
-        const authorName = await at.evaluate(
-          (a) => (a.click(), a.querySelector('.given-name')?.textContent),
-          at
-        );
+        const authorData: Author = {};
+        const primaryInfo = await at.evaluate((a) => {
+          const firstName = a.querySelector('.given-name')?.textContent;
+          const surName = a.querySelector('.surname')?.textContent;
+          const hasAffiliation = !!a.querySelector('.author-ref');
+          const isMainAuthor = !!a.querySelector(
+            'svg[title~="Correspondence"]'
+          );
+          const hasEmail = !!a.querySelector('svg[title~="email"]');
+          return {
+            firstName,
+            surName,
+            hasAffiliation,
+            isMainAuthor,
+            hasEmail,
+          };
+        }, at);
 
-        // wait to side panel open and data loaded
-        await this.volumePage.waitForSelector('#side-panel-author .given-name');
+        authorData.name = primaryInfo.firstName!;
+        authorData.lastName = primaryInfo.surName!;
 
-        const emailAddressElmnt = await this.volumePage.evaluate(() =>
-          document.querySelector('#side-panel-author .e-address')
-        );
+        if (primaryInfo.hasAffiliation || primaryInfo.hasEmail) {
+          await this.volumePage.evaluate((e) => e.click(), at);
 
-        if (emailAddressElmnt) {
-          const email =
-            emailAddressElmnt.firstElementChild?.lastElementChild?.textContent?.trim();
+          // wait to side panel open and data loaded
+          await this.volumePage.waitForSelector(
+            '#side-panel-author .given-name'
+          );
 
-          if (email) {
-            this.emailPlaceAPI.addEmail(email);
-          }
-        } else {
-          try {
-            const orcidPageLink = await this.volumePage.$eval(
-              '#side-panel-author a.anchor.orcid-link',
-              (e) => e.href
-            );
+          await this.volumePage.evaluate(() => console.log('meow'));
 
-            // handle OrcId page
+          const data = await this.volumePage.evaluate(() => {
+            const sidePanel = document.getElementById('side-panel');
 
-            await this.orcIdPage.goto(orcidPageLink);
-
-            const email = (
-              await this.orcIdPage.$eval(
-                '#emails-panel .row-with-privacy',
-                (e) => e.textContent
+            if (sidePanel) {
+              // Affilations
+              const affiliations = Array.from(
+                document.querySelectorAll(`#side-panel .affiliation`)
               )
-            )?.trim();
+                .map((e) => e?.textContent)
+                .filter((el) => el && el?.trim());
 
-            if (email) this.emailPlaceAPI.addEmail(email);
+              // Adrress
+              const address = Array.from(
+                document.querySelectorAll(`#side-panel .correspondence`)
+              )
+                .map((e) => e?.textContent)
+                .filter((el) => el && el?.trim());
+
+              // email
+              const emailAddress = Array.from(
+                document.querySelectorAll(`#side-panel .e-address`)
+              )
+                .map((e) => e?.textContent)
+                .filter((el) => el && el?.trim());
+
+              return {
+                affiliations,
+                address,
+                emailAddress,
+              };
+            }
+          });
+
+          if (data) {
+            authorData.address = data.address as string[];
+            authorData.email = data.emailAddress as string[];
+            authorData.affiliations = data.affiliations as string[];
+          }
+        }
+
+        if (!authorData.email || !authorData.email.length) {
+          try {
+            // const orcidPageLink = await this.volumePage.$eval(
+            //   '#side-panel-author a.anchor.orcid-link',
+            //   (e) => e.href
+            // );
+            // // handle OrcId page
+            // await this.volumePage.goto(orcidPageLink);
+            // const email = (
+            //   await this.volumePage.$eval(
+            //     '#emails-panel .row-with-privacy',
+            //     (e) => e.textContent
+            //   )
+            // )?.trim();
+            // if (email) authorData.email = [email];
           } catch (err) {
             // no orcid page available **OR** No email existed in orcid page
             console.error('ORCID FAILED');
           }
+        }
+
+        if (Object.keys(authorData).length) {
+          this.emailPlaceAPI.addAuthor(authorData);
         }
       }
 

@@ -1,12 +1,9 @@
 import ElsevierExtracter from './extracters/elsevier';
-import {
-  BaseBrowser,
-  BrowserManager,
-  RealBrowserMimicker,
-} from './helpers/browserManager';
+import { BaseBrowser, RealBrowserMimicker } from './helpers/browserManager';
 import ExcelAPI from './helpers/excelAPI';
 import BaseExtracter from './extracters/baseExtracter';
 import ExtracterUtilsAPI from './helpers/ExtracterUtils';
+import { AuthorsProgressStateNotifier } from './progressState';
 
 let browser: BaseBrowser;
 let excelAPI: ExcelAPI;
@@ -19,6 +16,8 @@ interface ExtractionOption {
   browserPath?: string;
   chromePath?: string;
   browserUserDataPath: string;
+  progressMonitor?: AuthorsProgressStateNotifier;
+  saveOnEveryItem?: boolean;
 }
 
 export default async function extractURLS(
@@ -45,7 +44,10 @@ async function _extract(
   excelAPI = new ExcelAPI(options.ouputPath, options.tempPath);
 
   await browser.run();
-  const extractorHandler = new URLExtractor();
+  const extractorHandler = new URLExtractor(
+    options.progressMonitor,
+    options.saveOnEveryItem
+  );
 
   for (let u of urls) {
     extractorHandler.extract(u);
@@ -58,12 +60,21 @@ async function _extract(
 }
 
 class URLExtractor {
-  static provideUtilAPI(id: string) {
-    return new ExtracterUtilsAPI(
+  constructor(
+    private progressConsumer?: AuthorsProgressStateNotifier,
+    private saveOnEveryNewItem: boolean = false
+  ) {}
+  private provideUtilAPI(id: string) {
+    const api = new ExtracterUtilsAPI(
       'elsevier',
       tempPath,
-      excelAPI.provideSheet('elsevier')
+      excelAPI.provideSheet('elsevier'),
+      {
+        saveOnAdd: this.saveOnEveryNewItem,
+      }
     );
+    this.progressConsumer?.setProvider(api);
+    return api;
   }
   private extracters: {
     e?: BaseExtracter;
@@ -81,17 +92,17 @@ class URLExtractor {
     ) {
       extracter = this.extracters.e ??= new ElsevierExtracter(
         browser,
-        URLExtractor.provideUtilAPI('elsevier')
+        this.provideUtilAPI('elsevier')
       );
     } else if (hostname.endsWith('springer.com')) {
       extracter = this.extracters.s ??= new ElsevierExtracter(
         browser,
-        URLExtractor.provideUtilAPI('springer')
+        this.provideUtilAPI('springer')
       );
     } else if (hostname.endsWith('wiley.com')) {
       extracter = this.extracters.w ??= new ElsevierExtracter(
         browser,
-        URLExtractor.provideUtilAPI('wiley')
+        this.provideUtilAPI('wiley')
       );
     } else {
       throw new Error(`No extracter found for url ${url}`);
@@ -99,9 +110,25 @@ class URLExtractor {
     extracter.addURL(url);
   }
 
+  /*
+    Because of single tab(page), we run tasks in semi synchron way,
+    then we wait to one extracter do it jobs, then we go to next extracter.
+  */
   async whenExtractionEnd() {
-    return Promise.all(
-      Object.values(this.extracters).map((e) => e.waitForExtraction())
-    );
+    return new Promise(async (res, rej) => {
+      for (let e of Object.values(this.extracters)) {
+        await e.waitForExtraction();
+      }
+    });
   }
 }
+
+process.on('unhandledRejection', (err) => {
+  browser.close();
+  console.error(err);
+});
+process.on('uncaughtException', (err) => {
+  browser.close();
+  console.error(err);
+});
+process.on('exit', () => browser.close());

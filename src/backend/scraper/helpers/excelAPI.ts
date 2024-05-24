@@ -1,5 +1,7 @@
 import XLSX from 'exceljs';
 import path from 'path';
+import Notifier from './notifier';
+import Author from '../models/author';
 export default class ExcelAPI {
   constructor(
     protected readonly actualPath: string | (() => string | Promise<string>),
@@ -15,8 +17,14 @@ export default class ExcelAPI {
 
   provideSheet(sheetName: string) {
     const sheet = this.workBook.addWorksheet(sheetName);
-    sheet.columns = [{ header: 'Email', key: 'email' }];
-    return new EmailToExcel(sheet, (saveToMain?: boolean) =>
+    sheet.columns = [
+      { header: 'First name', key: 'name' },
+      { header: 'Last name', key: 'lastName' },
+      { header: 'Affiliations', key: 'affiliations' },
+      { header: 'Addresses', key: 'address' },
+      { header: 'Email', key: 'email' },
+    ];
+    return new AuthorToExcel(sheet, (saveToMain?: boolean) =>
       this.save(saveToMain)
     );
   }
@@ -45,36 +53,57 @@ export default class ExcelAPI {
   }
 }
 
-class EmailToExcel implements ExcelExtracterAPI {
+abstract class BaseEmailToExcel implements ExcelExtracterAPI {
+  protected notifier: Notifier<'newemail'> = new Notifier();
+  addAuthor(emails: Author[]): Promise<void>;
+  addAuthor(email: Author): Promise<void>;
+  addAuthor(emails: any): Promise<void>;
+  async addAuthor(emails: unknown): Promise<void> {
+    this.notifier.trigger('newemail', emails);
+  }
+  onNewAuthor(handler: (info: Author) => any) {
+    this.notifier.addListener('newemail', (event) => handler(event.data));
+  }
+  abstract save(saveToMain?: boolean | undefined): Promise<void>;
+}
+
+class AuthorToExcel extends BaseEmailToExcel {
   constructor(
     private readonly sheet: XLSX.Worksheet,
     protected saveThisSheet: (saveToMain?: boolean) => Promise<void>,
     protected saveAfter: number = 10
-  ) {}
+  ) {
+    super();
+  }
 
   private addedEmailsCounter = 0;
 
-  addEmail(emails: string[]): Promise<void>;
-  addEmail(email: string): Promise<void>;
-  async addEmail(emails: any) {
-    const addIfNotEmpty = (email: string) => {
-      email = email.trim();
-      if (email) {
-        this.sheet.addRow([email]);
+  addAuthor(authorData: Author[]): Promise<void>;
+  addAuthor(authorData: Author): Promise<void>;
+  async addAuthor(authorData: any) {
+    const addIfNotEmpty = (data: Author) => {
+      if (data) {
+        this.sheet.addRow({
+          name: data.name,
+          lastName: data.lastName,
+          affiliations: data.affiliations?.join(', ') ?? '',
+          address: data.address?.join(', ') ?? '',
+          email: data.email?.join(', ') ?? '',
+        });
+        super.addAuthor(data);
         if (++this.addedEmailsCounter >= this.saveAfter) {
           return this.save();
         }
       }
     };
 
-    if (typeof emails === 'string') {
-      addIfNotEmpty(emails);
-      return;
-    }
-    if (emails instanceof Array) {
-      emails.forEach((e) => {
+    if (authorData instanceof Array) {
+      authorData.forEach((e) => {
         addIfNotEmpty(e);
       });
+    } else {
+      addIfNotEmpty(authorData);
+      return;
     }
   }
   async save(saveToMain?: boolean): Promise<void> {
@@ -83,9 +112,13 @@ class EmailToExcel implements ExcelExtracterAPI {
   }
 }
 
-export interface ExcelExtracterAPI {
-  addEmail(emails: string[]): Promise<void>;
-  addEmail(email: string): Promise<void>;
-  addEmail(emails: any): Promise<void>;
+export interface NewDataNotifier {
+  onNewAuthor(handler: (newAuthor: Author) => any): void;
+}
+
+export interface ExcelExtracterAPI extends NewDataNotifier {
+  addAuthor(authroData: Author[]): Promise<void>;
+  addAuthor(authroData: Author): Promise<void>;
+  addAuthor(authroData: any): Promise<void>;
   save(saveToMain?: boolean): Promise<void>;
 }

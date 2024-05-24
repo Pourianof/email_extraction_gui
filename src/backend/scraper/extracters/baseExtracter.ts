@@ -36,9 +36,8 @@ export default abstract class BaseExtracter {
 
           urlWrapper = urlWrapper.next;
         }
-        res();
-        await this.waiter;
         this.state = ExtracterState.IDOL;
+        res();
       });
     } else {
       throw new Error('No url to extract.');
@@ -53,13 +52,13 @@ export default abstract class BaseExtracter {
 
   addURL(url: string[]): void;
   addURL(url: string): void;
-  addURL(url: any): void {
+  addURL(url: any, beginExtract = true): void {
     if (typeof url == 'string') {
       this.urlsToExtract.adopt(url);
     } else if (url instanceof Array) {
       this.addAll(url);
     }
-    this.extract();
+    if (beginExtract) this.extract();
   }
 
   private addAll(urls?: string[]) {
