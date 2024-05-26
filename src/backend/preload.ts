@@ -6,9 +6,20 @@ import Author from '../shared/models/author';
 
 let scheduledForRemovingListeners = false;
 
+function removeProgressListeners() {
+  ipcRenderer.removeAllListeners(Events.EXTRACT_PROGRESS);
+  ipcRenderer.removeAllListeners(Events.EXTRACT_END);
+  scheduledForRemovingListeners = false;
+}
+
 export const contextApi: ContextApi = {
-  extractURLs(urls) {
-    return ipcRenderer.invoke(Events.EXTRACT_URLS, JSON.stringify(urls));
+  async extractURLs(urls) {
+    const result = await ipcRenderer.invoke(
+      Events.EXTRACT_URLS,
+      JSON.stringify(urls)
+    );
+    removeProgressListeners();
+    return result;
   },
   listenToExtractionProgress: function (
     cb: (state: { author: Author; totalAuthorRecieved: number }) => any
@@ -26,9 +37,7 @@ export const contextApi: ContextApi = {
   listenToExtractionEnd: function (cb?: () => any): void {
     ipcRenderer.addListener(Events.EXTRACT_END, () => {
       cb?.();
-      ipcRenderer.removeAllListeners(Events.EXTRACT_PROGRESS);
-      ipcRenderer.removeAllListeners(Events.EXTRACT_END);
-      scheduledForRemovingListeners = false;
+      removeProgressListeners();
     });
   },
 };

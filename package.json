@@ -13,6 +13,7 @@
   "author": "Pooria",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@sparticuz/chromium": "^119.0.2",
     "@types/command-line-args": "^5.2.3",
     "@types/node": "^18.13.0",
@@ -32,7 +33,6 @@
     "https-proxy-agent": "^7.0.4",
     "puppeteer": "^22.7.1",
     "puppeteer-afp": "https://github.com/zfcsoftware/puppeteer-afp/tree/master",
-    "email_extracting": "git+https://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@github.com/Coded-By-Pooria/email_extracting/tree/urls-parsing.git",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "style-loader": "^4.0.0",
@@ -54,7 +54,8 @@
   "dependencies": {
     "chrome-launcher": "^1.1.1",
     "cross-env": "^7.0.3",
-    "persian-number": "^1.6.0"
+    "persian-number": "^1.6.0",
+    "react-date-object": "^2.1.8"
   },
   "electronmon": {
     "patterns": [

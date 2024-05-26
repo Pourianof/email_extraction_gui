@@ -1,7 +1,49 @@
+import {
+  appendNewExtractedExcelItem,
+  createNewExtractedAuthorItem,
+} from './extracterHelper';
+import { backURLFormToInitialState } from './urlFormHelper';
 export class ExtractionState {
   static EXTRACTING = 'extracting';
   static IDOL = 'idol';
   static FINISHED = 'finished';
+}
+
+function hideExtractList() {
+  const extractListElmnt = document.querySelector('.extracted-list');
+  extractListElmnt.classList.add('hidden');
+  extractListElmnt.firstElementChild.firstElementChild.removeEventListener(
+    'click',
+    hideExtractList
+  );
+
+  const displayLabel = extractListElmnt.previousElementSibling;
+  displayLabel.classList.remove('hidden');
+  displayLabel.addEventListener('click', displayExtractList);
+}
+
+function displayExtractList() {
+  const extractListElmnt = document.querySelector('.extracted-list');
+  extractListElmnt.classList.remove('hidden');
+  extractListElmnt.firstElementChild.firstElementChild.addEventListener(
+    'click',
+    hideExtractList
+  );
+
+  const displayLabel = extractListElmnt.previousElementSibling;
+  displayLabel.classList.add('hidden');
+  displayLabel.removeEventListener('click', displayExtractList);
+}
+
+function handleExtractionWaitingView(hide) {
+  const journalForm = document.forms['journal-form'];
+  const waitingViewElmnt = journalForm.parentElement.firstElementChild;
+
+  if (hide) {
+    waitingViewElmnt.classList.add('hidden');
+  } else {
+    waitingViewElmnt.classList.remove('hidden');
+  }
 }
 
 export default class ExtractionHandler {
@@ -9,7 +51,9 @@ export default class ExtractionHandler {
 
   static async start(urls, options) {
     if (this.isExtractionOnProgress) {
-      throw new Error('');
+      throw new Error(
+        'Currently another extraction is on progress.\nYou must either cancel the previous one and start a new or wait to previous get finish.'
+      );
     }
 
     const handler = new ExtractionHandler(urls, options);
@@ -32,26 +76,64 @@ export default class ExtractionHandler {
         'This handler finished it extraction.\nYou must use new handler to extracting...'
       );
     }
-    this._state = ExtractionState.EXTRACTING;
-
-    window.context.listenToExtractionProgress((progressState) => {
-      console.log(progressState);
-    });
 
     this._waitForResponse();
-    const res = await window.context.extractURLs({
-      urls: this.urls,
-      options: this.options,
-    });
+
+    window.context.listenToExtractionProgress(this._onNewProgressState);
+    const res = JSON.parse(
+      await window.context.extractURLs({
+        urls: this.urls,
+        options: this.options,
+      })
+    );
 
     this._state = ExtractionState.FINISHED;
 
-    if (res.status.code > 0) {
-      this._succefulExtractionHandler(res.data);
-    } else {
-      this._failedExtractionHandler(res.status.message);
-    }
+    handleExtractionResult(res, this.extractedCount);
   }
+  extractedCount = 0;
+  stopScrollingDown = false;
+  _onNewProgressState = (state) => {
+    this.extractedCount = state.totalAuthorRecieved;
+
+    const journalForm = document.forms['journal-form'];
+    const waitingViewElmnt = journalForm.parentElement.firstElementChild;
+    const extractedListElmnt = waitingViewElmnt;
+
+    const { firstName, lastName, email, affiliations, address } = state.author;
+    const newItemElmnt = createNewExtractedAuthorItem(
+      state.totalAuthorRecieved,
+      firstName,
+      lastName,
+      affiliations,
+      address,
+      email
+    );
+
+    /**
+     * @type HTMLElement
+     */
+    const extractedListWrapperView =
+      extractedListElmnt.lastElementChild.lastElementChild;
+    extractedListWrapperView.appendChild(newItemElmnt);
+
+    if (extractedListWrapperView.children.length > 50) {
+      extractedListWrapperView.removeChild(
+        extractedListWrapperView.firstElementChild
+      );
+    }
+
+    if (
+      !this.stopScrollingDown &&
+      extractedListWrapperView.scrollHeight >
+        extractedListWrapperView.clientHeight
+    ) {
+      extractedListWrapperView.scrollTo(
+        0,
+        extractedListWrapperView.scrollHeight
+      );
+    }
+  };
 
   cancel() {
     // Must implement
@@ -59,42 +141,113 @@ export default class ExtractionHandler {
   }
 
   _waitForResponse() {
-    const journalForm = document.forms['journal-form'];
-    const waitingViewElmnt = journalForm.parentElement.firstElementChild;
+    this._state = ExtractionState.EXTRACTING;
+    handleExtractionWaitingView();
+    displayExtractList();
+  }
+}
 
-    waitingViewElmnt.classList.remove('hidden');
+const waitingViewElmnt = document.querySelector('.waiting-view');
+
+function handleExtractionResult(result, extractedCount) {
+  hideExtractList();
+  if (result.status.code > 0) {
+    succefulExtractionHandler(result.data, extractedCount);
+  } else {
+    failedExtractionHandler(result.status.message, extractedCount);
+  }
+}
+
+function succefulExtractionHandler(result, extractedCount) {
+  hideExtractList();
+  const { filePath } = result;
+
+  appendNewExtractedExcelItem(filePath);
+
+  let loadingImg = waitingViewElmnt.firstElementChild;
+
+  const tree = document.createDocumentFragment();
+  // display success message
+  const waitingResultElement = document.createElement('div');
+  waitingResultElement.classList.add('successful-extraction-result');
+  waitingResultElement.classList.add('extraction-result');
+
+  const statusHint = document.createElement('span');
+  statusHint.classList.add('--ser-message--');
+  statusHint.textContent = 'فرآیند جمع آوری با موفقیت به اتمام رسید.';
+  waitingResultElement.appendChild(statusHint);
+
+  const statusSubHint = document.createElement('span');
+  statusSubHint.classList.add('--ser-sub-message--');
+  statusSubHint.textContent = `در مجموعه ${extractedCount} آیتم بدست آمده است`;
+  waitingResultElement.appendChild(statusSubHint);
+
+  const openExtractedExcelBtn = document.createElement('button');
+  openExtractedExcelBtn.classList.add('--ser-btn--');
+  openExtractedExcelBtn.classList.add('--ser-open-btn--');
+  openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
+  openExtractedExcelBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.context.openExcelFile(filePath);
+  });
+  waitingResultElement.appendChild(openExtractedExcelBtn);
+
+  extractionFinishHandler(waitingResultElement);
+
+  tree.appendChild(waitingResultElement);
+
+  waitingViewElmnt.replaceChild(tree, loadingImg);
+}
+
+function failedExtractionHandler(message, extractedCount) {
+  let loadingImg = waitingViewElmnt.firstElementChild;
+  const waitingResultElement = document.createElement('div');
+  waitingResultElement.classList.add('failed-extraction-result');
+  waitingResultElement.classList.add('extraction-result');
+
+  const statusHint = document.createElement('span');
+  statusHint.classList.add('--fer-message--');
+  statusHint.textContent = `فرآیند گردآوری باشکست روبرو شد. پیام شکست :\n${message}`;
+  waitingResultElement.appendChild(statusHint);
+
+  if (extractedCount > 0) {
+    const statusSubHint = document.createElement('span');
+    statusSubHint.classList.add('--ser-sub-message--');
+    statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها تشکیل شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
+    waitingResultElement.appendChild(statusSubHint);
+
+    const openExtractedExcelBtn = document.createElement('button');
+    openExtractedExcelBtn.classList.add('--ser-btn--');
+    openExtractedExcelBtn.classList.add('--ser-open-btn--');
+    openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
+    openExtractedExcelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.context.openExcelFile(filePath);
+    });
+    waitingResultElement.appendChild(openExtractedExcelBtn);
   }
 
-  _succefulExtractionHandler(result) {
-    const { filePath } = result;
+  extractionFinishHandler(waitingResultElement);
 
-    const extractedContainer = document.getElementById('extracted-excels');
+  waitingViewElmnt.replaceChild(waitingResultElement, loadingImg);
+}
 
-    const newExtracted = createNewExtractedItem(filePath);
-    newExtracted.classList.add('newly-extracted');
+function extractionFinishHandler(parent) {
+  let loadingImg = waitingViewElmnt.firstElementChild;
 
-    extractedContainer.appendChild(newExtracted);
-  }
-
-  _createNewExtractedItem(extractedPath, fileName) {
-    const temp = document.getElementById('extracted-excel-item-template');
-    const tempNode = document.importNode(temp, true).content;
-
-    // set index
-    const descriptionElement = tempNode.lastElementChild;
-    const createTimeElmnt = descriptionElement.firstElementChild;
-    createTimeElmnt.textContent = new Date().toString();
-    const fileNameElmnt = createTimeElmnt.nextElementSibling;
-    fileNameElmnt.textContent = fileName;
-    descriptionElement.lastElementChild.textContent = extractedPath;
-
-    return tempNode;
-  }
-
-  _failedExtractionHandler(message) {
-    const extractionHintElmnt = document.getElementById('extraction-hint');
-    extractionHintElmnt.textContent = message;
-    extractionHintElmnt.classList.remove('hidden');
-    setTimeout(() => extractionHintElmnt.classList.add('hidden'), 5000);
-  }
+  const closeResultViewBtn = document.createElement('button');
+  closeResultViewBtn.classList.add('--ser-btn--');
+  closeResultViewBtn.classList.add('--ser-close-btn--');
+  closeResultViewBtn.textContent = 'بازگشت';
+  parent.appendChild(closeResultViewBtn);
+  closeResultViewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleExtractionWaitingView(true);
+    waitingViewElmnt.replaceChild(loadingImg, parent);
+    backURLFormToInitialState();
+    const extractedListWrapperView =
+      waitingViewElmnt.lastElementChild.lastElementChild;
+    extractedListWrapperView.replaceChildren([]);
+  });
+  document.getElementById('extract-btn')?.classList.add('hidden');
 }

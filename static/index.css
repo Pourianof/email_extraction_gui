@@ -37,6 +37,17 @@ a {
   color: inherit;
 }
 
+div::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+  border-radius: 10px;
+  height: 3px;
+}
+div::-webkit-scrollbar-thumb {
+  background-color: rgb(165, 165, 165);
+  border-radius: 10px;
+}
+
 body {
   direction: rtl;
   font-family: sahel, '2 Yekan', 'b nazanin', 'Times New Roman', Times, serif;
@@ -110,9 +121,20 @@ main#main {
   background-color: rgb(16 16 16 / 87%);
   z-index: 110;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.display-extraction {
+  background-color: #73304e;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.display-extraction:hover {
+  background-color: #a32a60;
 }
 
 .address-hints {
@@ -286,7 +308,7 @@ form.journal-form {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .en-in-fa {
@@ -352,4 +374,206 @@ form.journal-form {
   100% {
     opacity: 0;
   }
+}
+
+/*
+  ===================================================
+                  Extracted Authors list
+  ===================================================
+*/
+
+.extracted-list {
+  background-color: rgb(47 53 73);
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.extracted-list > * {
+  padding: 10px 5px;
+}
+
+.extracted-list-header-title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.close-extracted-list-btn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 30px;
+  padding: 7px;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.close-extracted-list-btn:hover {
+  background-color: #9b628b;
+  transition: 0.3s;
+}
+
+.extracted-items-icon {
+  width: 30px;
+  margin: 0 5px;
+  transform: rotateY(180deg);
+}
+.extracted-items-icon svg {
+  fill: #c3d1eb;
+}
+
+.extracted-list-header h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.extracted-list-header span {
+  font-size: 0.8em;
+}
+
+.extracted-list-view {
+  overflow: auto;
+}
+
+.author-info {
+  background-color: rgb(76, 84, 110);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.author-info-row {
+  display: flex;
+  margin: 3px 0;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.author-info-row .--air-more-- {
+  white-space: nowrap;
+}
+
+.--air-icon-- {
+  width: 20px;
+  min-width: 20px;
+}
+
+.--air-icon-- svg {
+  color: #1f1c29;
+  fill: #1f1c29;
+  vertical-align: middle;
+}
+
+.author-index {
+  width: 20px;
+  border-radius: 3px;
+  background-color: #1f1c29;
+  text-align: center;
+}
+
+.author-info .--ai-lbl-- {
+  margin: 0 5px;
+}
+.author-info .--ai-lbl--::after {
+  content: ':';
+}
+
+.author-fname {
+  direction: ltr;
+}
+
+.author-fullname {
+  display: flex;
+}
+
+/*
+  ===================================================
+                  Extracted Excel
+  ===================================================
+*/
+
+#extracted-excels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.extracted-excel-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 13px;
+  color: rgb(214, 214, 214);
+  width: 220px;
+  margin: 5px;
+  background-color: #121021;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.extracted-excel-item img {
+  width: 50px;
+  margin-left: 10px;
+}
+
+.extraction-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.successful-extraction-result {
+}
+
+.--ser-message-- {
+  background-color: #4d7d3e;
+  padding: 5px 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.--ser-sub-message-- {
+  font-size: 0.8em;
+  color: rgb(235, 161, 161);
+  text-align: center;
+}
+
+.extraction-result > * {
+  margin: 5px;
+}
+.--ser-btn-- {
+  cursor: pointer;
+  padding: 5px 10px;
+  display: block;
+  transition: 0.1s;
+}
+
+.--ser-open-btn-- {
+  background-color: #417a87;
+  border-radius: 3px;
+  box-shadow: 3px 3px #0e2b3d;
+}
+
+.--ser-open-btn--:hover {
+  box-shadow: 0px 0px #0e2b3d;
+}
+
+.--ser-close-btn-- {
+  color: #ddd9da;
+}
+
+.--ser-close-btn--:hover {
+  color: #cf5574;
 }

@@ -3,6 +3,7 @@ import {
   IpcMainInvokeEvent,
   app,
   dialog,
+  net,
   ipcMain,
 } from 'electron';
 import { Events } from './events';
@@ -12,16 +13,18 @@ import { CHROME_DIR, CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
 import { AuthorsProgressStateNotifier } from './scraper/progressState';
 import ExtractionProgressState from '../shared/extractionsProgressState';
-
+import { faker } from '@faker-js/faker';
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
     this.handle();
   }
 
-  private static handleInvokation(callback: (data: any) => Promise<any>) {
-    return (event: IpcMainInvokeEvent, d: string) => {
+  private static handleInvokation(
+    callback: (data: any) => Promise<IPCMessage>
+  ) {
+    return async (event: IpcMainInvokeEvent, d: string) => {
       const data = JSON.parse(d);
-      return callback(data);
+      return JSON.stringify(await callback(data));
     };
   }
 
@@ -30,22 +33,42 @@ export default class IPCEventHandler {
       Events.EXTRACT_URLS,
       IPCEventHandler.handleInvokation(
         //  this.handleExtract
-        async (data) => {
-          return new Promise<void>((res, rej) => {
+        (data) => {
+          return new Promise<IPCMessage>((res, rej) => {
             let counter = 1;
+            const bound = data?.options?.authorsCount ?? 10;
             const sendProgress = () => {
               this.win.webContents.send(
                 Events.EXTRACT_PROGRESS,
                 JSON.stringify({
                   author: {
-                    firstName: Math.round(Math.random() * 1000) + '-First name',
-                    lastName: Math.round(Math.random() * 1000) + '-Last name',
+                    firstName: faker.person.firstName(),
+                    lastName: faker.person.lastName(),
+                    affiliations: [
+                      faker.location.streetAddress({ useFullAddress: true }),
+                      faker.location.streetAddress({ useFullAddress: true }),
+                    ],
+                    address: [
+                      faker.location.streetAddress({ useFullAddress: true }),
+                    ],
+                    email: [faker.internet.email()],
                   },
+
                   totalAuthorRecieved: counter++,
                 } as ExtractionProgressState)
               );
-              if (counter > data?.options?.authorsCount ?? 10) {
-                res();
+
+              console.log(counter > data?.options?.authorsCount ?? 10);
+              if (counter > bound) {
+                res({
+                  status: {
+                    code: -50,
+                    message: 'Extraction Failed.',
+                  },
+                  data: {
+                    filePath: 'A:\\b\\c\\h.xlsx',
+                  },
+                });
               } else {
                 setTimeout(sendProgress, 1000);
               }
@@ -73,6 +96,15 @@ export default class IPCEventHandler {
           } as ExtractionProgressState)
         );
       });
+
+      if (!net.isOnline()) {
+        return {
+          status: {
+            code: -10,
+            message: 'از اتصال خود به اینترنت مطمئن شوید.',
+          },
+        };
+      }
 
       await extractURLS(data, {
         progressMonitor: progressListener,
