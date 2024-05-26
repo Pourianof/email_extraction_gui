@@ -9,6 +9,21 @@ export class ExtractionState {
   static FINISHED = 'finished';
 }
 
+let isExtractListScrollAway = false;
+
+function handleExtractedItemsListScroll(e) {
+  const sHeight = this.scrollHeight;
+  const cHeight = this.clientHeight;
+  const maxScroll = sHeight - cHeight;
+  const scrollTop = this.scrollTop;
+  const eps = 5;
+  if (scrollTop < maxScroll - eps) {
+    isExtractListScrollAway = true;
+  } else if (isExtractListScrollAway) {
+    isExtractListScrollAway = false;
+  }
+}
+
 function hideExtractList() {
   const extractListElmnt = document.querySelector('.extracted-list');
   extractListElmnt.classList.add('hidden');
@@ -19,6 +34,10 @@ function hideExtractList() {
 
   const displayLabel = extractListElmnt.previousElementSibling;
   displayLabel.classList.remove('hidden');
+  extractListElmnt.lastElementChild.removeEventListener(
+    'scroll',
+    handleExtractedItemsListScroll
+  );
   displayLabel.addEventListener('click', displayExtractList);
 }
 
@@ -28,6 +47,11 @@ function displayExtractList() {
   extractListElmnt.firstElementChild.firstElementChild.addEventListener(
     'click',
     hideExtractList
+  );
+
+  extractListElmnt.lastElementChild.addEventListener(
+    'scroll',
+    handleExtractedItemsListScroll
   );
 
   const displayLabel = extractListElmnt.previousElementSibling;
@@ -117,14 +141,10 @@ export default class ExtractionHandler {
       extractedListElmnt.lastElementChild.lastElementChild;
     extractedListWrapperView.appendChild(newItemElmnt);
 
-    if (extractedListWrapperView.children.length > 50) {
-      extractedListWrapperView.removeChild(
-        extractedListWrapperView.firstElementChild
-      );
-    }
+    handleExtractListItemBounds();
 
     if (
-      !this.stopScrollingDown &&
+      !isExtractListScrollAway &&
       extractedListWrapperView.scrollHeight >
         extractedListWrapperView.clientHeight
     ) {
@@ -146,15 +166,38 @@ export default class ExtractionHandler {
     displayExtractList();
   }
 }
+function handleExtractListItemBounds() {
+  const extractListViewElmnt = document.querySelector('.extracted-list-view');
+
+  const itemBound = 50;
+  const availableItemsCount = extractListViewElmnt.children.length;
+  if (!isExtractListScrollAway && availableItemsCount > itemBound) {
+    if (availableItemsCount > itemBound + 1) {
+      const newChildren = Array.from(extractListViewElmnt.children).slice(
+        availableItemsCount - itemBound
+      );
+      extractListViewElmnt.replaceChildren(...newChildren);
+    } else {
+      extractListViewElmnt.removeChild(extractListViewElmnt.firstElementChild);
+    }
+  }
+}
 
 const waitingViewElmnt = document.querySelector('.waiting-view');
 
 function handleExtractionResult(result, extractedCount) {
   hideExtractList();
+  isExtractListScrollAway = false;
+  handleExtractListItemBounds();
+
   if (result.status.code > 0) {
     succefulExtractionHandler(result.data, extractedCount);
   } else {
-    failedExtractionHandler(result.status.message, extractedCount);
+    failedExtractionHandler(
+      result.status.message,
+      result.data.filePath,
+      extractedCount
+    );
   }
 }
 
@@ -199,7 +242,7 @@ function succefulExtractionHandler(result, extractedCount) {
   waitingViewElmnt.replaceChild(tree, loadingImg);
 }
 
-function failedExtractionHandler(message, extractedCount) {
+function failedExtractionHandler(message, filePath, extractedCount) {
   let loadingImg = waitingViewElmnt.firstElementChild;
   const waitingResultElement = document.createElement('div');
   waitingResultElement.classList.add('failed-extraction-result');
@@ -213,7 +256,7 @@ function failedExtractionHandler(message, extractedCount) {
   if (extractedCount > 0) {
     const statusSubHint = document.createElement('span');
     statusSubHint.classList.add('--ser-sub-message--');
-    statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها تشکیل شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
+    statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها ساخته شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
     waitingResultElement.appendChild(statusSubHint);
 
     const openExtractedExcelBtn = document.createElement('button');

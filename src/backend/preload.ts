@@ -40,6 +40,9 @@ export const contextApi: ContextApi = {
       removeProgressListeners();
     });
   },
+  openExcelFile: function (filePath: string): void {
+    ipcRenderer.send(Events.OPEN_EXCEL, filePath);
+  },
 };
 
 contextBridge.exposeInMainWorld('context', contextApi);

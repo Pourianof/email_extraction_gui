@@ -567,7 +567,8 @@ form.journal-form {
 }
 
 .--ser-open-btn--:hover {
-  box-shadow: 0px 0px #0e2b3d;
+  box-shadow: 0px 0px 11px #0e2b3d;
+  background-color: #204149;
 }
 
 .--ser-close-btn-- {

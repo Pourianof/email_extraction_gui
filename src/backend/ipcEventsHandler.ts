@@ -5,6 +5,7 @@ import {
   dialog,
   net,
   ipcMain,
+  shell,
 } from 'electron';
 import { Events } from './events';
 import extractURLS from './scraper';
@@ -29,6 +30,10 @@ export default class IPCEventHandler {
   }
 
   private async handle() {
+    ipcMain.on(
+      Events.OPEN_EXCEL,
+      IPCEventHandler.handleInvokation(this.handleOpenExcel)
+    );
     ipcMain.handle(
       Events.EXTRACT_URLS,
       IPCEventHandler.handleInvokation(
@@ -36,6 +41,7 @@ export default class IPCEventHandler {
         (data) => {
           return new Promise<IPCMessage>((res, rej) => {
             let counter = 1;
+            const TIMER_INTERVAL = 100;
             const bound = data?.options?.authorsCount ?? 10;
             const sendProgress = () => {
               this.win.webContents.send(
@@ -70,16 +76,38 @@ export default class IPCEventHandler {
                   },
                 });
               } else {
-                setTimeout(sendProgress, 1000);
+                setTimeout(sendProgress, TIMER_INTERVAL);
               }
             };
 
-            setTimeout(sendProgress, 1000);
+            setTimeout(sendProgress, TIMER_INTERVAL);
           });
         }
         //
       )
     );
+  }
+
+  private async handleOpenExcel(filePath: string): Promise<IPCMessage> {
+    try {
+      shell.showItemInFolder(filePath);
+
+      return {
+        status: {
+          code: 200,
+          message: '',
+        },
+        data: {},
+      };
+    } catch (err) {
+      return {
+        status: {
+          code: -20,
+          message: 'مشکلی در باز کردن فایل وجود دارد',
+        },
+        data: {},
+      };
+    }
   }
 
   private async handleExtract(data: string[]) {
