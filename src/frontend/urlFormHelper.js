@@ -178,7 +178,7 @@ function checkURLInValidation() {
   return false;
 }
 
-function startExtraction(options) {
+function startExtraction() {
   if (!journalForm.firstElementChild) {
     return;
   }
@@ -208,12 +208,22 @@ function startExtraction(options) {
     if (url) urls.push(url);
   }
 
+  // Evaluate options
+  const options = {};
+  const extractOptionsForm = extractBtn.previousElementSibling;
+  const onlyMainOpt = extractOptionsForm['only-main'];
+  options.isOnlyEmail = onlyMainOpt.checked;
+
+  const onlyEmailOpt = extractOptionsForm['only-email'];
+  options.isOnlyMail = onlyEmailOpt.checked;
+
+  const authorCountOpt = extractOptionsForm['author-count'].value?.trim();
+  if (authorCountOpt) options.authorsCount = Number.parseInt(authorCountOpt);
+
   const extractionHandler = ExtractionHandler.start(urls, options);
 }
 
 export function handleExtractOptionsForm() {
-  const extractionOptions = {};
-
   const extractOptionsForm = extractBtn.previousElementSibling;
 
   extractOptionsForm['author-count'].addEventListener('keydown', function (e) {
@@ -226,36 +236,8 @@ export function handleExtractOptionsForm() {
       return;
     }
   });
-  extractOptionsForm?.addEventListener('change', (e) => {
-    const input = e.target;
 
-    switch (input.name) {
-      case 'only-email':
-        {
-          extractionOptions.isOnlyEmail = input.checked;
-        }
-        break;
-      case 'only-main':
-        {
-          extractionOptions.isOnlyMail = input.checked;
-        }
-        break;
-      case 'author-count':
-        {
-          const newVal = input.value?.trim();
-          if (newVal) {
-            extractionOptions.authorsCount = Number.parseInt(newVal);
-          } else {
-            delete extractionOptions.authorsCount;
-          }
-        }
-        break;
-    }
-  });
-
-  extractBtn.addEventListener('click', () =>
-    startExtraction(extractionOptions)
-  );
+  extractBtn.addEventListener('click', () => startExtraction());
 }
 
 export function backURLFormToInitialState() {

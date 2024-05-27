@@ -124,11 +124,11 @@ class URLExtractor {
 }
 
 process.on('unhandledRejection', (err) => {
-  browser.close();
+  browser?.close();
   console.error(err);
 });
 process.on('uncaughtException', (err) => {
-  browser.close();
+  browser?.close();
   console.error(err);
 });
 process.on('exit', () => browser.close());
