@@ -20,6 +20,9 @@
 
 button,
 input,
+select,
+option,
+optgroup,
 textarea,
 label {
   border: none;
@@ -325,6 +328,50 @@ form.journal-form {
   border-radius: 5px;
 }
 
+.what::before {
+  content: '؟';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.what {
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  vertical-align: middle;
+  margin: 0 5px;
+  width: 20px;
+  height: 20px;
+  background-color: #23364b;
+  border-radius: 30px;
+}
+
+.what-db {
+  position: absolute;
+  width: 300px;
+  font-size: 14px;
+  background-color: #313443;
+  padding: 6px;
+  text-align: justify;
+  border-radius: 10px;
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.extract-speed-opt select {
+  border-radius: 5px;
+  color: #121021;
+  cursor: pointer;
+  background-color: rgb(223, 215, 215);
+}
+
+.what-db-title {
+  color: rgb(199, 216, 159);
+}
+
 /*
   ===================================================
                     Footer Styles
@@ -534,9 +581,6 @@ form.journal-form {
   align-items: center;
 }
 
-.successful-extraction-result {
-}
-
 .--ser-message-- {
   background-color: #4d7d3e;
   padding: 5px 10px;
@@ -577,4 +621,11 @@ form.journal-form {
 
 .--ser-close-btn--:hover {
   color: #cf5574;
+}
+
+.--fer-message-- {
+  background-color: #5f1414;
+  border-radius: 5px;
+  padding: 5px 15px;
+  color: #f1b951;
 }
