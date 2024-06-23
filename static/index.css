@@ -81,6 +81,17 @@ header#header {
   font-weight: bold;
 }
 
+.ausmt-love {
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: 20px;
+}
+.ausmt-love img {
+  width: 25px;
+  vertical-align: middle;
+  aspect-ratio: 1/1;
+}
+
 .header-title {
   text-align: center;
 }
@@ -320,12 +331,41 @@ form.journal-form {
   display: inline-block;
 }
 
+.extracter-url-help {
+  margin: 6px 0;
+  background-color: rgb(62 85 113);
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: fit-content;
+}
+
+.extracter-name {
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  width: 60px;
+  margin-left: 10px;
+  color: rgb(209 140 146);
+  position: relative;
+}
+.extracter-name::after {
+  content: ':';
+  display: inline;
+  margin-right: 5px;
+  position: absolute;
+  left: -5px;
+}
+
 .author-count {
   background-color: rgba(43, 70, 121, 0.226);
   text-align: center;
   padding: 3px 5px;
   width: 60px;
   border-radius: 5px;
+}
+
+#extraction-options > div {
+  margin: 5px 0;
 }
 
 .what::before {

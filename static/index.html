@@ -8,6 +8,11 @@
       content="script-src 'self' 'unsafe-inline'"
     />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/resources/images/icons/ausmt.png"
+    />
     <title>استخراج کننده اطلاعات نویسندگان جورنال های معتبر جهانی</title>
     <link href="./index.css" rel="stylesheet" />
   </head>
@@ -166,6 +171,14 @@
             از ژورنال های نشریات معتبر جهانی
           </h1>
           <div class="publishers">Elsevier - Springer - Wiley</div>
+          <div class="ausmt-love">
+            ولی هیچکدوم
+            <img
+              src="/resources/images/icons/ausmt.png"
+              title="Amol University Special Technology"
+            />
+            نمیشه
+          </div>
         </div>
       </header>
       <main id="main">
@@ -181,10 +194,22 @@
               شوند
             </li>
             <li>
-              آدرس ها باید مربوط به یکی از 3 نشریات
-              <span class="en-in-fa">Elsevier</span> یا
-              <span class="en-in-fa">Springer</span> و یا
-              <span class="en-in-fa">Wiley</span> باشد
+              آدرس مناسب به ازای هر انتشاراتی بصورت زیر است:
+              <div class="extracter-url-help">
+                <span class="extracter-name">Elsevier</span> آدرس صفحه
+                <span class="en-in-fa">Volume</span> ژورنال مورد نظر باید وارد
+                شود
+              </div>
+              <div class="extracter-url-help">
+                <span class="extracter-name">Springer</span> آدرس صفحه آخرین
+                <span class="en-in-fa">Issue</span> از
+                <span class="en-in-fa">Volume</span> ژورنال مورد نظر باید وارد
+                شود
+              </div>
+              <div class="extracter-url-help">
+                <span class="extracter-name">Wiley</span> انشالا در آپدیت های
+                بعدی
+              </div>
             </li>
           </ol>
         </div>
@@ -297,6 +322,7 @@
                   <option>زیاد</option>
                   <option>متوسط</option>
                   <option selected>بهینه</option>
+                  <option selected>کم</option>
                 </select>
               </div>
             </form>
