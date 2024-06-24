@@ -236,14 +236,19 @@ function startExtraction() {
   const options = {};
   const extractOptionsForm = extractBtn.previousElementSibling;
   const onlyMainOpt = extractOptionsForm['only-main'];
-  options.isOnlyEmail = onlyMainOpt.checked;
+  options.isOnlyMainAuthor = onlyMainOpt.checked;
 
   const onlyEmailOpt = extractOptionsForm['only-email'];
-  options.isOnlyMail = onlyEmailOpt.checked;
+  options.isOnlyEmail = onlyEmailOpt.checked;
 
   const authorCountOpt = extractOptionsForm['author-count'].value?.trim();
   if (authorCountOpt) options.authorsCount = Number.parseInt(authorCountOpt);
 
+  options.extractSpeed = Array.from(
+    extractOptionsForm['extract-speed'].selectedOptions
+  )[0].value;
+
+  console.log('start');
   const extractionHandler = ExtractionHandler.start(urls, options);
 }
 

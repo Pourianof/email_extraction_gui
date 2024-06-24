@@ -8,12 +8,15 @@ import {
   shell,
 } from 'electron';
 import { Events } from './events';
-import extractURLS, { AuthorsProgressStateNotifier } from './authoractor';
+import extractURLS, {
+  AuthorsProgressStateNotifier,
+  ExtractSpeed,
+} from './authoractor';
 import path from 'path';
 import { CHROME_DIR, CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
 import ExtractionProgressState from '../shared/extractionsProgressState';
-import { faker } from '@faker-js/faker';
+
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
     this.handle();
@@ -35,55 +38,7 @@ export default class IPCEventHandler {
     );
     ipcMain.handle(
       Events.EXTRACT_URLS,
-      IPCEventHandler.handleInvokation(
-        //  this.handleExtract
-        (data) => {
-          return new Promise<IPCMessage>((res, rej) => {
-            let counter = 1;
-            const TIMER_INTERVAL = 100;
-            const bound = data?.options?.authorsCount ?? 10;
-            const sendProgress = () => {
-              this.win.webContents.send(
-                Events.EXTRACT_PROGRESS,
-                JSON.stringify({
-                  author: {
-                    firstName: faker.person.firstName(),
-                    lastName: faker.person.lastName(),
-                    affiliations: [
-                      faker.location.streetAddress({ useFullAddress: true }),
-                      faker.location.streetAddress({ useFullAddress: true }),
-                    ],
-                    address: [
-                      faker.location.streetAddress({ useFullAddress: true }),
-                    ],
-                    email: [faker.internet.email()],
-                  },
-
-                  totalAuthorRecieved: counter++,
-                } as ExtractionProgressState)
-              );
-
-              console.log(counter > data?.options?.authorsCount ?? 10);
-              if (counter > bound) {
-                res({
-                  status: {
-                    code: -50,
-                    message: 'Extraction Failed.',
-                  },
-                  data: {
-                    filePath: 'A:\\b\\c\\h.xlsx',
-                  },
-                });
-              } else {
-                setTimeout(sendProgress, TIMER_INTERVAL);
-              }
-            };
-
-            setTimeout(sendProgress, TIMER_INTERVAL);
-          });
-        }
-        //
-      )
+      IPCEventHandler.handleInvokation(this.handleExtract)
     );
   }
 
@@ -109,12 +64,22 @@ export default class IPCEventHandler {
     }
   }
 
-  private async handleExtract(data: string[]) {
+  private async handleExtract(data: {
+    urls: string[];
+    options: {
+      extractSpeed: 'کم' | 'بهینه' | 'متوسط' | 'زیاد' | 'حداکثر';
+      isOnlyEmail: boolean;
+      isOnlyMainAuthor: boolean;
+      authorsCount?: number;
+    };
+  }): Promise<IPCMessage> {
     console.log('Recieved urls: ', data);
 
+    let filePath: string | undefined;
+
     try {
-      let filePath: string;
       const progressListener = new AuthorsProgressStateNotifier((state) => {
+        console.log(this);
         this.win.webContents.send(
           Events.EXTRACT_PROGRESS,
           JSON.stringify({
@@ -133,7 +98,25 @@ export default class IPCEventHandler {
         };
       }
 
-      await extractURLS(data, {
+      let extractSpeed: ExtractSpeed | undefined;
+      if (data.options.extractSpeed) {
+        switch (data.options.extractSpeed) {
+          case 'بهینه':
+            extractSpeed = ExtractSpeed.OPTIMIZED;
+            break;
+          case 'کم':
+            extractSpeed = ExtractSpeed.LOW;
+            break;
+          case 'متوسط':
+            extractSpeed = ExtractSpeed.MEDIUM;
+            break;
+          case 'زیاد':
+            extractSpeed = ExtractSpeed.HIGH;
+            break;
+        }
+      }
+
+      await extractURLS(data.urls, {
         progressMonitor: progressListener,
         saveOnEveryItem: true,
         ouputPath: async () => {
@@ -151,31 +134,35 @@ export default class IPCEventHandler {
           filePath = path.join(app.getPath('desktop'), 'emails.xlsx');
           return filePath;
         },
-        browserPath: path.join(
-          CHROME_DIR,
-          'chrome',
-          'chrome-headless-shell.exe'
-        ),
         browserUserDataPath: CHROME_USER_DATA,
         tempPath: TEMP_EXCELS,
+        extractionConf: {
+          onlyAuthorsWithEmail: data.options.isOnlyEmail,
+          boundary: data.options.authorsCount,
+          onlyMainAuthors: data.options.isOnlyMainAuthor,
+          extractSpeed: extractSpeed,
+        },
       });
 
       return {
         status: {
-          status: {
-            message: 'extraction was successful',
-            code: 200,
-          },
-          data: {
-            filePath: filePath!,
-            title: path.basename(filePath!),
-          },
-        } as IPCMessage,
-      };
+          message: 'extraction was successful',
+          code: 200,
+        },
+        data: {
+          filePath: filePath!,
+          title: path.basename(filePath!),
+        },
+      } as IPCMessage;
     } catch (err) {
+      console.log('Extraction Failed : ', err);
       return {
         status: {
           message: 'Extraction broken by error.\n' + (err as Error).message,
+          code: -10,
+        },
+        data: {
+          filePath,
         },
       };
     }

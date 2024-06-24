@@ -110,6 +110,8 @@ export default class ExtractionHandler {
         options: this.options,
       })
     );
+    debugger;
+    console.log(res);
 
     this._state = ExtractionState.FINISHED;
 
@@ -118,6 +120,7 @@ export default class ExtractionHandler {
   extractedCount = 0;
   stopScrollingDown = false;
   _onNewProgressState = (state) => {
+    console.log(state);
     this.extractedCount = state.totalAuthorRecieved;
 
     const journalForm = document.forms['journal-form'];

@@ -3,5 +3,5 @@ export interface IPCMessage<T extends {} = {}> {
     code: number;
     message: string;
   };
-  data: T;
+  data?: T;
 }
