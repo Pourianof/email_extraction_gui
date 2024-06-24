@@ -35,18 +35,42 @@ function focusOnURLInput(e) {
         if (!url.protocol.startsWith('https')) {
           hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
         }
-        let { hostname } = url;
+        let { hostname, pathname } = url;
         if (hostname.startsWith('www.')) {
           hostname = hostname.substring(4);
         }
+        console.log(hostname);
         if (
           hostname !== 'elsevier.com' &&
           hostname !== 'sciencedirect.com' &&
           hostname !== 'springer.com' &&
-          hostname !== 'wiley.com'
+          hostname !== 'link.springer.com'
+          //  && hostname !== 'wiley.com'
         ) {
           hintMsg.push(
             'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا ویلی یا اشپرینگر نمیباشد.'
+          );
+        }
+
+        if (
+          hostname == 'sciencedirect.com' &&
+          !(
+            /^\/journal\//g.test(pathname) &&
+            /vol\/\d+(\/issue\/\d+)?\/?$/g.test(pathname)
+          )
+        ) {
+          hintMsg.push(
+            'آدرس وارد شده از ساینس دایرک به صفحه Volume از یک ژورنال اشاره نمیکند'
+          );
+        } else if (
+          (hostname == 'springer.com' || hostname == 'link.springer.com') &&
+          !(
+            /^\/?journal/g.test(pathname) &&
+            /volumes-and-issues\/\d+-\d+$/g.test(pathname)
+          )
+        ) {
+          hintMsg.push(
+            'آدرس وارد شده به یک صفحه از Issue مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
           );
         }
       } catch (err) {
