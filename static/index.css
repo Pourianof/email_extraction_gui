@@ -399,6 +399,7 @@ form.journal-form {
   border-radius: 10px;
   top: 0;
   transform: translateY(-100%);
+  z-index: 1000;
 }
 
 .extract-speed-opt select {
