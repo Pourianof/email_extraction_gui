@@ -55,7 +55,15 @@
     "chrome-launcher": "^1.1.1",
     "cross-env": "^7.0.3",
     "persian-number": "^1.6.0",
-    "react-date-object": "^2.1.8"
+    "react-date-object": "^2.1.8",
+    "@pourianof/notifier": "^1.0.0",
+    "@sparticuz/chromium": "^119.0.2",
+    "chrome-remote-interface": "^0.33.0",
+    "chrowser_module": "https://github.com/Coded-By-Pooria/chrowser_module",
+    "cli-color": "^2.0.3",
+    "exceljs": "^4.4.0",
+    "https-proxy-agent": "^7.0.4",
+    "xlsx": "^0.18.5"
   },
   "electronmon": {
     "patterns": [

@@ -8,11 +8,10 @@ import {
   shell,
 } from 'electron';
 import { Events } from './events';
-import extractURLS from './scraper';
+import extractURLS, { AuthorsProgressStateNotifier } from './authoractor';
 import path from 'path';
 import { CHROME_DIR, CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
-import { AuthorsProgressStateNotifier } from './scraper/progressState';
 import ExtractionProgressState from '../shared/extractionsProgressState';
 import { faker } from '@faker-js/faker';
 export default class IPCEventHandler {
