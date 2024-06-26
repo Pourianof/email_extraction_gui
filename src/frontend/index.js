@@ -49,6 +49,9 @@ function handleRemoveIndexMofication(removedElmnt) {
   document.getElementById('extracted-excels').addEventListener('click', (e) => {
     e.preventDefault();
     const target = e.target;
+    if (!target.classList.contains('newly-extracted')) {
+      return;
+    }
     const path = target.querySelector('.--eed-path--').textContent?.trim();
     if (path) {
       window.context.openExcelFile(JSON.stringify({ filePath: path }));
