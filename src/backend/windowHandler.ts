@@ -15,7 +15,7 @@ export default class WindowHandler {
     this.window = new BrowserWindow({
       width: 1024,
       height: 768,
-      title: 'Course Manager',
+      title: 'نویسنده یاب',
       // titleBarStyle: 'hidden',
       webPreferences: {
         preload: app.isPackaged

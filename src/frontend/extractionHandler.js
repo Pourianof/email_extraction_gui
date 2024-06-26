@@ -234,7 +234,7 @@ function succefulExtractionHandler(result, extractedCount) {
   openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
   openExtractedExcelBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    window.context.openExcelFile(filePath);
+    window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
   });
   waitingResultElement.appendChild(openExtractedExcelBtn);
 
@@ -268,7 +268,7 @@ function failedExtractionHandler(message, filePath, extractedCount) {
     openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
     openExtractedExcelBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.context.openExcelFile(filePath);
+      window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
     });
     waitingResultElement.appendChild(openExtractedExcelBtn);
   }

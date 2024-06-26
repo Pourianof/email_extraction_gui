@@ -616,6 +616,20 @@ form.journal-form {
   margin-left: 10px;
 }
 
+.extraced-excel-description {
+  max-width: 150px;
+}
+
+.extraced-excel-description .--eed-path-- {
+  text-align: left;
+  direction: ltr;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .extraction-result {
   display: flex;
   flex-direction: column;

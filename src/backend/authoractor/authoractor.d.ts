@@ -42,7 +42,7 @@ interface ExtractionOption {
     tempPath: string;
     browserPath?: string;
     chromePath?: string;
-    browserUserDataPath: string;
+    browserUserDataPath?: string;
     progressMonitor?: AuthorsProgressStateNotifier;
     saveOnEveryItem?: boolean;
     extractionConf?: {

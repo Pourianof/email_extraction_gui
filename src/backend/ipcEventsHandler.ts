@@ -13,9 +13,10 @@ import extractURLS, {
   ExtractSpeed,
 } from './authoractor';
 import path from 'path';
-import { CHROME_DIR, CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
+import { CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
 import ExtractionProgressState from '../shared/extractionsProgressState';
+import { registerExtractedExcel } from './extractedItemsRegisterer';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -34,17 +35,19 @@ export default class IPCEventHandler {
   private async handle() {
     ipcMain.on(
       Events.OPEN_EXCEL,
-      IPCEventHandler.handleInvokation(this.handleOpenExcel)
+      IPCEventHandler.handleInvokation(this.handleOpenExcel.bind(this))
     );
     ipcMain.handle(
       Events.EXTRACT_URLS,
-      IPCEventHandler.handleInvokation(this.handleExtract)
+      IPCEventHandler.handleInvokation(this.handleExtract.bind(this))
     );
   }
 
-  private async handleOpenExcel(filePath: string): Promise<IPCMessage> {
+  private async handleOpenExcel(openOptions: {
+    filePath: string;
+  }): Promise<IPCMessage> {
     try {
-      shell.showItemInFolder(filePath);
+      shell.showItemInFolder(openOptions.filePath);
 
       return {
         status: {
@@ -73,13 +76,10 @@ export default class IPCEventHandler {
       authorsCount?: number;
     };
   }): Promise<IPCMessage> {
-    console.log('Recieved urls: ', data);
-
     let filePath: string | undefined;
 
     try {
       const progressListener = new AuthorsProgressStateNotifier((state) => {
-        console.log(this);
         this.win.webContents.send(
           Events.EXTRACT_PROGRESS,
           JSON.stringify({
@@ -122,20 +122,28 @@ export default class IPCEventHandler {
         ouputPath: async () => {
           const res = await dialog.showSaveDialog(this.win, {
             message: 'مسیر ذخیره سازی فایل اکسل را انتخاب کنید',
-            buttonLabel: 'انتخاب',
+            buttonLabel: 'ذخیره',
             title: 'مسیر ذخیره سازی فایل اکسل',
-            nameFieldLabel: 'emails.xlsx',
+            nameFieldLabel: 'authors.xslx',
+            filters: [{ name: 'Excel', extensions: ['xlsx', 'xml'] }],
+            defaultPath: path.join(app.getPath('documents'), 'authors'),
           });
 
           if (!res.canceled) {
-            filePath = res.filePath!;
+            filePath = res.filePath;
+          } else {
+            filePath = path.join(app.getPath('desktop'), 'emails.xlsx');
           }
-
-          filePath = path.join(app.getPath('desktop'), 'emails.xlsx');
           return filePath;
         },
-        browserUserDataPath: CHROME_USER_DATA,
-        tempPath: TEMP_EXCELS,
+        browserUserDataPath:
+          process.env.NODE_ENV == 'development'
+            ? path.join(app.getPath('desktop'), 'authoractor_gui', 'chrome_dir')
+            : CHROME_USER_DATA,
+        tempPath:
+          process.env.NODE_ENV == 'development'
+            ? path.join(app.getPath('desktop'), 'authoractor_gui', 'temp')
+            : TEMP_EXCELS,
         extractionConf: {
           onlyAuthorsWithEmail: data.options.isOnlyEmail,
           boundary: data.options.authorsCount,
@@ -143,6 +151,8 @@ export default class IPCEventHandler {
           extractSpeed: extractSpeed,
         },
       });
+
+      registerExtractedExcel(filePath!);
 
       return {
         status: {
@@ -155,10 +165,20 @@ export default class IPCEventHandler {
         },
       } as IPCMessage;
     } catch (err) {
-      console.log('Extraction Failed : ', err);
+      let message: string;
+      if (err instanceof Error) {
+        if (
+          err.message.includes('WebSocket') ||
+          err.message.includes('closed')
+        ) {
+          message = 'بنا به دلایلی اتصال با مرورگر قطع شد.';
+        } else {
+          message = err.message;
+        }
+      }
       return {
         status: {
-          message: 'Extraction broken by error.\n' + (err as Error).message,
+          message: message!,
           code: -10,
         },
         data: {

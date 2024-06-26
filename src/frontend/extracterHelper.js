@@ -52,6 +52,7 @@ export function appendNewExtractedExcelItem(filePath) {
   const extractedContainer = document.getElementById('extracted-excels');
 
   const newExtracted = createNewExtractedItem(filePath);
+  newExtracted.title = filePath;
   newExtracted.classList.add('newly-extracted');
 
   extractedContainer.appendChild(newExtracted);
