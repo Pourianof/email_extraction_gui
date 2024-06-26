@@ -6,5 +6,6 @@ export default interface ContextApi {
     cb: (state: ExtractionProgressState) => any
   ) => void;
   listenToExtractionEnd: (cb?: () => any) => void;
+  getExtractedItems: () => Promise<{ filePath: string; date: number }[]>;
   openExcelFile: (filePath: string) => void;
 }

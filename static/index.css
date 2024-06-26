@@ -40,6 +40,10 @@ a {
   color: inherit;
 }
 
+summary {
+  cursor: pointer;
+}
+
 div::-webkit-scrollbar {
   background-color: transparent;
   width: 3px;
@@ -109,6 +113,18 @@ header#header {
   width: 150px;
   height: 150px;
   object-fit: contain;
+}
+
+.about {
+  background-color: #233d43;
+  border-radius: 10px;
+  padding: 10px 30px;
+  text-align: justify;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 30px;
+  width: 80%;
 }
 
 /* 
@@ -604,7 +620,7 @@ form.journal-form {
   align-items: center;
   font-size: 13px;
   color: rgb(214, 214, 214);
-  width: 220px;
+  width: 320px;
   margin: 5px;
   background-color: #121021;
   border-radius: 5px;
@@ -612,12 +628,18 @@ form.journal-form {
 }
 
 .extracted-excel-item img {
-  width: 50px;
+  width: 80px;
   margin-left: 10px;
 }
 
 .extraced-excel-description {
-  max-width: 150px;
+  max-width: 210px;
+}
+
+.--eed-count-title-- {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .extraced-excel-description .--eed-path-- {

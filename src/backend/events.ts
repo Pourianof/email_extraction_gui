@@ -3,4 +3,5 @@ export class Events {
   static readonly EXTRACT_PROGRESS = 'extractprogression';
   static readonly EXTRACT_END = 'extractend';
   static readonly OPEN_EXCEL = 'openexcel';
+  static readonly GET_EXTRACTED = 'getextracted';
 }

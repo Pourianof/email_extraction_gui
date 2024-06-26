@@ -50,6 +50,9 @@ interface ExtractionOption {
         extractSpeed?: ExtractSpeed;
     } & ExtractionFilters;
 }
-declare function extractURLS(urls: string[], options: ExtractionOption): Promise<void>;
+declare function extractURLS(urls: string[], options: ExtractionOption): Promise<{
+    elapsedTime: number;
+    numberOfExtractedAuthors: number;
+}>;
 
 export { AuthorsProgressStateNotifier, ExtractSpeed, type NewDataNotifier, extractURLS as default };

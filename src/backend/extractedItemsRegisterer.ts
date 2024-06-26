@@ -5,6 +5,7 @@ import { TEMP_FILES } from './pathes';
 let loadedExtractedItemsJson: {
   filePath: string;
   date: number;
+  numberOfExtractedAuthors: number;
 }[];
 
 const EXTRACTED_DB = path.join(TEMP_FILES, 'extracted.json');
@@ -24,17 +25,41 @@ function loadExractedItemsJsonFile() {
   }
 }
 
-export function registerExtractedExcel(filePath: string) {
+export function registerExtractedExcel(
+  filePath: string,
+  numberOfExtractedAuthors: number
+) {
   const newDate = Date.now();
 
   loadExractedItemsJsonFile();
 
-  loadedExtractedItemsJson.push({ date: newDate, filePath });
-  if (loadedExtractedItemsJson.length >= MAX_SAVED_ITEMS_COUNT) {
-    loadedExtractedItemsJson.splice(
-      0,
-      loadedExtractedItemsJson.length - MAX_SAVED_ITEMS_COUNT
-    );
+  const index = loadedExtractedItemsJson.findIndex(
+    (v) => v.filePath === filePath
+  );
+
+  if (index >= 0) {
+    if (
+      loadedExtractedItemsJson[index].numberOfExtractedAuthors !=
+      numberOfExtractedAuthors
+    ) {
+      loadedExtractedItemsJson[index].numberOfExtractedAuthors =
+        numberOfExtractedAuthors;
+    } else {
+      return;
+    }
+  } else {
+    loadedExtractedItemsJson.push({
+      date: newDate,
+      filePath,
+      numberOfExtractedAuthors,
+    });
+
+    if (loadedExtractedItemsJson.length >= MAX_SAVED_ITEMS_COUNT) {
+      loadedExtractedItemsJson.splice(
+        0,
+        loadedExtractedItemsJson.length - MAX_SAVED_ITEMS_COUNT
+      );
+    }
   }
   fs.writeFileSync(EXTRACTED_DB, JSON.stringify(loadedExtractedItemsJson));
 }

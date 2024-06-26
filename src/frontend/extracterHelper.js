@@ -48,17 +48,30 @@ export function createNewExtractedAuthorItem(
   return node;
 }
 
-export function appendNewExtractedExcelItem(filePath) {
+export function appendNewExtractedExcelItem(
+  filePath,
+  date,
+  numberOfExtractedAuthors,
+  fileName
+) {
   const extractedContainer = document.getElementById('extracted-excels');
 
-  const newExtracted = createNewExtractedItem(filePath);
-  newExtracted.title = filePath;
-  newExtracted.classList.add('newly-extracted');
+  const newExtracted = createNewExtractedItem(
+    filePath,
+    date,
+    numberOfExtractedAuthors,
+    fileName
+  );
 
   extractedContainer.appendChild(newExtracted);
 }
 
-export function createNewExtractedItem(extractedPath, fileName) {
+export function createNewExtractedItem(
+  extractedPath,
+  date,
+  numberOfExtractedAuthors,
+  fileName
+) {
   const temp = document.getElementById('extracted-excel-item-template');
   const tempNode = document.importNode(temp, true).content.firstElementChild;
 
@@ -66,13 +79,21 @@ export function createNewExtractedItem(extractedPath, fileName) {
   const descriptionElement = tempNode.lastElementChild;
   const createTimeElmnt = descriptionElement.firstElementChild;
   createTimeElmnt.textContent = new DateObject({
+    date: date,
     locale: persian_fa,
     calendar: persian,
-    format: 'dddd DD MMMM YYYY',
+    format: 'dddd DD MMMM YYYY ساعت HH:MM',
   });
-  const fileNameElmnt = createTimeElmnt.nextElementSibling;
-  fileNameElmnt.textContent = fileName;
+  const fileNameElmnt = createTimeElmnt.nextElementSibling.firstElementChild;
+  if (Number.isInteger(numberOfExtractedAuthors)) {
+    fileNameElmnt.textContent = `تعداد: ${numberOfExtractedAuthors}`;
+  }
+  fileNameElmnt.nextElementSibling.textContent = fileName ?? '';
+
   descriptionElement.lastElementChild.textContent = extractedPath;
+
+  tempNode.title = extractedPath ?? '';
+  tempNode.classList.add('newly-extracted');
 
   return tempNode;
 }

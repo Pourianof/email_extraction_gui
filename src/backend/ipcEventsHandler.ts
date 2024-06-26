@@ -16,7 +16,11 @@ import path from 'path';
 import { CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
 import ExtractionProgressState from '../shared/extractionsProgressState';
-import { registerExtractedExcel } from './extractedItemsRegisterer';
+import {
+  getSavedExtractedExcels,
+  registerExtractedExcel,
+} from './extractedItemsRegisterer';
+import RegisteredExtractedExcel from '../shared/models/registeredExcelData';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -27,7 +31,10 @@ export default class IPCEventHandler {
     callback: (data: any) => Promise<IPCMessage>
   ) {
     return async (event: IpcMainInvokeEvent, d: string) => {
-      const data = JSON.parse(d);
+      let data: any;
+      if (d) {
+        data = JSON.parse(d);
+      }
       return JSON.stringify(await callback(data));
     };
   }
@@ -41,6 +48,36 @@ export default class IPCEventHandler {
       Events.EXTRACT_URLS,
       IPCEventHandler.handleInvokation(this.handleExtract.bind(this))
     );
+    ipcMain.handle(
+      Events.GET_EXTRACTED,
+      IPCEventHandler.handleInvokation(
+        this.sendAvailableExtractedItemsData.bind(this)
+      )
+    );
+  }
+
+  private sendAvailableExtractedItemsData() {
+    try {
+      const registeredItems = getSavedExtractedExcels();
+      return {
+        status: {
+          code: 200,
+        },
+        data: registeredItems.map(
+          (r) =>
+            ({
+              date: r.date,
+              fileName: path.basename(r.filePath),
+              filePath: r.filePath,
+              numberOfExtractedAuthors: r.numberOfExtractedAuthors,
+            } as RegisteredExtractedExcel)
+        ),
+      };
+    } catch (err) {
+      return {
+        status: { code: -10, message: (err as Error).message },
+      };
+    }
   }
 
   private async handleOpenExcel(openOptions: {
@@ -116,7 +153,7 @@ export default class IPCEventHandler {
         }
       }
 
-      await extractURLS(data.urls, {
+      const extractResult = await extractURLS(data.urls, {
         progressMonitor: progressListener,
         saveOnEveryItem: true,
         ouputPath: async () => {
@@ -152,7 +189,7 @@ export default class IPCEventHandler {
         },
       });
 
-      registerExtractedExcel(filePath!);
+      registerExtractedExcel(filePath!, extractResult.numberOfExtractedAuthors);
 
       return {
         status: {
@@ -161,8 +198,11 @@ export default class IPCEventHandler {
         },
         data: {
           filePath: filePath!,
-          title: path.basename(filePath!),
-        },
+          fileName: path.basename(filePath!),
+          elapsedTime: extractResult.elapsedTime,
+          numberOfExtractedAuthors: extractResult.numberOfExtractedAuthors,
+          date: Date.now(),
+        } as RegisteredExtractedExcel,
       } as IPCMessage;
     } catch (err) {
       let message: string;

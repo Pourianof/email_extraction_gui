@@ -43,6 +43,16 @@ export const contextApi: ContextApi = {
   openExcelFile: function (filePath: string): void {
     ipcRenderer.send(Events.OPEN_EXCEL, filePath);
   },
+  getExtractedItems: async function (): Promise<
+    { filePath: string; date: number }[]
+  > {
+    const result = JSON.parse(await ipcRenderer.invoke(Events.GET_EXTRACTED));
+    if (result.status && result.code < 0) {
+      throw new Error(result.status.message);
+    }
+
+    return result.data;
+  },
 };
 
 contextBridge.exposeInMainWorld('context', contextApi);

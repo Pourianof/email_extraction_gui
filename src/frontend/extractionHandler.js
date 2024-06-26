@@ -2,6 +2,7 @@ import {
   appendNewExtractedExcelItem,
   createNewExtractedAuthorItem,
 } from './extracterHelper';
+import { formatUnixInterval } from './helpers';
 import { backURLFormToInitialState } from './urlFormHelper';
 export class ExtractionState {
   static EXTRACTING = 'extracting';
@@ -206,9 +207,15 @@ function handleExtractionResult(result, extractedCount) {
 
 function succefulExtractionHandler(result, extractedCount) {
   hideExtractList();
-  const { filePath } = result;
+  const { filePath, fileName, elapsedTime, numberOfExtractedAuthors, date } =
+    result;
 
-  appendNewExtractedExcelItem(filePath);
+  appendNewExtractedExcelItem(
+    filePath,
+    date,
+    numberOfExtractedAuthors,
+    fileName
+  );
 
   let loadingImg = waitingViewElmnt.firstElementChild;
 
@@ -220,7 +227,9 @@ function succefulExtractionHandler(result, extractedCount) {
 
   const statusHint = document.createElement('span');
   statusHint.classList.add('--ser-message--');
-  statusHint.textContent = 'فرآیند جمع آوری با موفقیت به اتمام رسید.';
+  const formatedElapsed = formatUnixInterval(elapsedTime);
+
+  statusHint.textContent = `فرآیند جمع آوری با موفقیت در طول ${formatedElapsed} به اتمام رسید.`;
   waitingResultElement.appendChild(statusHint);
 
   const statusSubHint = document.createElement('span');

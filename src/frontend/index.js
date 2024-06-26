@@ -6,6 +6,7 @@ import {
   reachFromTemplateTo,
 } from './urlFormHelper';
 import { availableWhatNotes } from './DATA';
+import { displayExtractedItems } from './uiInitializer';
 
 /**
  * @type HTMLElement
@@ -31,6 +32,8 @@ function handleRemoveIndexMofication(removedElmnt) {
 
   addBtn.addEventListener('click', addNewURLInput);
 
+  displayExtractedItems();
+
   journalForm.addEventListener('click', (e) => {
     const { target } = e;
     if (target.classList.contains('remove-url-btn')) {
@@ -43,7 +46,6 @@ function handleRemoveIndexMofication(removedElmnt) {
       }
     }
   });
-
   document.getElementById('extracted-excels').addEventListener('click', (e) => {
     e.preventDefault();
     const target = e.target;
