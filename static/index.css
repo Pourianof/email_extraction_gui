@@ -16,6 +16,7 @@
 :root {
   --bg-color: rgb(29, 34, 61);
   --input-bg-color: rgb(24, 28, 46);
+  --title-bar-height: 25px;
 }
 
 button,
@@ -55,17 +56,79 @@ div::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+html {
+  height: 100vh;
+}
+
 body {
   direction: rtl;
   font-family: sahel, '2 Yekan', 'b nazanin', 'Times New Roman', Times, serif;
   color: rgb(214, 214, 214);
   background-color: var(--bg-color);
+  overflow: hidden;
+  position: relative;
+  height: calc(100% - var(--title-bar-height));
+  margin: 0;
+  margin-top: var(--title-bar-height);
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.wrapper {
   max-width: 1080px;
   margin: 0 auto;
-  min-height: 100vh;
-  overflow: auto;
-  padding: 50px 0;
+}
+
+/* 
+   =====================================
+               TITLE BAR STYLES
+   =====================================
+*/
+
+#title-bar {
+  direction: rtl;
+  background-color: rgb(57 65 93);
+  display: flex;
+  flex-direction: row-reverse;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  right: 0;
+}
+#title-bar {
+  user-select: none;
+  -webkit-user-select: none;
+  height: var(--title-bar-height);
+  padding: 3px 10px;
+}
+
+.app-title {
+  color: #a6b4cb;
+  flex-grow: 1;
+  text-align: left;
+  font-size: 14px;
+  -webkit-app-region: drag;
+}
+
+#title-bar-buttons > button {
+  padding: 0;
+  width: 12px;
+  height: 100%;
   position: relative;
+  margin: 0 5px;
+}
+
+#title-bar-buttons > button svg {
+  fill: #a6b4cb;
+}
+#title-bar-buttons > button:hover svg {
+  fill: rgb(211, 97, 97) !important;
 }
 
 /* 
@@ -337,6 +400,7 @@ form.journal-form {
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 100;
   position: absolute;
 }
 
@@ -439,11 +503,12 @@ form.journal-form {
 */
 
 .ack {
-  position: absolute;
-  bottom: 10px;
+  /* position: absolute; */
+  /* bottom: 10px; */
   text-align: center;
   font-size: 13px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .ack a {

@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import { STATIC_FILES } from './pathes';
 import { resolveHtmlPath } from './util';
 import IPCEventHandler from './ipcEventsHandler';
 
@@ -16,7 +15,7 @@ export default class WindowHandler {
       width: 1024,
       height: 768,
       title: 'نویسنده یاب',
-      // titleBarStyle: 'hidden',
+      titleBarStyle: 'hidden',
       webPreferences: {
         preload: app.isPackaged
           ? path.join(__dirname, 'mainPreload.preload.js')

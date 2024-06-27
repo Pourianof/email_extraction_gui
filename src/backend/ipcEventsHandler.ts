@@ -6,6 +6,7 @@ import {
   net,
   ipcMain,
   shell,
+  Rectangle,
 } from 'electron';
 import { Events } from './events';
 import extractURLS, {
@@ -58,6 +59,26 @@ export default class IPCEventHandler {
     ipcMain.addListener(Events.OPEN_LINK, (e, d) => {
       this.openLink(d);
     });
+
+    ipcMain.addListener(Events.WIN_ACTIONS, (e, d) => {
+      this.operateWindowActions(d);
+    });
+  }
+
+  private operateWindowActions(action: string) {
+    action = action.trim().toLowerCase();
+    if (action == 'max') {
+      if (this.win.isMaximized()) {
+        this.win.unmaximize();
+      } else {
+        this.win.maximize();
+      }
+    } else if (action == 'min') {
+      this.win.minimize();
+    } else if (action == 'close') {
+      this.win.close();
+      app.exit();
+    }
   }
 
   private openLink(d: string) {

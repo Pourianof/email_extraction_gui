@@ -129,10 +129,10 @@ function handleScrollIfNeeded() {
   const root = document.getElementById('root');
   const rootHeight = root.getBoundingClientRect().height;
 
-  const availableHeight = window.innerHeight;
+  const scrollHeight = root.scrollHeight;
 
-  if (rootHeight > availableHeight) {
-    (document.scrollingElement || document.body).scroll({ top: rootHeight });
+  if (scrollHeight > rootHeight) {
+    (root || document.body).scroll({ top: scrollHeight });
   }
 }
 

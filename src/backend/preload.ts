@@ -56,6 +56,9 @@ export const contextApi: ContextApi = {
   openLink: function (linkName: string): void {
     ipcRenderer.send(Events.OPEN_LINK, linkName);
   },
+  operateWindowActions: function (action: 'close' | 'max' | 'min'): void {
+    ipcRenderer.send(Events.WIN_ACTIONS, action);
+  },
 };
 
 contextBridge.exposeInMainWorld('context', contextApi);

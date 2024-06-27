@@ -9,4 +9,5 @@ export default interface ContextApi {
   getExtractedItems: () => Promise<{ filePath: string; date: number }[]>;
   openExcelFile: (filePath: string) => void;
   openLink: (linkName: string) => void;
+  operateWindowActions(action: 'max' | 'min' | 'close'): void;
 }

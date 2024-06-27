@@ -62,7 +62,15 @@ function handleRemoveIndexMofication(removedElmnt) {
 
   let initialBtnPosition;
 
-  document.addEventListener('scroll', function (e) {
+  document.getElementById('title-bar').addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = e.target;
+    if ('action' in target.dataset) {
+      window.context.operateWindowActions(target.dataset.action);
+    }
+  });
+
+  document.getElementById('root').addEventListener('scroll', function (e) {
     const extractBtnWrapper = extractBtn.parentElement;
 
     const { top } = extractBtnWrapper.getBoundingClientRect();

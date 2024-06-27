@@ -5,4 +5,5 @@ export class Events {
   static readonly OPEN_EXCEL = 'openexcel';
   static readonly GET_EXTRACTED = 'getextracted';
   static readonly OPEN_LINK = 'openlink';
+  static readonly WIN_ACTIONS = 'winaction';
 }
