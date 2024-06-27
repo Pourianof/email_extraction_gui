@@ -54,6 +54,28 @@ export default class IPCEventHandler {
         this.sendAvailableExtractedItemsData.bind(this)
       )
     );
+
+    ipcMain.addListener(Events.OPEN_LINK, (e, d) => {
+      this.openLink(d);
+    });
+  }
+
+  private openLink(d: string) {
+    d = d.trim().toLowerCase();
+    const open = (link: string) => {
+      shell.openExternal(link);
+    };
+    if (d == 'springer') {
+      open('https://link.springer.com/journals');
+    } else if (d == 'elsevier') {
+      open(
+        'https://www.sciencedirect.com/browse/journals-and-books?contentType=JL'
+      );
+    } else if (d == 'wiley') {
+      open('https://www.wiley.com/en-it/publish/journal-finder');
+    } else if (d == 'ausmt') {
+      open(`https://ausmt.ac.ir/`);
+    }
   }
 
   private sendAvailableExtractedItemsData() {

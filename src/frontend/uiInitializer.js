@@ -6,7 +6,6 @@ export async function displayExtractedItems() {
      * @type {{filePath:string; date:number, fileName:string, numberOfExtractedAuthors:number}[]}
      */
     const extractedItems = await window.context.getExtractedItems();
-    console.log(extractedItems);
     extractedItems.forEach((i) => {
       appendNewExtractedExcelItem(
         i.filePath,

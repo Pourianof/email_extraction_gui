@@ -319,15 +319,18 @@ form.journal-form {
   background-color: #235972;
 }
 
-.btn {
+.btn,
+*[data-open] {
   position: relative;
 }
 
-.btn:hover {
+.btn:hover,
+*[data-open]:hover {
   cursor: pointer;
 }
 
-.btn::after {
+.btn::after,
+*[data-open]::after {
   display: block;
   content: '';
   width: 100%;

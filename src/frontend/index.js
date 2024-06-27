@@ -105,6 +105,13 @@ function uxHandler() {
       return;
     }
   });
+  window.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = e.target;
+    if ('open' in target.dataset) {
+      window.context.openLink(target.dataset.open);
+    }
+  });
   whatElmnts.forEach((we) => we.addEventListener('mouseover', whatHandler));
 }
 

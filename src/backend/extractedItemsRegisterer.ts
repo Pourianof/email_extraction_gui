@@ -2,11 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { TEMP_FILES } from './pathes';
 
-let loadedExtractedItemsJson: {
+type RegisteredData = {
   filePath: string;
   date: number;
   numberOfExtractedAuthors: number;
 }[];
+
+let loadedExtractedItemsJson: RegisteredData;
 
 const EXTRACTED_DB = path.join(TEMP_FILES, 'extracted.json');
 const MAX_SAVED_ITEMS_COUNT = 10;
@@ -14,15 +16,31 @@ const MAX_SAVED_ITEMS_COUNT = 10;
 function loadExractedItemsJsonFile() {
   if (!loadedExtractedItemsJson) {
     if (fs.existsSync(EXTRACTED_DB)) {
-      loadedExtractedItemsJson = JSON.parse(
+      const tempLoaded: RegisteredData = JSON.parse(
         fs.readFileSync(EXTRACTED_DB, {
           encoding: 'utf8',
         })
       );
+
+      loadedExtractedItemsJson = [];
+      tempLoaded.forEach((l) => {
+        if (fs.existsSync(l.filePath)) {
+          loadedExtractedItemsJson.push(l);
+        }
+      });
+
+      if (tempLoaded.length != loadedExtractedItemsJson.length) {
+        console.log('registering');
+        registerToFile();
+      }
     } else {
       loadedExtractedItemsJson = [];
     }
   }
+}
+
+function registerToFile() {
+  fs.writeFileSync(EXTRACTED_DB, JSON.stringify(loadedExtractedItemsJson));
 }
 
 export function registerExtractedExcel(
@@ -61,7 +79,7 @@ export function registerExtractedExcel(
       );
     }
   }
-  fs.writeFileSync(EXTRACTED_DB, JSON.stringify(loadedExtractedItemsJson));
+  registerToFile();
 }
 
 export function getSavedExtractedExcels() {
