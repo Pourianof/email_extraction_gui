@@ -6,8 +6,14 @@ import path from 'path';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
-import { BACKEND_PATH, DIST_PATH } from './webpack.pathes';
+import checkNodeEnv from './scripts/check-node-env';
+import deleteSourceMaps from './scripts/delete-source-maps';
+import { BACKEND_PATH, DIST_MAIN_PATH } from './webpack.pathes';
+
+checkNodeEnv('production');
+deleteSourceMaps();
 
 const configuration: webpack.Configuration = {
   devtool: 'source-map',
@@ -22,7 +28,7 @@ const configuration: webpack.Configuration = {
   },
 
   output: {
-    path: DIST_PATH,
+    path: DIST_MAIN_PATH,
     filename: '[name].js',
     library: {
       type: 'umd',
@@ -38,6 +44,11 @@ const configuration: webpack.Configuration = {
   },
 
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerPort: 8888,
+    }),
+
     /**
      * Create global constants which can be configured at compile time.
      *
@@ -56,6 +67,12 @@ const configuration: webpack.Configuration = {
     new webpack.DefinePlugin({
       'process.type': '"browser"',
     }),
+
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: path.join(RELEASE_APP_PATH, 'package.json'), to: DIST_PATH },
+    //   ],
+    // }),
   ],
 
   /**

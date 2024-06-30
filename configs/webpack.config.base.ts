@@ -4,11 +4,11 @@
 
 import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
-import { DIST_PATH, SRC_PATH } from './webpack.pathes';
-// import { dependencies as externals } from '../../release/app/package.json';
+import { SRC_PATH } from './webpack.pathes';
+import { dependencies as externals } from '../release/app/package.json';
 
 const configuration: webpack.Configuration = {
-  // externals: [...Object.keys(externals || {})],
+  externals: [...Object.keys(externals || {})],
 
   stats: 'errors-only',
 
@@ -32,7 +32,7 @@ const configuration: webpack.Configuration = {
   },
 
   output: {
-    path: DIST_PATH,
+    path: SRC_PATH,
     // https://github.com/webpack/webpack/issues/1114
     library: {
       type: 'commonjs2',

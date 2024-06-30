@@ -8,9 +8,7 @@ export default class WindowHandler {
   private window!: BrowserWindow;
   private eventHandler: IPCEventHandler;
   async init() {
-    console.log('Wait...');
     await app.whenReady();
-    console.log('App is ready...');
 
     this.window = new BrowserWindow({
       width: 1024,
@@ -20,8 +18,15 @@ export default class WindowHandler {
       icon: path.join(RESOURCE_DIR, 'images', 'icons', 'ausmt.png'),
       webPreferences: {
         preload: app.isPackaged
-          ? path.join(__dirname, 'mainPreload.preload.js')
-          : path.join(__dirname, '..', '..', 'dist', 'mainPreload.preload.js'),
+          ? path.join(__dirname, 'preload.js')
+          : path.join(
+              __dirname,
+              '..',
+              '..',
+              'configs',
+              '.dll',
+              'mainPreload.preload.js'
+            ),
         contextIsolation: true,
         nodeIntegration: false,
         webSecurity: false,

@@ -1,24 +1,31 @@
 {
-  "name": "email_extraction",
+  "name": "ausmt-author-collector",
   "version": "1.0.0",
   "description": "An simple app to extract information of authors of the world's most prestigious publication",
   "main": "./src/backend/main.ts",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
-    "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
-    "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
-    "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.prod.ts",
-    "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+    "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./configs/webpack.config.renderer.dev.dll.ts",
+    "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./configs/webpack.config.main.prod.ts",
+    "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./configs/webpack.config.renderer.prod.ts",
+    "postinstall": "ts-node ./configs/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll",
+    "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
-    "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never && npm run build:dll",
+    "package": "ts-node ./configs/scripts/clean.js dist && npm run build && electron-builder build --publish never && npm run build:dll",
     "start": "ts-node ./configs/scripts/check-port-in-use.js && npm run start:renderer",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./configs/webpack.renderer.dev.config.ts",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./configs/webpack.preload.dev.config.ts",
     "start:main": "cross-env NODE_ENV=development NODE_OPTIONS=\"--import tsx\" electron ."
   },
-  "author": "Pooria",
+  "author": {
+    "name": "Pooria",
+    "email": "PooriaXAmini@gmail.com",
+    "url": "https://github.com/coded-by-pooria"
+  },
   "license": "ISC",
   "devDependencies": {
+    "@electron/notarize": "^2.3.2",
+    "@electron/rebuild": "^3.6.0",
     "@faker-js/faker": "^8.4.1",
     "@sparticuz/chromium": "^119.0.2",
     "@types/command-line-args": "^5.2.3",
@@ -28,6 +35,7 @@
     "cli-color": "^2.0.3",
     "command-line-args": "^5.2.1",
     "concurrently": "^8.2.2",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.1",
     "css-minimizer-webpack-plugin": "^6.0.0",
     "detect-port": "^1.5.1",
@@ -35,6 +43,7 @@
     "electron-builder": "^24.13.3",
     "electron-devtools-installer": "^3.2.0",
     "electronmon": "^2.0.2",
+    "eslint": "^9.5.0",
     "exceljs": "^4.4.0",
     "html-webpack-plugin": "^5.6.0",
     "https-proxy-agent": "^7.0.4",
@@ -57,15 +66,14 @@
     "webpack-dev-server": "^5.0.4",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.10.0",
-    "webpack-nano": "^1.1.1",
-    "xlsx": "^0.18.5"
+    "webpack-nano": "^1.1.1"
   },
   "dependencies": {
     "@pourianof/notifier": "^1.0.1",
     "@sparticuz/chromium": "^119.0.2",
     "chrome-launcher": "^1.1.1",
     "chrome-remote-interface": "^0.33.0",
-    "chrowser_module": "https://github.com/Coded-By-Pooria/chrowser_module",
+    "chrowser_module": "https://github.com/Coded-By-Pooria/chrowser_module/tree/cjs-mode",
     "cli-color": "^2.0.3",
     "cross-env": "^7.0.3",
     "exceljs": "^4.4.0",
@@ -73,5 +81,65 @@
     "persian-number": "^1.6.0",
     "react-date-object": "^2.1.8",
     "xlsx": "^0.18.5"
+  },
+  "build": {
+    "productName": "AUSMT author collector",
+    "appId": "ac.ausmt.AuthorCollector",
+    "asar": true,
+    "asarUnpack": "**\\*.{node,dll}",
+    "files": [
+      "dist",
+      "node_modules",
+      "package.json"
+    ],
+    "mac": {
+      "target": {
+        "target": "default",
+        "arch": [
+          "arm64",
+          "x64"
+        ]
+      },
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "app": "release/app",
+      "buildResources": "resources",
+      "output": "release/build"
+    },
+    "extraResources": [
+      "./resources/***/**/*"
+    ]
+  },
+  "devEngines": {
+    "node": ">=14.x",
+    "npm": ">=7.x"
   }
 }

@@ -11,9 +11,13 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
-import { DIST_PATH, FRONTEND_PATH } from './webpack.pathes';
+import {
+  DIST_RENDERER_PATH,
+  FRONTEND_PATH,
+  STATIC_DIR,
+} from './webpack.pathes';
 import deleteSourceMaps from './scripts/delete-source-maps';
-import { STATIC_FILES } from '../src/backend/pathes';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 deleteSourceMaps();
 
@@ -27,7 +31,7 @@ const configuration: webpack.Configuration = {
   entry: [path.join(FRONTEND_PATH, 'index.js')],
 
   output: {
-    path: DIST_PATH,
+    path: DIST_RENDERER_PATH,
     publicPath: './',
     filename: 'renderer.js',
     library: {
@@ -121,7 +125,7 @@ const configuration: webpack.Configuration = {
 
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(STATIC_FILES, 'index.html'),
+      template: path.join(STATIC_DIR, 'index.html'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -133,6 +137,12 @@ const configuration: webpack.Configuration = {
 
     new webpack.DefinePlugin({
       'process.type': '"renderer"',
+    }),
+
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.join(STATIC_DIR, 'index.css'), to: DIST_RENDERER_PATH },
+      ],
     }),
   ],
 };

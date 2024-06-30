@@ -15,7 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "dev"
+    "outDir": "configs/dll"
   },
   "files": ["./src/@types/global.d.ts"],
   "exclude": ["./test"]

@@ -1,18 +1,46 @@
 import 'webpack-dev-server';
 import path from 'path';
+import fs from 'fs';
+import chalk from 'chalk';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { merge } from 'webpack-merge';
-import { spawn } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import baseConfig from './webpack.config.base';
 import {
   APP_PATH,
   DIST_PATH,
+  DIST_RENDERER_PATH,
+  DLL_PATH,
   FRONTEND_PATH,
   STATIC_PATH,
 } from './webpack.pathes';
+import checkNodeEnv from './scripts/check-node-env';
+
+// When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
+// at the dev webpack config is not accidentally run in a production environment
+if (process.env.NODE_ENV === 'production') {
+  checkNodeEnv('development');
+}
 
 const port = process.env.PORT || 1212;
+
+const manifest = path.resolve(DLL_PATH, 'renderer.json');
+const skipDLLs =
+  module.parent?.filename.includes('webpack.config.renderer.dev.dll') ||
+  module.parent?.filename.includes('webpack.config.eslint');
+
+/**
+ * Warn if the DLL is not built
+ */
+if (!skipDLLs && !(fs.existsSync(DLL_PATH) && fs.existsSync(manifest))) {
+  console.log(
+    chalk.black.bgYellow.bold(
+      'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"'
+    )
+  );
+  execSync('npm run postinstall');
+}
 
 const configuration: webpack.Configuration = {
   devtool: 'inline-source-map',
@@ -30,9 +58,9 @@ const configuration: webpack.Configuration = {
   },
 
   output: {
-    path: DIST_PATH,
+    path: DIST_RENDERER_PATH,
     publicPath: '/',
-    filename: '[name].renderer.dev.js',
+    filename: 'renderer.dev.js',
     library: {
       type: 'umd',
     },
@@ -93,6 +121,15 @@ const configuration: webpack.Configuration = {
     ],
   },
   plugins: [
+    ...(skipDLLs
+      ? []
+      : [
+          new webpack.DllReferencePlugin({
+            context: DLL_PATH,
+            manifest: require(manifest),
+            sourceType: 'var',
+          }),
+        ]),
     new webpack.NoEmitOnErrorsPlugin(),
 
     /**
@@ -118,7 +155,6 @@ const configuration: webpack.Configuration = {
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
       template: path.join(STATIC_PATH, 'index.html'),
-      chunks: ['mainWindow'],
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

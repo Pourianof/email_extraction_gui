@@ -1,0 +1,18 @@
+{
+  "name": "ausmt-author-collector",
+  "version": "1.0.0",
+  "description": "Collects authors information from famous publishers",
+  "license": "MIT",
+  "author": {
+    "name": "Pooria - ausmt",
+    "email": "PooriaXAmini@gmail.com",
+    "url": "https://github.com/coded-by-pooria"
+  },
+  "main": "./dist/main/main.js",
+  "scripts": {
+    "rebuild": "node -r ts-node/register ../../configs/scripts/electron-rebuild.js",
+    "postinstall": "npm run rebuild && npm run link-modules",
+    "link-modules": "node -r ts-node/register ../../configs/scripts/link-modules.ts"
+  },
+  "dependencies": {}
+}
