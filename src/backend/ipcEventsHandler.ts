@@ -20,6 +20,7 @@ import {
   registerExtractedExcel,
 } from './extractedItemsRegisterer';
 import RegisteredExtractedExcel from '../shared/models/registeredExcelData';
+import { logError } from './logger';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -255,9 +256,9 @@ export default class IPCEventHandler {
         } as RegisteredExtractedExcel,
       } as IPCMessage;
     } catch (err) {
-      console.error('error hapeened on extraction : ', err);
       let message: string;
       if (err instanceof Error) {
+        logError(`Error while extraction. error_msg:\n ${err.message}`);
         if (
           err.message.includes('WebSocket') ||
           err.message.includes('closed')

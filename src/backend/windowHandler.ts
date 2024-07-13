@@ -3,6 +3,7 @@ import path from 'path';
 import { resolveHtmlPath } from './util';
 import IPCEventHandler from './ipcEventsHandler';
 import { RESOURCE_DIR } from './pathes';
+import { logInfo } from './logger';
 
 export default class WindowHandler {
   private window!: BrowserWindow;
@@ -13,7 +14,7 @@ export default class WindowHandler {
       height: 768,
       title: 'نویسنده یاب',
       titleBarStyle: 'hidden',
-      icon: path.join(RESOURCE_DIR, 'images', 'icons', 'ausmt.png'),
+      icon: path.join(RESOURCE_DIR, 'images', 'icons', 'icon.ico'),
       webPreferences: {
         preload: app.isPackaged
           ? path.join(__dirname, 'preload.js')
@@ -35,8 +36,15 @@ export default class WindowHandler {
     });
     this.window.loadURL(resolveHtmlPath('index.html'));
 
-    this.window.on('ready-to-show', () => this.window.show());
-    this.window.once('close', () => app.exit());
+    this.window.on('ready-to-show', () => {
+      this.window.show();
+      logInfo('Display app window');
+    });
+    this.window.once('close', () => {
+      logInfo('App window closed');
+      app.exit();
+      logInfo('App exited');
+    });
 
     this.eventHandler = new IPCEventHandler(this.window);
   }
