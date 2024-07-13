@@ -1,3 +1,4 @@
+import './index.css';
 import PN from 'persian-number';
 
 import {
@@ -114,9 +115,9 @@ function uxHandler() {
     }
   });
   window.addEventListener('click', (e) => {
-    e.preventDefault();
     const target = e.target;
     if ('open' in target.dataset) {
+      e.preventDefault();
       window.context.openLink(target.dataset.open);
     }
   });

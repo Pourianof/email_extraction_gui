@@ -1,12 +1,12 @@
 @font-face {
   font-family: sahel;
-  src: url(/resources/fonts/SAHEL.TTF);
+  src: url(/assets/fonts/SAHEL.TTF);
   font-weight: normal;
 }
 
 @font-face {
   font-family: sahel;
-  src: url(/resources/fonts/SAHEL-BOLD.TTF);
+  src: url(/assets/fonts/SAHEL-BOLD.TTF);
   font-weight: bold;
 }
 
@@ -557,7 +557,7 @@ form.journal-form {
 .extracted-list {
   background-color: rgb(47 53 73);
   position: fixed;
-  top: 10px;
+  top: calc(var(--title-bar-height) + 10px);
   left: 10px;
   bottom: 10px;
   width: 350px;

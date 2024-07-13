@@ -44,8 +44,8 @@ function focusOnURLInput(e) {
           hostname !== 'elsevier.com' &&
           hostname !== 'sciencedirect.com' &&
           hostname !== 'springer.com' &&
-          hostname !== 'link.springer.com'
-          //  && hostname !== 'wiley.com'
+          hostname !== 'link.springer.com' &&
+          !hostname.endsWith('wiley.com')
         ) {
           hintMsg.push(
             'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا ویلی یا اشپرینگر نمیباشد.'
@@ -72,6 +72,19 @@ function focusOnURLInput(e) {
           hintMsg.push(
             'آدرس وارد شده به یک صفحه از Issue مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
           );
+        } else if (hostname.endsWith('wiley.com')) {
+          if (!hostname.startsWith('onlinelibrary.')) {
+            hintMsg.push(
+              'آدرس ژورنال ها در سایت ویلی با ساب دامین onlinelibrary آغاز میشود'
+            );
+          } else if (
+            !/^\/?loi\/\d+\/?$/g.test(pathname) &&
+            !/year\/\d+\/?$/g.test(pathname)
+          ) {
+            hintMsg.push(
+              'آدرس وارد شده مربوط به آدرس یک Volume از ژورنال نمیباشد'
+            );
+          }
         }
       } catch (err) {
         hintMsg.push('آدرس وارد شده معتبر نمیباشد.');
@@ -180,7 +193,10 @@ function checkURLInValidation() {
 
   for (let child of journalForm.children) {
     const hintsElmnt = reachFromTemplateTo(child, 'hint');
-    if (hintsElmnt.textContent.trim()) {
+    if (
+      !hintsElmnt.classList.contains('hidden') &&
+      hintsElmnt.textContent.trim()
+    ) {
       return {
         type: 'error',
         elmnt: child,
@@ -267,13 +283,4 @@ export function handleExtractOptionsForm() {
   });
 
   extractBtn.addEventListener('click', () => startExtraction());
-}
-
-export function backURLFormToInitialState() {
-  journalForm.replaceChildren([]);
-  const extractOptionsForm = extractBtn.previousElementSibling;
-
-  extractOptionsForm['only-email'].checked = false;
-  extractOptionsForm['only-main'].checked = false;
-  extractOptionsForm['author-count'].value = '';
 }

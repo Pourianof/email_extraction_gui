@@ -44,6 +44,7 @@ if (!skipDLLs && !(fs.existsSync(DLL_PATH) && fs.existsSync(manifest))) {
 
 const configuration: webpack.Configuration = {
   devtool: 'inline-source-map',
+  externals: ['fsevents', 'crypto-browserify'],
 
   mode: 'development',
 
@@ -154,7 +155,7 @@ const configuration: webpack.Configuration = {
 
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
-      template: path.join(STATIC_PATH, 'index.html'),
+      template: path.join(FRONTEND_PATH, 'index.html'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

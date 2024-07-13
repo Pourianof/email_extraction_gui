@@ -3,7 +3,7 @@ import {
   createNewExtractedAuthorItem,
 } from './extracterHelper';
 import { formatUnixInterval } from './helpers';
-import { backURLFormToInitialState } from './urlFormHelper';
+import { backURLFormToInitialState } from './sharedFunctions';
 export class ExtractionState {
   static EXTRACTING = 'extracting';
   static IDOL = 'idol';
@@ -111,8 +111,6 @@ export default class ExtractionHandler {
         options: this.options,
       })
     );
-    debugger;
-    console.log(res);
 
     this._state = ExtractionState.FINISHED;
 

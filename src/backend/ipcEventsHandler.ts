@@ -6,7 +6,6 @@ import {
   net,
   ipcMain,
   shell,
-  Rectangle,
 } from 'electron';
 import { Events } from './events';
 import extractURLS, {
@@ -14,7 +13,6 @@ import extractURLS, {
   ExtractSpeed,
 } from './authoractor';
 import path from 'path';
-import { CHROME_USER_DATA, TEMP_EXCELS } from './pathes';
 import { IPCMessage } from '../shared/IPCMessage';
 import ExtractionProgressState from '../shared/extractionsProgressState';
 import {
@@ -157,6 +155,10 @@ export default class IPCEventHandler {
     };
   }): Promise<IPCMessage> {
     let filePath: string | undefined;
+    const tempPath =
+      process.env.NODE_ENV == 'development'
+        ? path.join(app.getPath('desktop'), 'authoractor_gui', 'temp')
+        : path.join(__dirname, '..', '..', '..', 'temp', 'excels');
 
     try {
       const progressListener = new AuthorsProgressStateNotifier((state) => {
@@ -216,14 +218,10 @@ export default class IPCEventHandler {
           }
           return filePath;
         },
-        browserUserDataPath:
-          process.env.NODE_ENV == 'development'
-            ? path.join(app.getPath('desktop'), 'authoractor_gui', 'chrome_dir')
-            : CHROME_USER_DATA,
-        tempPath:
-          process.env.NODE_ENV == 'development'
-            ? path.join(app.getPath('desktop'), 'authoractor_gui', 'temp')
-            : TEMP_EXCELS,
+        browserUserDataPath: !app.isPackaged
+          ? path.join(app.getPath('desktop'), 'authoractor_gui', 'chrome_dir')
+          : path.join(__dirname, '..', '..', '..', 'temp', 'chrome_dir'),
+        tempPath,
         extractionConf: {
           onlyAuthorsWithEmail: data.options.isOnlyEmail,
           boundary: data.options.authorsCount,
@@ -232,7 +230,16 @@ export default class IPCEventHandler {
         },
       });
 
-      registerExtractedExcel(filePath!, extractResult.numberOfExtractedAuthors);
+      console.log('extraction finished');
+
+      if (!filePath) {
+        throw new Error('مشکلی در فرآیند استخراج پیش آمده. ');
+      } else {
+        registerExtractedExcel(
+          filePath!,
+          extractResult.numberOfExtractedAuthors
+        );
+      }
 
       return {
         status: {
@@ -248,6 +255,7 @@ export default class IPCEventHandler {
         } as RegisteredExtractedExcel,
       } as IPCMessage;
     } catch (err) {
+      console.error('error hapeened on extraction : ', err);
       let message: string;
       if (err instanceof Error) {
         if (
@@ -255,6 +263,8 @@ export default class IPCEventHandler {
           err.message.includes('closed')
         ) {
           message = 'بنا به دلایلی اتصال با مرورگر قطع شد.';
+        } else if (err.message.includes('net::ERR_ABORTED')) {
+          message = 'اتصال به شبکه قطع شد.';
         } else {
           message = err.message;
         }
@@ -265,7 +275,7 @@ export default class IPCEventHandler {
           code: -10,
         },
         data: {
-          filePath,
+          filePath: tempPath,
         },
       };
     }

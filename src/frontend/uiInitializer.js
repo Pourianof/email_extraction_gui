@@ -15,6 +15,6 @@ export async function displayExtractedItems() {
       );
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }

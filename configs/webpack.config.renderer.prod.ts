@@ -11,19 +11,12 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
-import {
-  DIST_RENDERER_PATH,
-  FRONTEND_PATH,
-  STATIC_DIR,
-} from './webpack.pathes';
+import { DIST_RENDERER_PATH, FRONTEND_PATH } from './webpack.pathes';
 import deleteSourceMaps from './scripts/delete-source-maps';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 deleteSourceMaps();
 
 const configuration: webpack.Configuration = {
-  devtool: 'source-map',
-
   mode: 'production',
 
   target: ['web', 'electron-renderer'],
@@ -125,7 +118,7 @@ const configuration: webpack.Configuration = {
 
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(STATIC_DIR, 'index.html'),
+      template: path.join(FRONTEND_PATH, 'index.html'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -137,12 +130,6 @@ const configuration: webpack.Configuration = {
 
     new webpack.DefinePlugin({
       'process.type': '"renderer"',
-    }),
-
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: path.join(STATIC_DIR, 'index.css'), to: DIST_RENDERER_PATH },
-      ],
     }),
   ],
 };

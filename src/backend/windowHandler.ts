@@ -8,8 +8,6 @@ export default class WindowHandler {
   private window!: BrowserWindow;
   private eventHandler: IPCEventHandler;
   async init() {
-    await app.whenReady();
-
     this.window = new BrowserWindow({
       width: 1024,
       height: 768,
@@ -30,6 +28,7 @@ export default class WindowHandler {
         contextIsolation: true,
         nodeIntegration: false,
         webSecurity: false,
+        devTools: process.env.NODE_ENV == 'development',
       },
       modal: true,
       show: false,
