@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { app, protocol } from 'electron';
+import { app, globalShortcut, protocol } from 'electron';
 import { TEMP_FILES } from './pathes.ts';
 import WindowHandler from './windowHandler';
 import path from 'path';
@@ -35,9 +35,18 @@ function initializeDirectories() {
 //   });
 // }
 
+function handleShortcuts() {
+  app.on('browser-window-focus', function () {
+    globalShortcut.register('CommandOrControl+R', () => {});
+    globalShortcut.register('F5', () => {});
+  });
+  app.on('browser-window-blur', function () {});
+}
+
 async function start() {
   app.once('ready', async () => {
     initializeDirectories();
+    if (process.env.NODE_ENV !== 'development') handleShortcuts();
     // protocolSetter();
     const windows = new WindowHandler();
     await windows.init();
