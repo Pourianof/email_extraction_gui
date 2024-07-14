@@ -124,6 +124,7 @@ const configuration: webpack.Configuration = {
         removeAttributeQuotes: true,
         removeComments: true,
       },
+      inject: 'body',
       isBrowser: false,
       isDevelopment: false,
     }),

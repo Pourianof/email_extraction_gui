@@ -20,7 +20,7 @@ import {
   registerExtractedExcel,
 } from './extractedItemsRegisterer';
 import RegisteredExtractedExcel from '../shared/models/registeredExcelData';
-import { logError } from './logger';
+import { logError, logInfo } from './logger';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -126,6 +126,7 @@ export default class IPCEventHandler {
     filePath: string;
   }): Promise<IPCMessage> {
     try {
+      logInfo(`Try to open excel file "${openOptions.filePath}"`);
       shell.showItemInFolder(openOptions.filePath);
 
       return {

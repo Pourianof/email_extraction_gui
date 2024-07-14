@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { app } from 'electron';
+import { app, protocol } from 'electron';
 import { TEMP_FILES } from './pathes.ts';
 import WindowHandler from './windowHandler';
 import path from 'path';
@@ -26,9 +26,19 @@ function initializeDirectories() {
   }
 }
 
+// function protocolSetter() {
+//   protocol.handle('file', (request) => {
+//     const url = request.url;
+//     console.log(url);
+//     logInfo(`request a file with address : ${url}`);
+//     return fetch(url);
+//   });
+// }
+
 async function start() {
   app.once('ready', async () => {
     initializeDirectories();
+    // protocolSetter();
     const windows = new WindowHandler();
     await windows.init();
   });

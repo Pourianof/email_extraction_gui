@@ -11,8 +11,8 @@ const logger = winston.createLogger({
       level: 'error',
       format: combine(
         label({ label: 'right meow!' }),
-        timestamp(),
-        prettyPrint()
+        timestamp()
+        // prettyPrint()
       ),
     }),
     new winston.transports.File({
@@ -21,8 +21,8 @@ const logger = winston.createLogger({
       level: 'info',
       format: combine(
         label({ label: 'right meow!' }),
-        timestamp(),
-        prettyPrint()
+        timestamp()
+        // prettyPrint()
       ),
     }),
   ],
