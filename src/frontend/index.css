@@ -238,12 +238,12 @@ main#main {
   margin: 0 auto;
 }
 
-.address-hints .en-in-fa {
+.en-in-fa {
   position: relative;
   font-weight: bold;
 }
 
-.address-hints .en-in-fa::after {
+.en-in-fa::before {
   content: '';
   display: block;
   position: absolute;
@@ -437,6 +437,130 @@ form.journal-form {
   margin-right: 5px;
   position: absolute;
   left: -5px;
+}
+
+.sample-valid-hints {
+  --svu-bg: rgb(205 215 229);
+  background-color: var(--svu-bg);
+  color: rgb(73, 72, 72);
+  position: relative;
+  padding: 5px 10px;
+  padding-top: 15px;
+  white-space: nowrap;
+  margin: 0 auto;
+  width: 80%;
+  font-size: 14px;
+}
+
+.sample-valid-url {
+  background-color: rgb(156, 176, 205);
+  border-radius: 3px;
+  padding: 3px;
+  color: #272727;
+  font-weight: bold;
+}
+
+.--svu-more-info-- {
+  background-color: rgb(156 176 205);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  counter-reset: svuNote;
+}
+
+.--svu-info-item-- {
+  background-color: rgb(205 215 229);
+  padding: 3px 5px;
+  border-radius: 3px;
+  margin: 5px 0;
+  counter-increment: svuNote;
+}
+.--svu-info-item--::before {
+  content: counter(svuNote);
+  display: inline-block;
+  background-color: rgb(156 176 205);
+  padding: 3px 5px;
+  margin-left: 5px;
+  width: 20px;
+  text-align: center;
+  color: #2b4867;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.--svu-title-- {
+  direction: rtl;
+  background-color: var(--svu-bg);
+  padding: 2px 5px;
+  font-weight: bold;
+  border-radius: 3px 3px 0 0;
+  text-align: center;
+  margin: 5px 0;
+  margin-bottom: 10px;
+}
+
+.--svu-url-- {
+  direction: ltr;
+  text-align: left;
+  counter-reset: urlPart;
+}
+
+.--svu-part-- {
+  display: inline-block;
+  background-color: rgb(205, 215, 229);
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: #2b4867;
+  font-weight: bold;
+  position: relative;
+  counter-increment: urlPart 1;
+  margin: 0 2px;
+}
+
+.--svu-part--::before {
+  content: counter(urlPart);
+  background-color: rgb(205, 215, 229);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  width: 15px;
+  font-size: 10px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.144);
+}
+
+#close-sample-hints {
+  width: 25px;
+  padding: 5px;
+  fill: #cb5151;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 28px;
+}
+
+#close-sample-hints:hover {
+  fill: rgb(165, 58, 58);
+  background-color: rgba(238, 218, 218, 0.815);
+  border-radius: 5px;
+}
+
+.--svu-hint--,
+.--svu-plus-- {
+  white-space: wrap;
+  display: block;
+  font-size: 12px;
+  background-color: rgb(183 77 77);
+  margin: 5px 0;
+  border-radius: 3px;
+  padding: 3px;
+  color: white;
+}
+
+.--svu-plus-- {
+  background-color: rgb(35, 126, 70);
 }
 
 .author-count {

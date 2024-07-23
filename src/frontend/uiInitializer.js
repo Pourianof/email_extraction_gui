@@ -1,4 +1,5 @@
 import { appendNewExtractedExcelItem } from './extracterHelper';
+import './validUrlMoreInfoHandler';
 
 export async function displayExtractedItems() {
   try {

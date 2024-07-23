@@ -322,25 +322,65 @@
               </li>
               <li>
                 آدرس مناسب به ازای هر انتشاراتی بصورت زیر است:
+                <span
+                  >(با کلیک بر روی عبارات
+                  <span class="en-in-fa">زیرخط دار</span> میتوانید از جزئیات
+                  بیشتر اطلاع پیدا کنید.)</span
+                >
                 <div class="extracter-url-row">
                   <div class="extracter-url-help">
                     <span class="extracter-name">Elsevier</span> آدرس صفحه
-                    <span class="en-in-fa"> Volume </span>
-                    یا <span class="en-in-fa">Issue</span> یا
-                    <span class="en-in-fa">Book (کتاب)</span> ژورنال مورد نظر
-                    باید وارد شود
+                    <span
+                      data-sample-id="elsevier-volume"
+                      sample-btn
+                      class="en-in-fa btn"
+                    >
+                      Volume
+                    </span>
+
+                    یا
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="elsevier-book"
+                      sample-btn
+                      >Book (کتاب)</span
+                    >
+                    ژورنال مورد نظر باید وارد شود
                   </div>
                 </div>
                 <div class="extracter-url-help">
                   <span class="extracter-name">Springer</span> آدرس صفحه آخرین
-                  <span class="en-in-fa">Issue</span> از
-                  <span class="en-in-fa">Volume</span> ژورنال مورد نظر باید وارد
-                  شود
+                  <span
+                    class="en-in-fa btn"
+                    data-sample-id="springer-issue"
+                    sample-btn
+                    >Issue</span
+                  >
+                  از
+                  <span
+                    class="en-in-fa btn"
+                    data-sample-id="springer-issue"
+                    sample-btn
+                    >Volume</span
+                  >
+                  ژورنال مورد نظر باید وارد شود
                 </div>
                 <div class="extracter-url-help">
                   <span class="extracter-name">Wiley</span> آدرس صفحه
-                  <span class="en-in-fa">Volume</span> یا
-                  <span class="en-in-fa">Issue</span> مورد نظر باید وارد شود
+                  <span
+                    class="en-in-fa btn"
+                    data-sample-id="wiley-volume"
+                    sample-btn
+                    >Volume</span
+                  >
+                  یا
+                  <span
+                    class="en-in-fa btn"
+                    data-sample-id="wiley-issue"
+                    sample-btn
+                    >Issue</span
+                  >
+                  مورد نظر باید وارد شود
                 </div>
               </li>
             </ol>
@@ -417,6 +457,215 @@
                 </div>
                 <div class="extracted-list-view"></div>
               </div>
+            </div>
+            <div class="sample-valid-hints hidden">
+              <span id="close-sample-hints" class="btn">
+                <svg
+                  id="Layer_1"
+                  data-name="Layer 1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 40 40"
+                >
+                  <path
+                    d="M.9,39.1a2.85,2.85,0,0,0,4,0v0L20,24.05,35.11,39.16a2.86,2.86,0,0,0,4-4h0L24.05,20,39.16,4.89a2.86,2.86,0,1,0-4-4L20,16,4.89.9a2.86,2.86,0,1,0-4,4L16,20,.9,35.11A2.84,2.84,0,0,0,.9,39.1Z"
+                    transform="translate(0 0)"
+                  />
+                </svg>
+              </span>
+              <div data-name="elsevier-book" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa"> Book (کتاب)</span> مناسب از نشریه
+                  Elsevier
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--"
+                      >sciencedirect.com</span
+                    >
+                    <span class="--svu-path-- --svu-part--"
+                      >/book/9781455728657</span
+                    >
+                    /abeloffs-clinical-oncology
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">ScienceDirect.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس به یک کتاب اشاره میکند
+                  </div>
+                </div>
+              </div>
+              <div data-name="elsevier-volume" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">Volume</span> مناسب از نشریه Elsevier
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      sciencedirect.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--">
+                      /journal/linear-algebra-and-its-applications
+                    </span>
+                    <span class="--svu-path-- --svu-part--">vol/699</span>
+                    /suppl/C
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">ScienceDirect.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس به یک ژورنال اشاره میکند
+                  </div>
+                  <div class="--svu-info-item--">
+                    در انتهای مسیر نیز <span class="en-in-fa">Volume</span> مورد
+                    نظر از آن ژورنال را مشخص میکند
+                  </div>
+                </div>
+              </div>
+              <div data-name="springer-issue" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">issue</span> مناسب از نشریه Springer
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      link.springer.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--">
+                      journal/11356
+                    </span>
+                    <span class="--svu-path-- --svu-part--"
+                      >/volumes-and-issues/31-32</span
+                    >
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">link.springer.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس با عبارت journal و بعد شناسه آن ژورنال آغاز میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    در انتهای مسیر نیز شماره
+                    <span class="en-in-fa">Volume (عدد 31)</span> و شماره
+                    <span class="en-in-fa">Issue (عدد 32)</span> مورد نظر از آن
+                    ژورنال را مشخص میکند.
+                    <span class="--svu-hint--"
+                      >انتخاب آخرین issue اهمیت دارد چراکه اگر آدرس issue های
+                      دیگر را وارد کنید از آن issue شروع به پردازش میکند و به
+                      issue های قبلتر میرود</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div data-name="wiley-volume" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">Volume</span> مناسب از نشریه Wiley
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      onlinelibrary.wiley.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--">
+                      /loi/10991506
+                    </span>
+                    <span class="--svu-path-- --svu-part--">/year/2024</span>
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">onlinelibrary.wiley.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس نیز با loi و سپس شناسه ژورنال آغاز میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    در انتهای مسیر نیز عبارت year و سپس سال Volume قرار میگیرد
+                  </div>
+                </div>
+              </div>
+              <div data-name="wiley-issue" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">Issue</span> مناسب از نشریه Wiley
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      onlinelibrary.wiley.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--">
+                      /toc/10991506
+                    </span>
+                    /2024
+                    <span class="--svu-path-- --svu-part--">/31</span>
+                    <span class="--svu-path-- --svu-part--">/4</span>
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">onlinelibrary.wiley.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس نیز با toc و سپس شناسه ژورنال آغاز میشود
+                  </div>
+                  <div class="--svu-info-item--">
+                    بعد از آن شماره Volume مورد نظر قرار میگیرد
+                  </div>
+                  <div class="--svu-info-item--">و در آخر هم شماره Issue</div>
+                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                </div>
+              </div>
+              <span class="--svu-plus--"
+                >قسمت های شماره دار در آدرس نمونه، بخش های لازم و اجباری مسیر
+                هستند و قسمت های بدون شماره که بصورت معمولی در مسیر نوشته شده
+                اند، اختیاری هستند و میتوانند از مسیر حذف شوند</span
+              >
             </div>
             <div class="extract-btn-wrapper">
               <form id="extraction-options">
