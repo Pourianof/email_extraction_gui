@@ -21,6 +21,7 @@ import {
 } from './extractedItemsRegisterer';
 import RegisteredExtractedExcel from '../shared/models/registeredExcelData';
 import { logError, logInfo } from './logger';
+import { DEPENDENCIES_DIR, TEMP_FILES } from './pathes';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -174,6 +175,7 @@ export default class IPCEventHandler {
       });
 
       if (!net.isOnline()) {
+        logError('No internet connection extracting try.');
         return {
           status: {
             code: -10,
@@ -200,7 +202,16 @@ export default class IPCEventHandler {
         }
       }
 
+      logInfo(
+        `Try to extract urls: [${data.urls.join(
+          ' , '
+        )}]\nWith options: ${JSON.stringify(data.options)}`
+      );
+
       const extractResult = await extractURLS(data.urls, {
+        winHandlerPath: !app.isPackaged
+          ? path.join(__dirname, 'authoractor', 'winHandler.exe')
+          : path.join(DEPENDENCIES_DIR, 'winHandler.exe'),
         progressMonitor: progressListener,
         saveOnEveryItem: true,
         ouputPath: async () => {
@@ -222,7 +233,7 @@ export default class IPCEventHandler {
         },
         browserUserDataPath: !app.isPackaged
           ? path.join(app.getPath('desktop'), 'authoractor_gui', 'chrome_dir')
-          : path.join(__dirname, '..', '..', '..', 'temp', 'chrome_dir'),
+          : path.join(TEMP_FILES, 'chrome_dir'),
         tempPath,
         extractionConf: {
           onlyAuthorsWithEmail: data.options.isOnlyEmail,
@@ -235,6 +246,7 @@ export default class IPCEventHandler {
       console.log('extraction finished');
 
       if (!filePath) {
+        logError('No file path registered.');
         throw new Error('مشکلی در فرآیند استخراج پیش آمده. ');
       } else {
         registerExtractedExcel(

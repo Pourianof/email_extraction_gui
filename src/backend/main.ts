@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { app, globalShortcut, protocol } from 'electron';
-import { TEMP_FILES } from './pathes.ts';
+import { APP_DIR, TEMP_FILES } from './pathes.ts';
 import WindowHandler from './windowHandler';
 import path from 'path';
 import { logError, logInfo } from './logger.ts';
+import { rimrafSync } from 'rimraf';
 
 function initializeDirectories() {
   try {
@@ -23,6 +24,39 @@ function initializeDirectories() {
     logError(
       `Error happened while creating temporary directories. err_msg: ${err?.message}`
     );
+  }
+}
+
+function appEntertionManaging() {
+  try {
+    const now = Date.now();
+    const dbPath = path.join(APP_DIR, 'DB.json');
+    const oneDay = 24 * 60 * 60 * 1000;
+    const threeDay = 3 * oneDay;
+
+    function registerLast() {
+      fs.writeFileSync(
+        path.join(APP_DIR, 'DB.json'),
+        JSON.stringify({ last_chrome_cleaning: now })
+      );
+    }
+
+    if (fs.existsSync(dbPath)) {
+      const db = JSON.parse(fs.readFileSync(dbPath, { encoding: 'utf8' }));
+      const passedTime = db.last_chrome_cleaning - now;
+      if (passedTime > threeDay) {
+        if (fs.readdirSync(path.join(TEMP_FILES, 'chrome_dir')).length) {
+          logInfo(`Chrome dir clean up after ${passedTime / oneDay} day(s)`);
+          // delete chrome profile
+          rimrafSync(path.join(TEMP_FILES, 'chrome_dir', '*'));
+          registerLast();
+        }
+      }
+    } else {
+      registerLast();
+    }
+  } catch (err) {
+    logError(`Error happened while cleaning chrome dir`);
   }
 }
 
@@ -46,6 +80,7 @@ function handleShortcuts() {
 async function start() {
   app.once('ready', async () => {
     initializeDirectories();
+    appEntertionManaging();
     if (process.env.NODE_ENV !== 'development') handleShortcuts();
     // protocolSetter();
     const windows = new WindowHandler();

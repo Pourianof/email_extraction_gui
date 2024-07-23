@@ -45,6 +45,7 @@ interface ExtractionOption {
     browserUserDataPath?: string;
     progressMonitor?: AuthorsProgressStateNotifier;
     saveOnEveryItem?: boolean;
+    winHandlerPath: string;
     extractionConf?: {
         boundary?: number;
         extractSpeed?: ExtractSpeed;

@@ -4,6 +4,9 @@ export const DLL_PATH = path.join(__dirname, '.dll');
 
 export const APP_PATH = path.join(__dirname, '..');
 
+export const ASSET_DIR = path.join(APP_PATH, 'assets');
+export const DEPENDENCIES_DIR = path.join(ASSET_DIR, 'dependencies');
+
 export const SRC_PATH = path.join(APP_PATH, 'src');
 
 export const APP_NODE_MODULES = path.join(APP_PATH, 'node_modules');

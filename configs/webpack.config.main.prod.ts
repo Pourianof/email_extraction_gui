@@ -11,7 +11,11 @@ import Copy from 'copy-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import checkNodeEnv from './scripts/check-node-env';
 import deleteSourceMaps from './scripts/delete-source-maps';
-import { BACKEND_PATH, DIST_MAIN_PATH } from './webpack.pathes';
+import {
+  BACKEND_PATH,
+  DEPENDENCIES_DIR,
+  DIST_MAIN_PATH,
+} from './webpack.pathes';
 
 checkNodeEnv('production');
 deleteSourceMaps();
@@ -73,7 +77,7 @@ const configuration: webpack.Configuration = {
       patterns: [
         {
           from: path.join(BACKEND_PATH, 'authoractor', 'winHandler.exe'),
-          to: DIST_MAIN_PATH,
+          to: DEPENDENCIES_DIR,
         },
       ],
     }),

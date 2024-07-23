@@ -6,6 +6,9 @@ export const APP_DIR = app.isPackaged
   : path.join(__dirname, '..', '..');
 export const STATIC_FILES = path.join(APP_DIR, 'static');
 export const TEMP_FILES = path.join(APP_DIR, 'temp');
+export const ASSET_DIR = path.join(APP_DIR, 'assets');
+export const DEPENDENCIES_DIR = path.join(ASSET_DIR, 'dependencies');
+
 export const TEMP_EXCELS = path.join(TEMP_FILES, 'excels');
 export const RESOURCE_DIR = path.join(APP_DIR, 'assets');
 export const CHROME_DIR = path.join(RESOURCE_DIR, 'chrome');
