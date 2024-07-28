@@ -1,7 +1,7 @@
 import winston from 'winston';
 import { APP_DIR } from './pathes';
 
-const { combine, timestamp, label, prettyPrint } = winston.format;
+const { combine, timestamp } = winston.format;
 
 const logger = winston.createLogger({
   transports: [
@@ -9,21 +9,13 @@ const logger = winston.createLogger({
       dirname: APP_DIR,
       filename: 'error.log',
       level: 'error',
-      format: combine(
-        label({ label: 'right meow!' }),
-        timestamp()
-        // prettyPrint()
-      ),
+      format: combine(timestamp()),
     }),
     new winston.transports.File({
       dirname: APP_DIR,
       filename: 'general.log',
       level: 'info',
-      format: combine(
-        label({ label: 'right meow!' }),
-        timestamp()
-        // prettyPrint()
-      ),
+      format: combine(timestamp()),
     }),
   ],
 });

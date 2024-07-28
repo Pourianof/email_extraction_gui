@@ -89,3 +89,21 @@ async function start() {
 }
 
 start();
+
+process.on('uncaughtException', (err) => {
+  logError(err.message);
+});
+
+process.on('unhandledRejection', (err) => {
+  let errMsg: string;
+  try {
+    if (err instanceof Error) {
+      errMsg = err.message + `\n${err.stack}`;
+    } else {
+      errMsg = JSON.stringify(err);
+    }
+  } catch (err) {
+    errMsg = `Unhandled Rejection: Couldn't Provide message`;
+  }
+  logError(errMsg);
+});

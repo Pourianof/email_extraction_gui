@@ -6,6 +6,7 @@ import {
   net,
   ipcMain,
   shell,
+  clipboard,
 } from 'electron';
 import { Events } from './events';
 import extractURLS, {
@@ -22,6 +23,7 @@ import {
 import RegisteredExtractedExcel from '../shared/models/registeredExcelData';
 import { logError, logInfo } from './logger';
 import { DEPENDENCIES_DIR, TEMP_FILES } from './pathes';
+import DateObject from 'react-date-object';
 
 export default class IPCEventHandler {
   constructor(private win: BrowserWindow) {
@@ -54,6 +56,11 @@ export default class IPCEventHandler {
       IPCEventHandler.handleInvokation(
         this.sendAvailableExtractedItemsData.bind(this)
       )
+    );
+
+    ipcMain.handle(
+      Events.COPY_TEXT,
+      IPCEventHandler.handleInvokation(this.handleCopyText.bind(this))
     );
 
     ipcMain.addListener(Events.OPEN_LINK, (e, d) => {
@@ -96,6 +103,8 @@ export default class IPCEventHandler {
       open('https://www.wiley.com/en-it/publish/journal-finder');
     } else if (d == 'ausmt') {
       open(`https://ausmt.ac.ir/`);
+    } else if (d == 'github') {
+      open(`https://github.com/Coded-By-Pooria`);
     }
   }
 
@@ -121,6 +130,10 @@ export default class IPCEventHandler {
         status: { code: -10, message: (err as Error).message },
       };
     }
+  }
+
+  private handleCopyText(options: { text: string }) {
+    clipboard.writeText(options.text);
   }
 
   private async handleOpenExcel(openOptions: {
@@ -215,19 +228,22 @@ export default class IPCEventHandler {
         progressMonitor: progressListener,
         saveOnEveryItem: true,
         ouputPath: async () => {
+          const defaultName = `authors-${new DateObject().format(
+            'YYYY-DD-MM-HH-mm-ss'
+          )}`;
           const res = await dialog.showSaveDialog(this.win, {
             message: 'مسیر ذخیره سازی فایل اکسل را انتخاب کنید',
             buttonLabel: 'ذخیره',
             title: 'مسیر ذخیره سازی فایل اکسل',
-            nameFieldLabel: 'authors.xslx',
+            nameFieldLabel: `${defaultName}.xslx`,
             filters: [{ name: 'Excel', extensions: ['xlsx', 'xml'] }],
-            defaultPath: path.join(app.getPath('documents'), 'authors'),
+            defaultPath: path.join(app.getPath('documents'), defaultName),
           });
 
           if (!res.canceled) {
             filePath = res.filePath;
           } else {
-            filePath = path.join(app.getPath('desktop'), 'emails.xlsx');
+            filePath = path.join(app.getPath('desktop'), defaultName);
           }
           return filePath;
         },
@@ -279,8 +295,12 @@ export default class IPCEventHandler {
           message = 'بنا به دلایلی اتصال با مرورگر قطع شد.';
         } else if (err.message.includes('net::ERR_ABORTED')) {
           message = 'اتصال به شبکه قطع شد.';
+        } else if (err.message.trim().includes('lock')) {
+          message =
+            'امکان ثبت فایل با مسیر داده شده وجود نداشت، ممکن است دلیل آن باز بودن فایل هم نام موجود در این مسیر باشد';
         } else {
-          message = err.message;
+          message =
+            'خطایی رخ داده است. برای اطلاعات بیشتر فایل log را بررسی کنید ودر صورت رخ دادن مجدد فایل log را به پشتیبات ارسال کنید. یا دوباره اجرا کنید.';
         }
       }
       return {

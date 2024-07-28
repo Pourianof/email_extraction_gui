@@ -7,7 +7,8 @@ import {
   reachFromTemplateTo,
 } from './urlFormHelper';
 import { availableWhatNotes } from './DATA';
-import { displayExtractedItems } from './uiInitializer';
+import './uiInitializer';
+import './converLinkTool';
 
 /**
  * @type HTMLElement
@@ -32,8 +33,6 @@ function handleRemoveIndexMofication(removedElmnt) {
   const addBtn = document.getElementById('add-new-url-btn');
 
   addBtn.addEventListener('click', addNewURLInput);
-
-  displayExtractedItems();
 
   journalForm.addEventListener('click', (e) => {
     const { target } = e;

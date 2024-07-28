@@ -414,12 +414,87 @@ form.journal-form {
   display: inline-block;
 }
 
-.extracter-url-help {
+.extracter-url-help,
+.address-helper-input-hint {
   margin: 6px 0;
   background-color: rgb(62 85 113);
   padding: 2px 5px;
   border-radius: 3px;
   width: fit-content;
+}
+
+.address-helper {
+  background-color: rgb(17 17 45);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #c7c7c7;
+}
+
+.address-helper-form {
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.address-helper-input,
+.output-url {
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  direction: ltr;
+  background-color: #505577;
+}
+
+.--ahi-url-- {
+  width: 100%;
+  display: block;
+}
+
+.output-url {
+  background-color: rgb(128 159 171);
+  color: #161616;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.address-convert-form select {
+  background-color: rgb(34, 34, 70);
+  border: 1px solid rgb(78 78 111);
+  direction: ltr;
+}
+
+.address-convert-form input,
+.address-convert-form select {
+  width: 200px;
+}
+
+.address-convert-form label {
+  width: 140px;
+  text-align: center;
+  display: inline-block;
+}
+.output-url {
+  position: relative;
+}
+
+.output-url:hover {
+  background-color: rgb(64, 150, 93);
+  transition: 0.3s;
+}
+
+.output-url:hover::after {
+  content: 'کپی کنید';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: rgba(34, 34, 34, 0.664);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 5px;
 }
 
 .extracter-name {
@@ -503,6 +578,18 @@ form.journal-form {
   direction: ltr;
   text-align: left;
   counter-reset: urlPart;
+  position: relative;
+}
+
+.--svu-url--::before {
+  content: 'آدرس نمونه';
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateY(-100%);
+  font-weight: normal;
+  font-size: 12px;
+  color: rgba(66, 65, 65, 0.8);
 }
 
 .--svu-part-- {
@@ -638,6 +725,12 @@ form.journal-form {
 .ack a {
   font-weight: bold;
   color: rgb(125, 199, 115);
+}
+
+.ack svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
 }
 
 /*

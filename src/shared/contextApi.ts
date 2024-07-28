@@ -10,4 +10,5 @@ export default interface ContextApi {
   openExcelFile: (filePath: string) => void;
   openLink: (linkName: string) => void;
   operateWindowActions(action: 'max' | 'min' | 'close'): void;
+  copyToClipBoard(opt: { text: string }): Promise<void>;
 }

@@ -13,6 +13,9 @@ function removeProgressListeners() {
 }
 
 export const contextApi: ContextApi = {
+  async copyToClipBoard(opts) {
+    return ipcRenderer.invoke(Events.COPY_TEXT, JSON.stringify(opts));
+  },
   async extractURLs(urls) {
     const result = await ipcRenderer.invoke(
       Events.EXTRACT_URLS,

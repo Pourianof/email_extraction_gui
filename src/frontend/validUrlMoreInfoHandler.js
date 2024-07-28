@@ -10,8 +10,6 @@ function handle() {
   const addressHintsElmnt = document.querySelector('.address-hints');
 
   addressHintsElmnt.addEventListener('click', (e) => {
-    e.preventDefault();
-
     /**@type HTMLElement */
     const target = e.target;
     if (target.attributes && 'sample-btn' in target.attributes) {
@@ -27,6 +25,7 @@ function handle() {
 
         if (openedSampleBox) {
           openedSampleBox.classList.remove('hidden');
+          openedSampleBox.scrollIntoView();
         }
       }
     }

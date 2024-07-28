@@ -1,5 +1,16 @@
 import PN from 'persian-number';
 import ExtractionHandler from './extractionHandler';
+import {
+  isElsevier,
+  isElsevierIssue,
+  isSpringer,
+  isSpringerArticles,
+  isSpringerIssue,
+  isWiley,
+  isWileyArticles,
+  isWileyIssue,
+  isWileyVolume,
+} from './urlValidator';
 
 const journalForm = document.forms['journal-form'];
 const extractBtn =
@@ -35,58 +46,37 @@ function focusOnURLInput(e) {
         if (!url.protocol.startsWith('https')) {
           hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
         }
-        let { hostname, pathname } = url;
-        if (hostname.startsWith('www.')) {
-          hostname = hostname.substring(4);
-        }
-        console.log(hostname);
-        if (
-          hostname !== 'elsevier.com' &&
-          hostname !== 'sciencedirect.com' &&
-          hostname !== 'springer.com' &&
-          hostname !== 'link.springer.com' &&
-          !hostname.endsWith('wiley.com')
-        ) {
+
+        if (!isElsevier(val) && !isSpringer(val) && !isWiley(val)) {
           hintMsg.push(
-            'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا ویلی یا اشپرینگر نمیباشد.'
+            'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر نمیباشد.'
           );
         }
 
-        if (
-          hostname == 'sciencedirect.com' &&
-          !(
-            /^\/journal\//g.test(pathname) &&
-            /vol\/\d+(\/issue\/\d+)?\/?$/g.test(pathname)
-          )
-        ) {
+        if (isElsevier(val) && !isElsevierIssue(val)) {
           hintMsg.push(
-            'آدرس وارد شده از ساینس دایرک به صفحه Volume از یک ژورنال اشاره نمیکند'
+            'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک ژورنال اشاره نمیکند'
           );
         } else if (
-          (hostname == 'springer.com' || hostname == 'link.springer.com') &&
-          !(
-            /^\/?journal/g.test(pathname) &&
-            /volumes-and-issues\/\d+-\d+$/g.test(pathname)
-          )
+          isSpringer(val) &&
+          !isSpringerIssue(val) &&
+          !isSpringerArticles(val)
         ) {
           hintMsg.push(
-            'آدرس وارد شده به یک صفحه از Issue مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
+            'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
           );
-        } else if (hostname.endsWith('wiley.com')) {
-          if (!hostname.startsWith('onlinelibrary.')) {
-            hintMsg.push(
-              'آدرس ژورنال ها در سایت ویلی با ساب دامین onlinelibrary آغاز میشود'
-            );
-          } else if (
-            !/^\/?loi\/\d+\/?$/g.test(pathname) &&
-            !/year\/\d+\/?$/g.test(pathname)
-          ) {
-            hintMsg.push(
-              'آدرس وارد شده مربوط به آدرس یک Volume از ژورنال نمیباشد'
-            );
-          }
+        } else if (
+          isWiley(val) &&
+          !isWileyIssue(val) &&
+          !isWileyVolume(val) &&
+          !isWileyArticles(val)
+        ) {
+          hintMsg.push(
+            'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از ژورنال نمیباشد'
+          );
         }
       } catch (err) {
+        console.log(err);
         hintMsg.push('آدرس وارد شده معتبر نمیباشد.');
         if (!val.startsWith('https')) {
           hintMsg.push('لطفا عبارت https:// را در ابتدای آدرس خود قرار دهید');
@@ -264,7 +254,6 @@ function startExtraction() {
     extractOptionsForm['extract-speed'].selectedOptions
   )[0].value;
 
-  console.log('start');
   const extractionHandler = ExtractionHandler.start(urls, options);
 }
 
