@@ -43,7 +43,7 @@ export function isElsevierIssue(url) {
   return (
     isElsevier(url) &&
     ((/^\/journal\//g.test(pathname) &&
-      /vol\/\d+(\/issue\/\d+)?(\/suppl\/C)?\/?$/g.test(pathname)) ||
+      /vol\/\d+(\/issue\/\d+)?(\/suppl\/\w)?\/?$/g.test(pathname)) ||
       /^\/?book\/\d+\/?([\w\d-]+)?\/?$/g.test(pathname))
   );
 }
