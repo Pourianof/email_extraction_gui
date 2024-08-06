@@ -56,6 +56,33 @@ div::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+/*
+  ======= General ========
+*/
+
+.center {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.flex-40 {
+  flex: 40;
+}
+
+.flex-60 {
+  flex: 60;
+}
+
+.flex-20 {
+  flex: 20;
+}
+
+.flex-50 {
+  flex: 50;
+}
+
 html {
   height: 100vh;
 }
@@ -167,14 +194,29 @@ header#header {
   display: flex;
   justify-content: space-around;
 }
+.logos:first-child {
+  border-bottom: 1px solid black;
+}
+
 .header-logos {
   background-color: rgb(235, 235, 235);
-  padding: 0 50px;
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border-right: 1px solid black;
+}
+
+.header-logos:first-child {
+  border: none;
+}
+
+.header-logos.solar-ausmt {
+  background-color: #1e1e1e;
 }
 
 .header-logos img {
-  width: 150px;
-  height: 150px;
+  width: 60%;
+  aspect-ratio: 1;
   object-fit: contain;
 }
 
@@ -255,6 +297,31 @@ main#main {
   width: 100%;
 }
 
+.reset-form {
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  fill: white;
+  transform: translateY(100%);
+  transition: 0.1s;
+  background-color: var(--extract-wrap-bg);
+  padding: 5px 10px;
+  border-radius: 0 0 5px 5px;
+}
+.reset-form:hover {
+  background-color: #2b345f;
+}
+
+.reset-form:hover svg {
+  fill: rgb(177, 52, 52);
+  transform: rotateZ(-90deg);
+}
+
+.reset-form svg {
+  transition: 0.3s;
+  width: 15px;
+}
+
 .address-hint-list {
   padding: 0px 30px;
 }
@@ -264,14 +331,17 @@ main#main {
 }
 
 .extract-btn-wrapper {
+  --extract-wrap-bg: #1a1f37;
   display: flex;
   z-index: 100;
   justify-content: space-between;
-  background-color: #1a1f37;
+  background-color: var(--extract-wrap-bg);
   padding: 10px 20px;
   width: 80%;
   margin: 0 auto;
+  margin-bottom: 50px;
   position: relative;
+  border-bottom: 1px solid #2c3547;
 }
 
 #extract-btn {
@@ -477,6 +547,14 @@ form.journal-form {
   position: relative;
 }
 
+.--cni-input-hint-- {
+  background-color: #23294700;
+  border: 1px solid #4a516b;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #cf9470;
+}
+
 .output-url:hover {
   background-color: rgb(64, 150, 93);
   transition: 0.3s;
@@ -501,7 +579,7 @@ form.journal-form {
   display: inline-block;
   text-align: center;
   font-weight: bold;
-  width: 75px;
+  width: 100px;
   margin-left: 10px;
   color: rgb(209 140 146);
   position: relative;
@@ -541,6 +619,13 @@ form.journal-form {
   border-radius: 5px;
   margin-top: 10px;
   counter-reset: svuNote;
+}
+
+.--svu-info-item-- .--svu-info-opt-- {
+  background-color: rgb(214, 156, 49);
+  margin: 3px 0;
+  padding: 2px 5px;
+  border-radius: 3px;
 }
 
 .--svu-info-item-- {
@@ -712,6 +797,24 @@ form.journal-form {
                     Footer Styles
   ===================================================
 */
+
+.copy-right {
+  padding: 0 5px;
+  font-size: 12px;
+  color: rgb(84 90 127);
+  display: flex;
+  justify-content: space-between;
+}
+
+.my-links span {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.cp {
+  direction: ltr;
+  cursor: default;
+}
 
 .ack {
   /* position: absolute; */
@@ -927,6 +1030,17 @@ form.journal-form {
   align-items: center;
 }
 
+.--eed-count-title-- span:first-child {
+  white-space: nowrap;
+}
+
+.--eed-title-- {
+  margin-right: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .extraced-excel-description .--eed-path-- {
   text-align: left;
   direction: ltr;
@@ -990,4 +1104,27 @@ form.journal-form {
   border-radius: 5px;
   padding: 5px 15px;
   color: #f1b951;
+}
+
+/*
+  ===================== Effects ================
+*/
+
+.rip-btn {
+  overflow: hidden;
+}
+
+span.ripple {
+  position: absolute; /* The absolute position we mentioned earlier */
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 300ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }

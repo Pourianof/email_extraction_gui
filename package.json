@@ -1,6 +1,6 @@
 {
   "name": "ausmt-author-collector",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "An simple app to extract information of authors of the world's most prestigious publication",
   "main": "./src/backend/main.ts",
   "icon": "./assets/images/icons/icon.png",
@@ -82,7 +82,8 @@
   "build": {
     "productName": "AUSMT author collector",
     "appId": "ac.ausmt.AuthorCollector",
-    "buildVersion": "1.1.0",
+    "copyright": "Copyright (C) 2024 Amol University of Special Modern Technologies",
+    "buildVersion": "1.2.0",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -137,6 +138,9 @@
     "extraResources": [
       "./assets/***/**/*"
     ]
+  },
+  "extraMetadata": {
+    "version": "1.2.0"
   },
   "devEngines": {
     "node": ">=14.x",

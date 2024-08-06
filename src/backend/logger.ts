@@ -1,21 +1,20 @@
 import winston from 'winston';
 import { APP_DIR } from './pathes';
 
-const { combine, timestamp } = winston.format;
+const { combine, timestamp, json } = winston.format;
 
 const logger = winston.createLogger({
+  format: combine(timestamp(), json()),
   transports: [
     new winston.transports.File({
       dirname: APP_DIR,
       filename: 'error.log',
       level: 'error',
-      format: combine(timestamp()),
     }),
     new winston.transports.File({
       dirname: APP_DIR,
       filename: 'general.log',
       level: 'info',
-      format: combine(timestamp()),
     }),
   ],
 });

@@ -6,10 +6,15 @@ import {
   isSpringer,
   isSpringerArticles,
   isSpringerIssue,
+  isTandF,
+  isTandFIssue,
   isWiley,
   isWileyArticles,
   isWileyIssue,
   isWileyVolume,
+  isWorldScientific,
+  isWorldScientificIssue,
+  isWorldScientificMainPage,
 } from './urlValidator';
 
 const journalForm = document.forms['journal-form'];
@@ -47,9 +52,15 @@ function focusOnURLInput(e) {
           hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
         }
 
-        if (!isElsevier(val) && !isSpringer(val) && !isWiley(val)) {
+        if (
+          !isElsevier(val) &&
+          !isSpringer(val) &&
+          !isWiley(val) &&
+          !isWorldScientific(val) &&
+          !isTandF(val)
+        ) {
           hintMsg.push(
-            'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر نمیباشد.'
+            'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر یا T&F و یا World-Scientific و یا T&F نمیباشد.'
           );
         }
 
@@ -73,6 +84,18 @@ function focusOnURLInput(e) {
         ) {
           hintMsg.push(
             'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از ژورنال نمیباشد'
+          );
+        } else if (
+          isWorldScientific(val) &&
+          !isWorldScientificIssue(val) &&
+          !isWorldScientificMainPage(val)
+        ) {
+          hintMsg.push(
+            'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات World-Scientific نمیباشد'
+          );
+        } else if (isTandF(val) && !isTandFIssue(val)) {
+          hintMsg.push(
+            'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات T&F نمیباشد'
           );
         }
       } catch (err) {

@@ -126,10 +126,10 @@ export default class ExtractionHandler {
     const waitingViewElmnt = journalForm.parentElement.firstElementChild;
     const extractedListElmnt = waitingViewElmnt;
 
-    const { firstName, lastName, email, affiliations, address } = state.author;
+    const { name, lastName, email, affiliations, address } = state.author;
     const newItemElmnt = createNewExtractedAuthorItem(
       state.totalAuthorRecieved,
-      firstName,
+      name,
       lastName,
       affiliations,
       address,
@@ -288,10 +288,13 @@ function failedExtractionHandler(message, filePath, extractedCount) {
 function extractionFinishHandler(parent) {
   let loadingImg = waitingViewElmnt.firstElementChild;
 
+  const returnToViewBtn = document.createElement('button');
+  returnToViewBtn.classList.add('--rv-btn--');
+  returnToViewBtn.textContent = 'بازگشت به فرم قبلی';
+
   const closeResultViewBtn = document.createElement('button');
-  closeResultViewBtn.classList.add('--ser-btn--');
-  closeResultViewBtn.classList.add('--ser-close-btn--');
-  closeResultViewBtn.textContent = 'بازگشت';
+  closeResultViewBtn.classList.add('--ser-btn--', '--ser-close-btn--');
+  closeResultViewBtn.textContent = 'اتمام و نمایش فرم جدید';
   parent.appendChild(closeResultViewBtn);
   closeResultViewBtn.addEventListener('click', (e) => {
     e.preventDefault();

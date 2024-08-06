@@ -73,3 +73,33 @@ export function isWileyArticles(url) {
   const { pathname } = new URL(url);
   return isWiley(url) && /^\/?index\/[\d\w]+\/?$/g.test(pathname);
 }
+
+/** @param {string} url */
+export function isWorldScientific(url) {
+  return testHost(url, 'worldscientific.com');
+}
+/** @param {string} url */
+export function isWorldScientificMainPage(url) {
+  const { pathname } = new URL(url);
+  return (
+    isWorldScientific(url) && /\/?worldscinet\/[\w\d-]+\/?/g.test(pathname)
+  );
+}
+/** @param {string} url */
+export function isWorldScientificIssue(url) {
+  const { pathname } = new URL(url);
+  return (
+    isWorldScientific(url) &&
+    /\/?toc\/[\w\d-]+\/\d+\/?((0\d|[1-9]\d*)(n(0\d|[1-9]\d*))?)?$/g.test(
+      pathname
+    )
+  );
+}
+
+export function isTandF(url) {
+  return testHost(url, 'tandfonline.com');
+}
+export function isTandFIssue(url) {
+  const { pathname } = new URL(url);
+  return isTandF(url) && /\/?toc\/[\d\w-]+\/\d+\/\d+(-\d+)?\/?/g.test(pathname);
+}

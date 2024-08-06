@@ -40,11 +40,64 @@ function displayMessage(message, isErr) {
 function convertToolInitializer() {
   /**@type HTMLFormElement */
   const volIssForm = form.querySelector(`.convert-number-inputs`);
-  volIssForm.addEventListener('change', function (e) {
+  volIssForm.addEventListener('input', function (e) {
     /** @type HTMLInputElement */
     const target = e.target;
     const val = target.value.trim();
+
+    if (!/^\d+$/.test(val) || !val.length) {
+      console.log('prevent');
+      const num = Number(val);
+      if (!Number.isNaN(num)) {
+        this.value = Math.abs(num);
+      } else {
+        this.value = '';
+      }
+      e.preventDefault();
+      return;
+    } else if (e.data && !Number.isInteger(e.data)) {
+      this.value = val.substring(0, val.length - 1);
+      return;
+    }
+
     if (val) {
+      const [pub, type] = getActiveOption();
+      if (pub == 'wiley' && type.startsWith('vol')) {
+        const num = +val;
+        const year = new Date().getFullYear();
+
+        const year2 = +year.toString().substring(2);
+
+        console.log(
+          num,
+          year,
+          year2,
+          (num < 2000 && (num < 0 || num > year2)) || num > year
+        );
+
+        if ((num < 2000 && (num < 0 || num > year2)) || num > year) {
+          const numStr = num.toString();
+          let inYear;
+          if (numStr.length > 4 && numStr.startsWith(20)) {
+            const tempYear = +numStr.substring(2, 4);
+            if (tempYear < year2) {
+              inYear = tempYear;
+            } else {
+              inYear = tempYear - 1;
+            }
+          } else {
+            const tempYear = +numStr.substring(0, 2);
+            if (tempYear > year2) {
+              inYear = year2 - 1;
+            } else {
+              inYear = tempYear;
+            }
+          }
+          this.value = inYear;
+          return;
+        }
+      }
+
       generateOutputURL();
     }
   });
@@ -117,11 +170,20 @@ function convertToolInitializer() {
   });
 }
 
-function handleOptions() {
+function processTypeString(type) {
+  return type.split('-').map((n) => n.toLowerCase());
+}
+
+function getActiveOption() {
   const options = selectElmnt.options;
   const index = selectElmnt.selectedIndex;
   const name = options[index].value;
-  const type = name.split('-')[1].toLowerCase();
+
+  return processTypeString(name);
+}
+
+function handleOptions() {
+  const [pub, type] = getActiveOption();
 
   const visibleParts = form.querySelectorAll(
     `.convert-number-inputs .--cni-input--`
@@ -141,6 +203,17 @@ function handleOptions() {
       v.classList.remove('hidden');
     } else if (t.includes(type)) {
       v.classList.remove('hidden');
+      const hintElmnt = v.getElementsByClassName('--cni-input-hint--').item(0);
+      if (pub == 'wiley') {
+        if (hintElmnt) {
+          const fullYear = new Date().getFullYear().toString();
+          hintElmnt.textContent = `شماره Volume در ناشر John Wiley، باید برابر با سال آن Volume باشد. (عددی بین 0 تا ${fullYear.substring(
+            2
+          )} یا 2000 تا ${fullYear})`;
+        }
+      } else {
+        hintElmnt.textContent = '';
+      }
     } else {
       v.classList.add('hidden');
     }
@@ -168,7 +241,7 @@ function generateOutputURL() {
     if (isWiley) {
       targetURL = `https://www.onlinelibrary.wiley.com/index/${journalId}`;
     } else {
-      targetURL = `https://www.link.springer.com/journal/${journalId}/articles`;
+      targetURL = `https://link.springer.com/journal/${journalId}/articles`;
     }
   } else {
     let vol = Number(

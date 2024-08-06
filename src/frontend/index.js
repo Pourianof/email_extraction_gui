@@ -9,6 +9,7 @@ import {
 import { availableWhatNotes } from './DATA';
 import './uiInitializer';
 import './converLinkTool';
+import './rippleAnimation';
 
 /**
  * @type HTMLElement

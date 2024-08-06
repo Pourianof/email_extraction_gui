@@ -18,7 +18,10 @@
           <span class="journal-url-index"></span>
           <div class="journal-url-input">
             <input dir="auto" type="text" />
-            <span class="">مسیر ژورنال مورد نظرتان را در اینجا قرار دهید</span>
+            <span class=""
+              >آدرس صفحه مورد نظرتان را با در نظر گرفتن صحت آن در اینجا قرار
+              دهید</span
+            >
           </div>
           <button class="remove-url-btn btn">
             <svg
@@ -72,7 +75,7 @@
           <div class="--eed-create-time--"></div>
           <div class="--eed-count-title--">
             <span></span>
-            <span class="--eed-title--"></span>
+            <span dir="auto" class="--eed-title--"></span>
           </div>
           <div class="--eed-path--"></div>
         </div>
@@ -222,20 +225,43 @@
         </div>
         <header id="header">
           <div class="logos">
-            <div class="header-logos">
+            <div class="header-logos flex-60">
               <img
-                data-open="springer"
-                src="../../../assets/images/springer.png"
+                class="center"
+                data-open="tfo"
+                src="../../../assets/images/tfo.png"
               />
             </div>
-            <div class="header-logos">
+            <div class="header-logos flex-40">
               <img
+                class="center"
                 data-open="elsevier"
                 src="../../../assets/images/elsevier.png"
               />
             </div>
-            <div class="header-logos">
-              <img data-open="wiley" src="../../../assets/images/wiley.png" />
+
+            <div class="header-logos flex-60">
+              <img
+                class="center"
+                data-open="ws"
+                src="../../../assets/images/ws.png"
+              />
+            </div>
+          </div>
+          <div class="logos">
+            <div class="header-logos flex-50">
+              <img
+                class="center"
+                data-open="springer"
+                src="../../../assets/images/icons/springer.svg"
+              />
+            </div>
+            <div class="header-logos flex-50">
+              <img
+                class="center"
+                data-open="wiley"
+                src="../../../assets/images/wiley.png"
+              />
             </div>
           </div>
           <div class="description">
@@ -243,7 +269,10 @@
               جمع آوری اطلاعات نویسندگان <br />
               از ژورنال های ناشران معتبر جهانی
             </h1>
-            <div class="publishers">Elsevier - Springer - John Wiley</div>
+            <div class="publishers">
+              Elsevier - Springer - John Wiley - World Scientific - Taylor &
+              Francis
+            </div>
             <div class="ausmt-love">
               ولی هیچکدوم
               <img
@@ -262,13 +291,13 @@
           <div class="about">
             <details>
               <summary>
-                <h3 style="display: inline-block">درباره برنامه:</h3>
+                <h3 style="display: inline-block">درباره برنامه</h3>
               </summary>
               <div>
                 <p>
                   هدف از این برنامه جمع آوری اطلاعات نویسندگان از 5 ناشر معتبر
-                  جهانی یعنی Elsevier، Springer، John Wiley، Taylor & Francis و
-                  World Scientific می‌باشد. در واقع این برنامه فرآیند جمع آوری
+                  جهانی یعنی Elsevier، Springer، John Wiley، World Scientific و
+                  Taylor & Francis می‌باشد. در واقع این برنامه فرآیند جمع آوری
                   را خودکار میکند.
                 </p>
                 <h4 style="color: #f39c9c">
@@ -277,12 +306,12 @@
                 <ul>
                   <li>
                     برای استفاده از این برنامه حتما از نصب بودن مرورگر Google
-                    Chrome در سیستم خود اطمینان حاصل کنید
+                    Chrome در سیستم خود اطمینان حاصل کنید.
                   </li>
                   <li>
                     وقتی فرآیند جمع آوری آغاز می‌شود، مرورگر کروم باز می‌شود،
                     درصورت بستن مرورگر فرآیند جمع آوری به پایان می‌رسد. پس مراقب
-                    باشید
+                    باشید.
                   </li>
                   <li>
                     پیشنهاد می‌شود از مرورگر باز شده استفاده نکنید. ممکن است
@@ -290,12 +319,12 @@
                     خودتان باز کردید مانعی ندارد)
                   </li>
                   <li>
-                    پیشنهاد می‌شود از یک اینترنت با سرعت مناسب استفاده کنید
+                    پیشنهاد می‌شود از یک اینترنت با سرعت مناسب استفاده کنید.
                   </li>
                   <li>
                     پیشنهاد می‌شود در هر چندبار استفاده از برنامه در صورت امکان،
                     از نرم افزار های تغییر آی پی یا پروکسی ها استفاده کنید تا از
-                    تشخیص به عنوان بات تا حد امکان چلوگیری شود
+                    تشخیص به عنوان بات تا حد امکان چلوگیری شود.
                   </li>
                   <!-- <li>
                     درصورت امکان در حین استخراج از سیستم استفاده نکنید. دلیل این
@@ -346,56 +375,86 @@
                       sample-btn
                       >Book (کتاب)</span
                     >
-                    ژورنال مورد نظر باید وارد شود
+                    ژورنال مورد نظر باید وارد شود.
                   </div>
-                </div>
-                <div class="extracter-url-help">
-                  <span class="extracter-name">Springer</span> آدرس صفحه آخرین
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="springer-issue"
-                    sample-btn
-                    >Issue</span
-                  >
-                  از
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="springer-issue"
-                    sample-btn
-                    >Volume</span
-                  >
-                  و یا آدرس صفحه
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="springer-articles"
-                    sample-btn
-                    >Articles (مقالات)</span
-                  >
-                  ژورنال مورد نظر باید وارد شود
-                </div>
-                <div class="extracter-url-help">
-                  <span class="extracter-name">John Wiley</span> آدرس صفحه
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="wiley-volume"
-                    sample-btn
-                    >Volume</span
-                  >
-                  یا
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="wiley-issue"
-                    sample-btn
-                    >Issue</span
-                  >
-                  و یا آدرس صفحه
-                  <span
-                    class="en-in-fa btn"
-                    data-sample-id="wiley-articles"
-                    sample-btn
-                    >Articles (مقالات)</span
-                  >
-                  مورد نظر باید وارد شود
+                  <div class="extracter-url-help">
+                    <span class="extracter-name">Springer</span> آدرس صفحه آخرین
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="springer-issue"
+                      sample-btn
+                      >Issue</span
+                    >
+                    از
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="springer-issue"
+                      sample-btn
+                      >Volume</span
+                    >
+                    و یا آدرس صفحه
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="springer-articles"
+                      sample-btn
+                      >Articles (مقالات)</span
+                    >
+                    ژورنال مورد نظر باید وارد شود.
+                  </div>
+                  <div class="extracter-url-help">
+                    <span class="extracter-name">John Wiley</span> آدرس صفحه
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="wiley-volume"
+                      sample-btn
+                      >Volume</span
+                    >
+                    یا
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="wiley-issue"
+                      sample-btn
+                      >Issue</span
+                    >
+                    و یا آدرس صفحه
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="wiley-articles"
+                      sample-btn
+                      >Articles (مقالات)</span
+                    >
+                    مورد نظر باید وارد شود.
+                  </div>
+                  <div class="extracter-url-help">
+                    <span class="extracter-name">World Scientific</span> آدرس
+                    صفحه
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="ws-issue"
+                      sample-btn
+                      >Issue</span
+                    >
+                    یا
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="ws-main-page"
+                      sample-btn
+                      >آدرس صفحه اصلی ژورنال</span
+                    >
+                    مورد نظر باید وارد شود.
+                  </div>
+                  <div class="extracter-url-help">
+                    <span class="extracter-name">Taylor & Francis</span> آدرس
+                    صفحه
+
+                    <span
+                      class="en-in-fa btn"
+                      data-sample-id="tf-issue"
+                      sample-btn
+                      >Issue</span
+                    >
+                    مورد نظر باید وارد شود.
+                  </div>
                 </div>
               </li>
             </ol>
@@ -408,8 +467,8 @@
                 </summary>
                 <div class="address-helper-form">
                   <label>
-                    آدرس اولیه را وارد کنید. این آدرس می‌بایست یکی از آدرس های
-                    معتبر مشخص شده در لیست بالا برای 2 ناشر
+                    آدرس اولیه را وارد کنید. این آدرس باید یکی از آدرس های معتبر
+                    مشخص شده در لیست بالا برای 2 ناشر
                     <span class="en-in-fa">John Wiley</span> و
                     <span class="en-in-fa">Springer</span> یا آدرس صفحه اصلی
                     ژورنال یکی از این 2 ناشر باشد.
@@ -452,6 +511,7 @@
                           inputmode="numeric"
                           min="1"
                         />
+                        <div class="--cni-input-hint--"></div>
                       </div>
                       <div class="--cni-input-- hidden" type="issue">
                         <label>شماره Issue</label>
@@ -466,7 +526,7 @@
                     </form>
                   </div>
                   <div id="output-address" class="hidden">
-                    <div class="output-url btn">
+                    <div class="output-url rip-btn btn">
                       <span id="generated-address"></span>
                       <button class="btn"></button>
                     </div>
@@ -826,6 +886,125 @@
                   <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
                 </div>
               </div>
+              <div data-name="ws-issue" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">Issue</span> مناسب از ناشر World
+                  Scientific
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      worldscientific.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--"> /toc</span>
+                    <span class="--svu-path-- --svu-part--">/jaa</span>
+                    <span class="--svu-path-- --svu-part--">/23</span>
+                    <span class="--svu-path-- --svu-part--">/07</span>
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع می‌شود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">worldscientific.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر با عبارت toc شروع می‌شود
+                  </div>
+                  <div class="--svu-info-item--">
+                    بعد از آن هم عنوان ژورنال مورد نظر
+                  </div>
+                  <div class="--svu-info-item--">شماره Volume</div>
+                  <div class="--svu-info-item--">
+                    شماره Issue
+                    <div class="--svu-info-opt--">
+                      ممکن است برخی از ژورنال ها در یکسری از Volume ها تنها یک
+                      Issue داشته باشند که باعث میشود این قسمت در مسیر مشخص نشود
+                    </div>
+                  </div>
+                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                </div>
+              </div>
+              <div data-name="ws-main-page" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">صفحه اصلی</span> مناسب از ناشر World
+                  Scientific
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      worldscientific.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--"> /worldscinet</span>
+                    <span class="--svu-path-- --svu-part--">/jaa</span>
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع می‌شود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">worldscientific.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر با عبارت worldscinet شروع می‌شود
+                  </div>
+                  <div class="--svu-info-item--">
+                    بعد از آن هم عنوان ژورنال مورد نظر
+                  </div>
+
+                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                </div>
+              </div>
+              <div data-name="tf-issue" class="hidden">
+                <div class="--svu-title--">
+                  نمونه ای از یک آدرس
+                  <span class="en-in-fa">issue</span> مناسب از ناشر Taylor &
+                  Francis
+                </div>
+                <div class="sample-valid-url --svu-book--">
+                  <div class="--svu-url--">
+                    <span class="--svu-protocol-- --svu-part--">https://</span>
+                    www.
+                    <span class="--svu-domain --svu-part--">
+                      tandfonline.com
+                    </span>
+                    <span class="--svu-path-- --svu-part--">/toc/rrob20</span>
+                    <span class="--svu-path-- --svu-part--">/11</span>
+                    <span class="--svu-path-- --svu-part--">/4</span>
+                  </div>
+                </div>
+                <div class="--svu-more-info--">
+                  <div class="--svu-info-item--">
+                    آدرس با عبارت
+                    <span class="en-in-fa">https://</span> شروع می‌شود
+                  </div>
+                  <div class="--svu-info-item--">
+                    دامنه آدرس برابر با
+                    <span class="en-in-fa">tandfonline.com</span> است
+                  </div>
+                  <div class="--svu-info-item--">
+                    مسیر آدرس با عبارت toc و بعد شناسه آن ژورنال آغاز می‌شود
+                  </div>
+                  <div class="--svu-info-item--">شماره Volume</div>
+                  <div class="--svu-info-item--">شماره Issue</div>
+                </div>
+                <div class="--svu-hint--">
+                  با وارد کردن آدرس یک Issue، کل داده های Volume مربوط به آن
+                  Issue استخراج میشود
+                </div>
+              </div>
               <span class="--svu-plus--"
                 >قسمت های <span class="--svu-part--">شماره دار</span> در آدرس
                 نمونه، بخش های لازم و اجباری مسیر هستند و قسمت های بدون شماره که
@@ -836,16 +1015,20 @@
             <div class="extract-btn-wrapper">
               <form id="extraction-options">
                 <div>
-                  <input
-                    type="checkbox"
-                    id="only-main-author"
-                    name="only-main"
-                  />
-                  <label for="only-main-author">نویسنده اصلی مقاله</label>
+                  <label for="only-main-author" class="btn">
+                    <input
+                      type="checkbox"
+                      id="only-main-author"
+                      name="only-main"
+                    />
+                    نویسنده اصلی مقاله
+                  </label>
                 </div>
                 <div>
-                  <input id="only-email" type="checkbox" name="only-email" />
-                  <label for="only-email">نویسندگان دارای ایمیل</label>
+                  <label for="only-email" class="btn">
+                    <input id="only-email" type="checkbox" name="only-email" />
+                    نویسندگان دارای ایمیل
+                  </label>
                 </div>
                 <div>
                   <label>اتمام جمع آوری پس از یافتن </label>
@@ -876,6 +1059,27 @@
                     <option selected>کم</option>
                   </select>
                 </div>
+                <button class="btn reset-form rip-btn" type="reset">
+                  <svg
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 17 20"
+                  >
+                    <defs>
+                      <style>
+                        .cls-1 {
+                          fill-rule: evenodd;
+                        }
+                      </style>
+                    </defs>
+                    <path
+                      class="cls-1"
+                      d="M10.71.3a1,1,0,0,1,0,1.41L9.22,3.18H10a8.41,8.41,0,1,1-8.5,8.41,1,1,0,0,1,2,0A6.5,6.5,0,1,0,10,5.18H9.22L10.7,6.64A1,1,0,1,1,9.3,8.06L6.08,4.89a1,1,0,0,1-.29-.71,1,1,0,0,1,.29-.71L9.3.29A1,1,0,0,1,10.71.3Z"
+                      transform="translate(-1.5)"
+                    />
+                  </svg>
+                </button>
               </form>
               <button id="extract-btn" class="hidden btn">شروع استخراج</button>
             </div>
@@ -892,135 +1096,19 @@
             >
             <br />
             تحت نظارت دکتر محمدعلی حسین زاده<br />
-            <div data-open="github" title="طراح و برنامه نویس" class="ack">
-              <span>
-                <svg
-                  width="128"
-                  height="128"
-                  viewBox="0 0 128 128"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <defs>
-                    <circle id="b" cx="64" cy="64" r="56" />
-                    <filter
-                      x="-7.1%"
-                      y="-5.4%"
-                      width="114.3%"
-                      height="114.3%"
-                      filterUnits="objectBoundingBox"
-                      id="a"
-                    >
-                      <feMorphology
-                        radius="1"
-                        operator="dilate"
-                        in="SourceAlpha"
-                        result="shadowSpreadOuter1"
-                      />
-                      <feOffset
-                        dy="2"
-                        in="shadowSpreadOuter1"
-                        result="shadowOffsetOuter1"
-                      />
-                      <feGaussianBlur
-                        stdDeviation="2"
-                        in="shadowOffsetOuter1"
-                        result="shadowBlurOuter1"
-                      />
-                      <feComposite
-                        in="shadowBlurOuter1"
-                        in2="SourceAlpha"
-                        operator="out"
-                        result="shadowBlurOuter1"
-                      />
-                      <feColorMatrix
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.240942029 0"
-                        in="shadowBlurOuter1"
-                      />
-                    </filter>
-                    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="c">
-                      <stop stop-color="#FEFEFE" offset="0%" />
-                      <stop stop-color="#E0E0E0" offset="100%" />
-                    </linearGradient>
-                    <circle id="d" cx="64" cy="63" r="52" />
-                    <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="g">
-                      <stop stop-color="#492779" offset="0%" />
-                      <stop stop-color="#892793" offset="100%" />
-                    </linearGradient>
-                    <path
-                      d="M12 64.034c0 23.025 14.885 42.472 35.555 49.367 2.6.456 3.575-1.105 3.575-2.47 0-1.237-.065-5.334-.065-9.692C38 103.644 34.62 98.05 33.58 95.124c-.585-1.496-3.12-6.114-5.33-7.35-1.82-.976-4.42-3.382-.065-3.447 4.095-.065 7.02 3.772 7.995 5.333 4.68 7.87 12.155 5.66 15.145 4.293.455-3.382 1.82-5.66 3.315-6.96-11.57-1.3-23.66-5.788-23.66-25.69 0-5.66 2.015-10.343 5.33-13.985-.52-1.3-2.34-6.634.52-13.79 0 0 4.355-1.365 14.3 5.334 4.16-1.17 8.58-1.756 13-1.756s8.84.586 13 1.756c9.945-6.764 14.3-5.333 14.3-5.333 2.86 7.154 1.04 12.487.52 13.788 3.315 3.642 5.33 8.26 5.33 13.984 0 19.968-12.155 24.39-23.725 25.692 1.885 1.626 3.51 4.748 3.51 9.626 0 6.96-.065 12.553-.065 14.31 0 1.365.975 2.99 3.575 2.47C101.115 106.507 116 86.995 116 64.035 116 35.284 92.73 12 64 12S12 35.285 12 64.034z"
-                      id="e"
-                    />
-                    <filter
-                      x="-.5%"
-                      y="-.5%"
-                      width="101%"
-                      height="102%"
-                      filterUnits="objectBoundingBox"
-                      id="f"
-                    >
-                      <feOffset
-                        dy="1"
-                        in="SourceAlpha"
-                        result="shadowOffsetOuter1"
-                      />
-                      <feColorMatrix
-                        values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.529296875 0"
-                        in="shadowOffsetOuter1"
-                      />
-                    </filter>
-                    <filter
-                      x="-1%"
-                      y="-1%"
-                      width="101.9%"
-                      height="103%"
-                      filterUnits="objectBoundingBox"
-                      id="h"
-                    >
-                      <feGaussianBlur
-                        stdDeviation="1"
-                        in="SourceAlpha"
-                        result="shadowBlurInner1"
-                      />
-                      <feOffset
-                        in="shadowBlurInner1"
-                        result="shadowOffsetInner1"
-                      />
-                      <feComposite
-                        in="shadowOffsetInner1"
-                        in2="SourceAlpha"
-                        operator="arithmetic"
-                        k2="-1"
-                        k3="1"
-                        result="shadowInnerInner1"
-                      />
-                      <feColorMatrix
-                        values="0 0 0 0 0.258823529 0 0 0 0 0.137254902 0 0 0 0 0.431372549 0 0 0 0.703549592 0"
-                        in="shadowInnerInner1"
-                      />
-                    </filter>
-                  </defs>
-                  <g fill="none" fill-rule="evenodd">
-                    <path d="M0 0h128v128H0z" />
-                    <use fill="#000" filter="url(#a)" xlink:href="#b" />
-                    <use
-                      stroke-opacity=".5"
-                      stroke="#BABABA"
-                      stroke-width="2"
-                      fill-opacity="0"
-                      fill="#FFF"
-                      xlink:href="#b"
-                    />
-                    <circle fill="url(#c)" cx="64" cy="64" r="56" />
-                    <g>
-                      <use fill="#000" filter="url(#f)" xlink:href="#e" />
-                      <use fill="url(#g)" xlink:href="#e" />
-                      <use fill="#000" filter="url(#h)" xlink:href="#e" />
-                    </g>
-                  </g>
-                </svg>
-              </span>
+          </div>
+          <div class="copy-right">
+            <div title="صفحه گیت‌هاب" data-open="github">
+              <span>طراح و برنامه نویس: </span>
               پوریا امینی
+              <!-- <div class="my-links">
+                <span> گیت‌هاب </span>
+                <span>ایمیل</span>
+              </div> -->
+            </div>
+            <div class="cp">
+              &#169; Copyright Amol University of Special Modern Technologies
+              2024
             </div>
           </div>
         </footer>

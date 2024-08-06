@@ -105,6 +105,12 @@ export default class IPCEventHandler {
       open(`https://ausmt.ac.ir/`);
     } else if (d == 'github') {
       open(`https://github.com/Coded-By-Pooria`);
+    } else if (d == 'ws') {
+      open(`https://www.worldscientific.com/page/wsjournals`);
+    } else if (d == 'tfo') {
+      open(
+        `https://www.tandfonline.com/action/showPublications?pubType=journal`
+      );
     }
   }
 
@@ -243,7 +249,7 @@ export default class IPCEventHandler {
           if (!res.canceled) {
             filePath = res.filePath;
           } else {
-            filePath = path.join(app.getPath('desktop'), defaultName);
+            filePath = path.join(app.getPath('desktop'), `${defaultName}.xlsx`);
           }
           return filePath;
         },
@@ -263,7 +269,9 @@ export default class IPCEventHandler {
 
       if (!filePath) {
         logError('No file path registered.');
-        throw new Error('مشکلی در فرآیند استخراج پیش آمده. ');
+        throw new Error(
+          'مشکلی در فرآیند استخراج پیش آمده. ممکن است دلیل آن، عدم استخراج داده‌ای باشد.'
+        );
       } else {
         registerExtractedExcel(
           filePath!,
@@ -300,7 +308,7 @@ export default class IPCEventHandler {
             'امکان ثبت فایل با مسیر داده شده وجود نداشت، ممکن است دلیل آن باز بودن فایل هم نام موجود در این مسیر باشد';
         } else {
           message =
-            'خطایی رخ داده است. برای اطلاعات بیشتر فایل log را بررسی کنید ودر صورت رخ دادن مجدد فایل log را به پشتیبات ارسال کنید. یا دوباره اجرا کنید.';
+            'خطایی رخ داده است. برای اطلاعات بیشتر فایل log را بررسی کنید ودر صورت رخ دادن مجدد فایل log را به پشتیبان ارسال کنید. یا دوباره اجرا کنید.';
         }
       }
       return {

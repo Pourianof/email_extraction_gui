@@ -1,10 +1,10 @@
 {
   "name": "ausmt-author-collector",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Collects authors information from famous publishers",
   "license": "MIT",
   "author": {
-    "name": "Pooria - ausmt",
+    "name": "Pooria Amini - ausmt",
     "email": "PooriaXAmini@gmail.com",
     "url": "https://github.com/coded-by-pooria"
   },
