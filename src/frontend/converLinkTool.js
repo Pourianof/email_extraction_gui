@@ -206,13 +206,17 @@ function handleOptions() {
       const hintElmnt = v.getElementsByClassName('--cni-input-hint--').item(0);
       if (pub == 'wiley') {
         if (hintElmnt) {
+          hintElmnt.classList.remove('hidden');
           const fullYear = new Date().getFullYear().toString();
           hintElmnt.textContent = `شماره Volume در ناشر John Wiley، باید برابر با سال آن Volume باشد. (عددی بین 0 تا ${fullYear.substring(
             2
           )} یا 2000 تا ${fullYear})`;
         }
       } else {
-        hintElmnt.textContent = '';
+        if (hintElmnt) {
+          hintElmnt.classList.add('hidden');
+          hintElmnt.textContent = '';
+        }
       }
     } else {
       v.classList.add('hidden');

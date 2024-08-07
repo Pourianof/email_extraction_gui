@@ -26,20 +26,22 @@ function handleExtractedItemsListScroll(e) {
 }
 
 function hideExtractList() {
-  const extractListElmnt = document.querySelector('.extracted-list');
+  const extractListElmnt = waitingViewElmnt.lastElementChild;
   extractListElmnt.classList.add('hidden');
   extractListElmnt.firstElementChild.firstElementChild.removeEventListener(
     'click',
     hideExtractList
   );
-
-  const displayLabel = extractListElmnt.previousElementSibling;
-  displayLabel.classList.remove('hidden');
   extractListElmnt.lastElementChild.removeEventListener(
     'scroll',
     handleExtractedItemsListScroll
   );
-  displayLabel.addEventListener('click', displayExtractList);
+  const displayLabel = waitingViewElmnt
+    .getElementsByClassName('display-extraction')
+    .item(0);
+  if (displayLabel) {
+    displayLabel.addEventListener('click', displayExtractList);
+  }
 }
 
 function displayExtractList() {
@@ -55,9 +57,12 @@ function displayExtractList() {
     handleExtractedItemsListScroll
   );
 
-  const displayLabel = extractListElmnt.previousElementSibling;
-  displayLabel.classList.add('hidden');
-  displayLabel.removeEventListener('click', displayExtractList);
+  const displayLabel = waitingViewElmnt
+    .getElementsByClassName('display-extraction')
+    .item(0);
+  if (displayLabel) {
+    displayLabel.removeEventListener('click', displayExtractList);
+  }
 }
 
 function handleExtractionWaitingView(hide) {
@@ -235,15 +240,7 @@ function succefulExtractionHandler(result, extractedCount) {
   statusSubHint.textContent = `در مجموعه ${extractedCount} آیتم بدست آمده است`;
   waitingResultElement.appendChild(statusSubHint);
 
-  const openExtractedExcelBtn = document.createElement('button');
-  openExtractedExcelBtn.classList.add('--ser-btn--');
-  openExtractedExcelBtn.classList.add('--ser-open-btn--');
-  openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
-  openExtractedExcelBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
-  });
-  waitingResultElement.appendChild(openExtractedExcelBtn);
+  createResultCommonPart(waitingResultElement);
 
   extractionFinishHandler(waitingResultElement);
 
@@ -269,15 +266,7 @@ function failedExtractionHandler(message, filePath, extractedCount) {
     statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها ساخته شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
     waitingResultElement.appendChild(statusSubHint);
 
-    const openExtractedExcelBtn = document.createElement('button');
-    openExtractedExcelBtn.classList.add('--ser-btn--');
-    openExtractedExcelBtn.classList.add('--ser-open-btn--');
-    openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
-    openExtractedExcelBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
-    });
-    waitingResultElement.appendChild(openExtractedExcelBtn);
+    createResultCommonPart(waitingResultElement);
   }
 
   extractionFinishHandler(waitingResultElement);
@@ -285,17 +274,65 @@ function failedExtractionHandler(message, filePath, extractedCount) {
   waitingViewElmnt.replaceChild(waitingResultElement, loadingImg);
 }
 
+function createResultCommonPart(parent) {
+  const itemsRelatedButtonsWrapper = document.createElement('div');
+  itemsRelatedButtonsWrapper.classList.add('--ser-buttons-container--');
+
+  const displayExtractedItemsListBtn = document.createElement('button');
+  displayExtractedItemsListBtn.classList.add('display-extraction');
+  displayExtractedItemsListBtn.append(
+    document.createTextNode('نمایش آیتم های بدست آمده')
+  );
+
+  displayExtractedItemsListBtn.classList.remove('hidden');
+  displayExtractedItemsListBtn.addEventListener('click', displayExtractList);
+
+  const openExtractedExcelBtn = document.createElement('button');
+  openExtractedExcelBtn.classList.add('--ser-btn--');
+  openExtractedExcelBtn.classList.add('--ser-open-btn--');
+  openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
+  openExtractedExcelBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
+  });
+
+  itemsRelatedButtonsWrapper.append(
+    openExtractedExcelBtn,
+    displayExtractedItemsListBtn
+  );
+
+  parent.appendChild(itemsRelatedButtonsWrapper);
+}
+
 function extractionFinishHandler(parent) {
   let loadingImg = waitingViewElmnt.firstElementChild;
 
   const returnToViewBtn = document.createElement('button');
-  returnToViewBtn.classList.add('--rv-btn--');
+  returnToViewBtn.classList.add('--ser-btn--', '--rv-btn--', '--ser-oc-btn--');
   returnToViewBtn.textContent = 'بازگشت به فرم قبلی';
 
   const closeResultViewBtn = document.createElement('button');
-  closeResultViewBtn.classList.add('--ser-btn--', '--ser-close-btn--');
+  closeResultViewBtn.classList.add('--ser-btn--', '--ser-oc-btn--');
   closeResultViewBtn.textContent = 'اتمام و نمایش فرم جدید';
-  parent.appendChild(closeResultViewBtn);
+
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.classList.add(
+    '--ser-buttons-container--',
+    '--ser-result-form-action-btns-wrapper--'
+  );
+  buttonsContainer.appendChild(returnToViewBtn);
+  buttonsContainer.appendChild(closeResultViewBtn);
+
+  parent.appendChild(buttonsContainer);
+
+  returnToViewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleExtractionWaitingView(true);
+    document.getElementById('extract-btn').classList.remove('hidden');
+    const extractedListWrapperView =
+      waitingViewElmnt.lastElementChild.lastElementChild;
+    extractedListWrapperView.replaceChildren([]);
+  });
   closeResultViewBtn.addEventListener('click', (e) => {
     e.preventDefault();
     handleExtractionWaitingView(true);

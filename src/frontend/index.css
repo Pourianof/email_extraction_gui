@@ -56,6 +56,14 @@ div::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
 /*
   ======= General ========
 */
@@ -230,6 +238,38 @@ header#header {
   font-size: 14px;
   line-height: 30px;
   width: 80%;
+  transition: 0.1s;
+}
+
+.about-info-key {
+  color: #9d905f;
+}
+
+.about-info-val {
+  font-weight: bold;
+}
+
+.about-app-sub-info-item {
+  color: white;
+  opacity: 0.4;
+  cursor: default;
+  width: fit-content;
+  font-size: 12px;
+}
+
+.about-app-sub-info-item:hover {
+  opacity: 0.9;
+}
+
+.about-app-icon {
+  width: 18px;
+  vertical-align: middle;
+  aspect-ratio: 1;
+}
+
+.about-app-email object {
+  width: 25px;
+  fill: red;
 }
 
 /* 
@@ -253,7 +293,7 @@ main#main {
   right: 0;
   bottom: 0;
   border-radius: 10px;
-  background-color: rgb(16 16 16 / 87%);
+  background-color: rgb(16 16 16 / 95%);
   z-index: 110;
   display: flex;
   flex-direction: column;
@@ -1057,6 +1097,19 @@ form.journal-form {
   align-items: center;
 }
 
+.--ser-buttons-container-- {
+  display: flex;
+  justify-content: center;
+}
+
+.--ser-buttons-container-- > button:first-child {
+  margin-left: 15px;
+}
+
+.--ser-buttons-container--.--ser-result-form-action-btns-wrapper-- {
+  margin-top: 20px;
+}
+
 .--ser-message-- {
   background-color: #4d7d3e;
   padding: 5px 10px;
@@ -1091,12 +1144,32 @@ form.journal-form {
   background-color: #204149;
 }
 
-.--ser-close-btn-- {
+.--ser-oc-btn-- {
   color: #ddd9da;
+  position: relative;
 }
 
-.--ser-close-btn--:hover {
-  color: #cf5574;
+.--ser-oc-btn--::before {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  border-radius: 50px;
+  left: 0;
+  right: 0;
+  background-color: #a0a550;
+  transition: 0.2s;
+  z-index: -1;
+}
+
+/* oc = open close */
+.--ser-oc-btn--:hover::before {
+  height: 100%;
+}
+
+.--ser-oc-btn--:hover {
+  color: #000000;
 }
 
 .--fer-message-- {
