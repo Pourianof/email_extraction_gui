@@ -45,35 +45,31 @@ function convertToolInitializer() {
     const target = e.target;
     const val = target.value.trim();
 
+    if (!val && e.data) {
+      target.value = '';
+      return;
+    }
+
     if (!/^\d+$/.test(val) || !val.length) {
-      console.log('prevent');
       const num = Number(val);
       if (!Number.isNaN(num)) {
-        this.value = Math.abs(num);
+        target.value = Math.abs(num);
       } else {
-        this.value = '';
+        target.value = '';
       }
-      e.preventDefault();
       return;
-    } else if (e.data && !Number.isInteger(e.data)) {
-      this.value = val.substring(0, val.length - 1);
+    } else if (e.data && !Number.isInteger(Number(e.data))) {
+      target.value = val.substring(0, val.length - 1);
       return;
     }
 
     if (val) {
       const [pub, type] = getActiveOption();
-      if (pub == 'wiley' && type.startsWith('vol')) {
+      if (pub == 'wiley' && target.dataset.name == 'volume') {
         const num = +val;
         const year = new Date().getFullYear();
 
         const year2 = +year.toString().substring(2);
-
-        console.log(
-          num,
-          year,
-          year2,
-          (num < 2000 && (num < 0 || num > year2)) || num > year
-        );
 
         if ((num < 2000 && (num < 0 || num > year2)) || num > year) {
           const numStr = num.toString();
@@ -93,9 +89,10 @@ function convertToolInitializer() {
               inYear = tempYear;
             }
           }
-          this.value = inYear;
-          return;
+          target.value = inYear;
         }
+      } else {
+        return;
       }
 
       generateOutputURL();
@@ -210,7 +207,7 @@ function handleOptions() {
           const fullYear = new Date().getFullYear().toString();
           hintElmnt.textContent = `شماره Volume در ناشر John Wiley، باید برابر با سال آن Volume باشد. (عددی بین 0 تا ${fullYear.substring(
             2
-          )} یا 2000 تا ${fullYear})`;
+          )})`;
         }
       } else {
         if (hintElmnt) {
@@ -266,6 +263,7 @@ function generateOutputURL() {
       }
     } else if (type == 'volume') {
       if (isWiley) {
+        vol = `20${vol < 10 ? `0${vol}` : vol}`;
         targetURL = `https://www.onlinelibrary.wiley.com/loi/${journalId}/${vol}`;
       }
     }
