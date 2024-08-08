@@ -410,754 +410,867 @@
               </div>
             </details>
           </div>
-          <h4 class="journal-form-header">
-            آدرس ژورنال های مد نظرتان را وارد کنید
-          </h4>
-          <div class="address-hints">
-            <div>نکاتی که لازم است در مورد آدرس ها توجه شود:</div>
-            <ol class="address-hint-list">
-              <li>
-                آدرس ها باید با عبارت
-                <span class="en-in-fa">https://</span> شروع شوند
-              </li>
-              <li>
-                آدرس مناسب به ازای هر انتشاراتی بصورت زیر است:
-                <span
-                  >(با کلیک بر روی عبارات
-                  <span class="en-in-fa">زیرخط دار</span> میتوانید از جزئیات
-                  بیشتر اطلاع پیدا کنید.)</span
-                >
-                <div class="extracter-url-row">
-                  <div class="extracter-url-help">
-                    <span class="extracter-name">Elsevier</span> آدرس صفحه
-                    <span
-                      data-sample-id="elsevier-volume"
-                      sample-btn
-                      class="en-in-fa btn"
-                    >
-                      Volume
-                    </span>
-
-                    یا
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="elsevier-book"
-                      sample-btn
-                      >Book (کتاب)</span
-                    >
-                    ژورنال مورد نظر باید وارد شود.
-                  </div>
-                  <div class="extracter-url-help">
-                    <span class="extracter-name">Springer</span> آدرس صفحه آخرین
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="springer-issue"
-                      sample-btn
-                      >Issue</span
-                    >
-                    از
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="springer-issue"
-                      sample-btn
-                      >Volume</span
-                    >
-                    و یا آدرس صفحه
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="springer-articles"
-                      sample-btn
-                      >Articles (مقالات)</span
-                    >
-                    ژورنال مورد نظر باید وارد شود.
-                  </div>
-                  <div class="extracter-url-help">
-                    <span class="extracter-name">John Wiley</span> آدرس صفحه
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="wiley-volume"
-                      sample-btn
-                      >Volume</span
-                    >
-                    یا
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="wiley-issue"
-                      sample-btn
-                      >Issue</span
-                    >
-                    و یا آدرس صفحه
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="wiley-articles"
-                      sample-btn
-                      >Articles (مقالات)</span
-                    >
-                    مورد نظر باید وارد شود.
-                  </div>
-                  <div class="extracter-url-help">
-                    <span class="extracter-name">World Scientific</span> آدرس
-                    صفحه
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="ws-issue"
-                      sample-btn
-                      >Issue</span
-                    >
-                    یا
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="ws-main-page"
-                      sample-btn
-                      >آدرس صفحه اصلی ژورنال</span
-                    >
-                    مورد نظر باید وارد شود.
-                  </div>
-                  <div class="extracter-url-help">
-                    <span class="extracter-name">Taylor & Francis</span> آدرس
-                    صفحه
-
-                    <span
-                      class="en-in-fa btn"
-                      data-sample-id="tf-issue"
-                      sample-btn
-                      >Issue</span
-                    >
-                    مورد نظر باید وارد شود.
-                  </div>
-                </div>
-              </li>
-            </ol>
-            <div class="address-helper" id="address-convert-form">
-              <details>
-                <summary>
-                  <h3 style="display: inline-block">
-                    آدرس یار (ابزار تبدیل آدرس)
-                  </h3>
-                </summary>
-                <div class="address-helper-form">
-                  <label>
-                    آدرس اولیه را وارد کنید. این آدرس باید یکی از آدرس های معتبر
-                    مشخص شده در لیست بالا برای 2 ناشر
-                    <span class="en-in-fa">John Wiley</span> و
-                    <span class="en-in-fa">Springer</span> یا آدرس صفحه اصلی
-                    ژورنال یکی از این 2 ناشر باشد.
-                  </label>
-                  <input type="text" class="address-helper-input --ahi-url--" />
-                  <div class="address-helper-input-hint hidden"></div>
-                  <div class="address-convert-form">
-                    <label>انتخاب آدرس هدف: </label>
-                    <select id="target-address-select">
-                      <optgroup disabled label="Wiley">
-                        <option value="Wiley-Volume" name="Wiley-Volume">
-                          Wiley - Volume
-                        </option>
-                        <option value="Wiley-Issue" name="Wiley-Issue">
-                          Wiley - Issue
-                        </option>
-                        <option value="Wiley-Articles" name="Wiley-Articles">
-                          Wiley - Articles(مقالات)
-                        </option>
-                      </optgroup>
-                      <optgroup disabled label="Springer">
-                        <option value="Springer-Issue" name="Springer-Issue">
-                          Springer - Issue
-                        </option>
-                        <option
-                          value="Springer-Articles"
-                          name="Springer-Articles"
-                        >
-                          Springer - Articles(مقالات)
-                        </option>
-                      </optgroup>
-                    </select>
-                    <form class="convert-number-inputs">
-                      <div class="--cni-input-- hidden" type="volume issue">
-                        <label>شماره Volume</label>
-                        <input
-                          class="address-helper-input --adi-volume--"
-                          type="number"
-                          pattern="\d+"
-                          inputmode="numeric"
-                          min="1"
-                          data-name="volume"
-                        />
-                        <div class="--cni-input-hint-- hidden"></div>
-                      </div>
-                      <div class="--cni-input-- hidden" type="issue">
-                        <label>شماره Issue</label>
-                        <input
-                          class="address-helper-input"
-                          type="number"
-                          pattern="\d+"
-                          inputmode="numeric"
-                          min="1"
-                          data-name="issue"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div id="output-address" class="hidden">
-                    <div class="output-url rip-btn btn">
-                      <span id="generated-address"></span>
-                      <button class="btn"></button>
-                    </div>
-                    <div>
-                      توجه: برنامه هیچ تضمینی به وجود منابع در آدرس تولید شده
-                      نمیدهد. یعنی برای مثال ممکن است صفحه Volume یا Issue ای با
-                      عدد های داده شده اصلا در ژورنال وجود نداشته باشد.
-                    </div>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-          <div id="form-wrapper">
-            <div class="waiting-view hidden">
-              <img src="../../../assets/images/loading.gif" />
-              <!-- <div class="display-extraction hidden">
-                نمایش آیتم های بدست آمده
-              </div> -->
-              <div class="extracted-list">
-                <div class="extracted-list-header">
-                  <div class="extracted-list-header-title">
-                    <span class="close-extracted-list-btn extracted-items-icon">
-                      <svg
-                        id="Layer_1"
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 863.65 863.65"
-                      >
-                        <path
-                          d="M75.08,863.65A75.08,75.08,0,0,1,22,735.48L735.48,22A75.08,75.08,0,0,1,841.66,128.17L128.16,841.66a74.84,74.84,0,0,1-53.09,22Zm713.49,0a74.91,74.91,0,0,1-53.09-22L22,128.17A75.08,75.08,0,0,1,128.16,22l713.5,713.49a75.08,75.08,0,0,1-53.09,128.17Z"
-                        />
-                      </svg>
-                    </span>
-                    <span class="extracted-items-icon">
-                      <svg
-                        id="Layer_1"
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 87.5 75"
-                      >
-                        <path
-                          d="M85.94,15.63H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,1,0,0-3.12Z"
-                        />
-                        <path
-                          d="M28.12,12.5H85.94a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,1,0,0,3.12Z"
-                        />
-                        <path
-                          d="M28.12,6.25H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
-                        />
-                        <path
-                          d="M85.94,42.19H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
-                        />
-                        <path
-                          d="M85.94,35.94H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
-                        />
-                        <path
-                          d="M28.12,32.81H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
-                        />
-                        <path
-                          d="M85.94,68.75H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
-                        />
-                        <path
-                          d="M85.94,62.5H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
-                        />
-                        <path
-                          d="M28.12,59.38H68.75a1.57,1.57,0,0,0,0-3.13H28.12a1.57,1.57,0,0,0,0,3.13Z"
-                        />
-                        <path
-                          d="M4.69,0h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,17.19V4.69A4.69,4.69,0,0,1,4.69,0Z"
-                        />
-                        <path
-                          d="M4.69,26.56h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,43.75V31.25A4.69,4.69,0,0,1,4.69,26.56Z"
-                        />
-                        <path
-                          d="M4.69,53.13h12.5a5,5,0,0,1,4.69,4.68v12.5A4.69,4.69,0,0,1,17.19,75H4.69A5,5,0,0,1,0,70.31V57.81A4.68,4.68,0,0,1,4.69,53.13Z"
-                        />
-                      </svg>
-                    </span>
-                    <h3>لیست نویسندگان بدست آمده</h3>
-                  </div>
-                  <span>فقط ۵۰ آیتم آخر نمایش داده می‌شود</span>
-                </div>
-                <div class="extracted-list-view"></div>
-              </div>
-            </div>
-            <div class="sample-valid-hints hidden">
-              <span id="close-sample-hints" class="btn">
-                <svg
-                  id="Layer_1"
-                  data-name="Layer 1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 40 40"
-                >
-                  <path
-                    d="M.9,39.1a2.85,2.85,0,0,0,4,0v0L20,24.05,35.11,39.16a2.86,2.86,0,0,0,4-4h0L24.05,20,39.16,4.89a2.86,2.86,0,1,0-4-4L20,16,4.89.9a2.86,2.86,0,1,0-4,4L16,20,.9,35.11A2.84,2.84,0,0,0,.9,39.1Z"
-                    transform="translate(0 0)"
-                  />
-                </svg>
-              </span>
-              <div data-name="elsevier-book" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa"> Book (کتاب)</span> مناسب از ناشر
-                  Elsevier
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--"
-                      >sciencedirect.com</span
-                    >
-                    <span class="--svu-path-- --svu-part--"
-                      >/book/9781455728657</span
-                    >
-                    /abeloffs-clinical-oncology
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">ScienceDirect.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس به یک کتاب اشاره میکند
-                  </div>
-                </div>
-              </div>
-              <div data-name="elsevier-volume" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Volume</span> مناسب از ناشر Elsevier
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      sciencedirect.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--">
-                      /journal/linear-algebra-and-its-applications
-                    </span>
-                    <span class="--svu-path-- --svu-part--">/vol/699</span>
-                    /suppl/C
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">ScienceDirect.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس به یک ژورنال اشاره میکند
-                  </div>
-                  <div class="--svu-info-item--">
-                    در انتهای مسیر نیز <span class="en-in-fa">Volume</span> مورد
-                    نظر از آن ژورنال را مشخص میکند
-                  </div>
-                </div>
-              </div>
-              <div data-name="springer-issue" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">issue</span> مناسب از ناشر Springer
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      link.springer.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--">
-                      journal/11356
-                    </span>
-                    <span class="--svu-path-- --svu-part--"
-                      >/volumes-and-issues/31-32</span
-                    >
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">link.springer.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس با عبارت journal و بعد شناسه آن ژورنال آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    در انتهای مسیر نیز شماره
-                    <span class="en-in-fa">Volume (عدد 31)</span> و شماره
-                    <span class="en-in-fa">Issue (عدد 32)</span> مورد نظر از آن
-                    ژورنال را مشخص میکند.
-                    <span class="--svu-hint--"
-                      >انتخاب آخرین issue اهمیت دارد چراکه اگر آدرس issue های
-                      دیگر را وارد کنید از آن issue شروع به پردازش میکند و به
-                      issue های قبلتر میرود</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div data-name="springer-articles" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Articles</span> مناسب از ناشر Wiley
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      link.springer.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--"> /journal </span>
-                    <span class="--svu-path-- --svu-part--">/22</span>
-                    <span class="--svu-path-- --svu-part--">/articles</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">link.springer.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس با عبارت journal آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">سپس شناسه ژورنال</div>
-                  <div class="--svu-info-item--">
-                    و در آخر هم عبارت articles
-                  </div>
-                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
-                </div>
-              </div>
-              <div data-name="wiley-volume" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Volume</span> مناسب از ناشر Wiley
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      onlinelibrary.wiley.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--">
-                      /loi/10991506
-                    </span>
-                    <span class="--svu-path-- --svu-part--">/year/2024</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">onlinelibrary.wiley.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس نیز با loi و سپس شناسه ژورنال آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    در انتهای مسیر نیز عبارت year و سپس سال Volume قرار میگیرد
-                  </div>
-                </div>
-              </div>
-              <div data-name="wiley-issue" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Issue</span> مناسب از ناشر Wiley
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      onlinelibrary.wiley.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--">
-                      /toc/10991506
-                    </span>
-                    /2024
-                    <span class="--svu-path-- --svu-part--">/31</span>
-                    <span class="--svu-path-- --svu-part--">/4</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">onlinelibrary.wiley.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس نیز با toc و سپس شناسه ژورنال آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    بعد از آن شماره Volume مورد نظر قرار میگیرد
-                  </div>
-                  <div class="--svu-info-item--">و در آخر هم شماره Issue</div>
-                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
-                </div>
-              </div>
-              <div data-name="wiley-articles" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Issue</span> مناسب از ناشر Wiley
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      onlinelibrary.wiley.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--"> /index</span>
-                    <span class="--svu-path-- --svu-part--">/5708</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">onlinelibrary.wiley.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس نیز با عبارت index آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    بعد از آن هم شناسه ژورنال قرار میگیرد
-                  </div>
-                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
-                </div>
-              </div>
-              <div data-name="ws-issue" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">Issue</span> مناسب از ناشر World
-                  Scientific
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      worldscientific.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--"> /toc</span>
-                    <span class="--svu-path-- --svu-part--">/jaa</span>
-                    <span class="--svu-path-- --svu-part--">/23</span>
-                    <span class="--svu-path-- --svu-part--">/07</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">worldscientific.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر با عبارت toc شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    بعد از آن هم عنوان ژورنال مورد نظر
-                  </div>
-                  <div class="--svu-info-item--">شماره Volume</div>
-                  <div class="--svu-info-item--">
-                    شماره Issue
-                    <div class="--svu-info-opt--">
-                      ممکن است برخی از ژورنال ها در یکسری از Volume ها تنها یک
-                      Issue داشته باشند که باعث میشود این قسمت در مسیر مشخص نشود
-                    </div>
-                  </div>
-                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
-                </div>
-              </div>
-              <div data-name="ws-main-page" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">صفحه اصلی</span> مناسب از ناشر World
-                  Scientific
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      worldscientific.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--"> /worldscinet</span>
-                    <span class="--svu-path-- --svu-part--">/jaa</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">worldscientific.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر با عبارت worldscinet شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    بعد از آن هم عنوان ژورنال مورد نظر
-                  </div>
-
-                  <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
-                </div>
-              </div>
-              <div data-name="tf-issue" class="hidden">
-                <div class="--svu-title--">
-                  نمونه ای از یک آدرس
-                  <span class="en-in-fa">issue</span> مناسب از ناشر Taylor &
-                  Francis
-                </div>
-                <div class="sample-valid-url --svu-book--">
-                  <div class="--svu-url--">
-                    <span class="--svu-protocol-- --svu-part--">https://</span>
-                    www.
-                    <span class="--svu-domain --svu-part--">
-                      tandfonline.com
-                    </span>
-                    <span class="--svu-path-- --svu-part--">/toc/rrob20</span>
-                    <span class="--svu-path-- --svu-part--">/11</span>
-                    <span class="--svu-path-- --svu-part--">/4</span>
-                  </div>
-                </div>
-                <div class="--svu-more-info--">
-                  <div class="--svu-info-item--">
-                    آدرس با عبارت
-                    <span class="en-in-fa">https://</span> شروع می‌شود
-                  </div>
-                  <div class="--svu-info-item--">
-                    دامنه آدرس برابر با
-                    <span class="en-in-fa">tandfonline.com</span> است
-                  </div>
-                  <div class="--svu-info-item--">
-                    مسیر آدرس با عبارت toc و بعد شناسه آن ژورنال آغاز می‌شود
-                  </div>
-                  <div class="--svu-info-item--">شماره Volume</div>
-                  <div class="--svu-info-item--">شماره Issue</div>
-                </div>
-                <div class="--svu-hint--">
-                  با وارد کردن آدرس یک Issue، کل داده های Volume مربوط به آن
-                  Issue استخراج میشود
-                </div>
-              </div>
-              <span class="--svu-plus--"
-                >قسمت های <span class="--svu-part--">شماره دار</span> در آدرس
-                نمونه، بخش های لازم و اجباری مسیر هستند و قسمت های بدون شماره که
-                بصورت معمولی در مسیر نوشته شده اند، اختیاری هستند و میتوانند از
-                مسیر حذف شوند</span
+          <div id="main-content">
+            <div id="extractor-items" class="flex">
+              <div
+                data-id="pub-extractor"
+                class="extracter-item-title flex-50 selected-extractor-item covered"
               >
+                <span>ناشران</span><span>Publishers</span>
+              </div>
+              <div
+                data-id="google-schobar-extractor"
+                class="extracter-item-title flex-50 covered"
+              >
+                <span>گوگل اسکولار</span><span>Google Scholar</span>
+              </div>
             </div>
-            <div class="extract-btn-wrapper">
-              <form id="extraction-options">
-                <div>
-                  <label for="only-main-author" class="btn">
-                    <input
-                      type="checkbox"
-                      id="only-main-author"
-                      name="only-main"
-                    />
-                    نویسنده اصلی مقاله
-                  </label>
+            <div id="extractor-views">
+              <div id="pub-extractor" class="">
+                <h4 class="journal-form-header">
+                  آدرس ژورنال های مد نظرتان را وارد کنید
+                </h4>
+                <div class="address-hints">
+                  <div>نکاتی که لازم است در مورد آدرس ها توجه شود:</div>
+                  <ol class="address-hint-list">
+                    <li>
+                      آدرس ها باید با عبارت
+                      <span class="en-in-fa">https://</span> شروع شوند
+                    </li>
+                    <li>
+                      آدرس مناسب به ازای هر انتشاراتی بصورت زیر است:
+                      <span
+                        >(با کلیک بر روی عبارات
+                        <span class="en-in-fa">زیرخط دار</span> میتوانید از
+                        جزئیات بیشتر اطلاع پیدا کنید.)</span
+                      >
+                      <div class="extracter-url-row">
+                        <div class="extracter-url-help">
+                          <span class="extracter-name">Elsevier</span> آدرس صفحه
+                          <span
+                            data-sample-id="elsevier-volume"
+                            sample-btn
+                            class="en-in-fa btn"
+                          >
+                            Volume
+                          </span>
+
+                          یا
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="elsevier-book"
+                            sample-btn
+                            >Book (کتاب)</span
+                          >
+                          ژورنال مورد نظر باید وارد شود.
+                        </div>
+                        <div class="extracter-url-help">
+                          <span class="extracter-name">Springer</span> آدرس صفحه
+                          آخرین
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="springer-issue"
+                            sample-btn
+                            >Issue</span
+                          >
+                          از
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="springer-issue"
+                            sample-btn
+                            >Volume</span
+                          >
+                          و یا آدرس صفحه
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="springer-articles"
+                            sample-btn
+                            >Articles (مقالات)</span
+                          >
+                          ژورنال مورد نظر باید وارد شود.
+                        </div>
+                        <div class="extracter-url-help">
+                          <span class="extracter-name">John Wiley</span> آدرس
+                          صفحه
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="wiley-volume"
+                            sample-btn
+                            >Volume</span
+                          >
+                          یا
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="wiley-issue"
+                            sample-btn
+                            >Issue</span
+                          >
+                          و یا آدرس صفحه
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="wiley-articles"
+                            sample-btn
+                            >Articles (مقالات)</span
+                          >
+                          مورد نظر باید وارد شود.
+                        </div>
+                        <div class="extracter-url-help">
+                          <span class="extracter-name">World Scientific</span>
+                          آدرس صفحه
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="ws-issue"
+                            sample-btn
+                            >Issue</span
+                          >
+                          یا
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="ws-main-page"
+                            sample-btn
+                            >آدرس صفحه اصلی ژورنال</span
+                          >
+                          مورد نظر باید وارد شود.
+                        </div>
+                        <div class="extracter-url-help">
+                          <span class="extracter-name">Taylor & Francis</span>
+                          آدرس صفحه
+
+                          <span
+                            class="en-in-fa btn"
+                            data-sample-id="tf-issue"
+                            sample-btn
+                            >Issue</span
+                          >
+                          مورد نظر باید وارد شود.
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                  <div class="address-helper" id="address-convert-form">
+                    <details>
+                      <summary>
+                        <h3 style="display: inline-block">
+                          آدرس یار (ابزار تبدیل آدرس)
+                        </h3>
+                      </summary>
+                      <div class="address-helper-form">
+                        <label>
+                          آدرس اولیه را وارد کنید. این آدرس باید یکی از آدرس های
+                          معتبر مشخص شده در لیست بالا برای 2 ناشر
+                          <span class="en-in-fa">John Wiley</span> و
+                          <span class="en-in-fa">Springer</span> یا آدرس صفحه
+                          اصلی ژورنال یکی از این 2 ناشر باشد.
+                        </label>
+                        <input
+                          type="text"
+                          class="address-helper-input --ahi-url--"
+                        />
+                        <div class="address-helper-input-hint hidden"></div>
+                        <div class="address-convert-form">
+                          <label>انتخاب آدرس هدف: </label>
+                          <select id="target-address-select">
+                            <optgroup disabled label="Wiley">
+                              <option value="Wiley-Volume" name="Wiley-Volume">
+                                Wiley - Volume
+                              </option>
+                              <option value="Wiley-Issue" name="Wiley-Issue">
+                                Wiley - Issue
+                              </option>
+                              <option
+                                value="Wiley-Articles"
+                                name="Wiley-Articles"
+                              >
+                                Wiley - Articles(مقالات)
+                              </option>
+                            </optgroup>
+                            <optgroup disabled label="Springer">
+                              <option
+                                value="Springer-Issue"
+                                name="Springer-Issue"
+                              >
+                                Springer - Issue
+                              </option>
+                              <option
+                                value="Springer-Articles"
+                                name="Springer-Articles"
+                              >
+                                Springer - Articles(مقالات)
+                              </option>
+                            </optgroup>
+                          </select>
+                          <form class="convert-number-inputs">
+                            <div
+                              class="--cni-input-- hidden"
+                              type="volume issue"
+                            >
+                              <label>شماره Volume</label>
+                              <input
+                                class="address-helper-input --adi-volume--"
+                                type="number"
+                                pattern="\d+"
+                                inputmode="numeric"
+                                min="1"
+                                data-name="volume"
+                              />
+                              <div class="--cni-input-hint-- hidden"></div>
+                            </div>
+                            <div class="--cni-input-- hidden" type="issue">
+                              <label>شماره Issue</label>
+                              <input
+                                class="address-helper-input"
+                                type="number"
+                                pattern="\d+"
+                                inputmode="numeric"
+                                min="1"
+                                data-name="issue"
+                              />
+                            </div>
+                          </form>
+                        </div>
+                        <div id="output-address" class="hidden">
+                          <div class="output-url rip-btn btn">
+                            <span id="generated-address"></span>
+                            <button class="btn"></button>
+                          </div>
+                          <div>
+                            توجه: برنامه هیچ تضمینی به وجود منابع در آدرس تولید
+                            شده نمیدهد. یعنی برای مثال ممکن است صفحه Volume یا
+                            Issue ای با عدد های داده شده اصلا در ژورنال وجود
+                            نداشته باشد.
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                  </div>
                 </div>
-                <div>
-                  <label for="only-email" class="btn">
-                    <input id="only-email" type="checkbox" name="only-email" />
-                    نویسندگان دارای ایمیل
-                  </label>
+                <div id="form-wrapper">
+                  <div class="waiting-view hidden">
+                    <img src="../../../assets/images/loading.gif" />
+                    <!-- <div class="display-extraction hidden">
+                    نمایش آیتم های بدست آمده
+                  </div> -->
+                    <div class="extracted-list">
+                      <div class="extracted-list-header">
+                        <div class="extracted-list-header-title">
+                          <span
+                            class="close-extracted-list-btn extracted-items-icon"
+                          >
+                            <svg
+                              id="Layer_1"
+                              data-name="Layer 1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 863.65 863.65"
+                            >
+                              <path
+                                d="M75.08,863.65A75.08,75.08,0,0,1,22,735.48L735.48,22A75.08,75.08,0,0,1,841.66,128.17L128.16,841.66a74.84,74.84,0,0,1-53.09,22Zm713.49,0a74.91,74.91,0,0,1-53.09-22L22,128.17A75.08,75.08,0,0,1,128.16,22l713.5,713.49a75.08,75.08,0,0,1-53.09,128.17Z"
+                              />
+                            </svg>
+                          </span>
+                          <span class="extracted-items-icon">
+                            <svg
+                              id="Layer_1"
+                              data-name="Layer 1"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 87.5 75"
+                            >
+                              <path
+                                d="M85.94,15.63H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,1,0,0-3.12Z"
+                              />
+                              <path
+                                d="M28.12,12.5H85.94a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,1,0,0,3.12Z"
+                              />
+                              <path
+                                d="M28.12,6.25H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
+                              />
+                              <path
+                                d="M85.94,42.19H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
+                              />
+                              <path
+                                d="M85.94,35.94H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
+                              />
+                              <path
+                                d="M28.12,32.81H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
+                              />
+                              <path
+                                d="M85.94,68.75H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
+                              />
+                              <path
+                                d="M85.94,62.5H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
+                              />
+                              <path
+                                d="M28.12,59.38H68.75a1.57,1.57,0,0,0,0-3.13H28.12a1.57,1.57,0,0,0,0,3.13Z"
+                              />
+                              <path
+                                d="M4.69,0h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,17.19V4.69A4.69,4.69,0,0,1,4.69,0Z"
+                              />
+                              <path
+                                d="M4.69,26.56h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,43.75V31.25A4.69,4.69,0,0,1,4.69,26.56Z"
+                              />
+                              <path
+                                d="M4.69,53.13h12.5a5,5,0,0,1,4.69,4.68v12.5A4.69,4.69,0,0,1,17.19,75H4.69A5,5,0,0,1,0,70.31V57.81A4.68,4.68,0,0,1,4.69,53.13Z"
+                              />
+                            </svg>
+                          </span>
+                          <h3>لیست نویسندگان بدست آمده</h3>
+                        </div>
+                        <span>فقط ۵۰ آیتم آخر نمایش داده می‌شود</span>
+                      </div>
+                      <div class="extracted-list-view"></div>
+                    </div>
+                  </div>
+                  <div class="sample-valid-hints hidden">
+                    <span id="close-sample-hints" class="btn">
+                      <svg
+                        id="Layer_1"
+                        data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 40 40"
+                      >
+                        <path
+                          d="M.9,39.1a2.85,2.85,0,0,0,4,0v0L20,24.05,35.11,39.16a2.86,2.86,0,0,0,4-4h0L24.05,20,39.16,4.89a2.86,2.86,0,1,0-4-4L20,16,4.89.9a2.86,2.86,0,1,0-4,4L16,20,.9,35.11A2.84,2.84,0,0,0,.9,39.1Z"
+                          transform="translate(0 0)"
+                        />
+                      </svg>
+                    </span>
+                    <div data-name="elsevier-book" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa"> Book (کتاب)</span> مناسب از ناشر
+                        Elsevier
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--"
+                            >sciencedirect.com</span
+                          >
+                          <span class="--svu-path-- --svu-part--"
+                            >/book/9781455728657</span
+                          >
+                          /abeloffs-clinical-oncology
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">ScienceDirect.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس به یک کتاب اشاره میکند
+                        </div>
+                      </div>
+                    </div>
+                    <div data-name="elsevier-volume" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Volume</span> مناسب از ناشر
+                        Elsevier
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            sciencedirect.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            /journal/linear-algebra-and-its-applications
+                          </span>
+                          <span class="--svu-path-- --svu-part--"
+                            >/vol/699</span
+                          >
+                          /suppl/C
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">ScienceDirect.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس به یک ژورنال اشاره میکند
+                        </div>
+                        <div class="--svu-info-item--">
+                          در انتهای مسیر نیز
+                          <span class="en-in-fa">Volume</span> مورد نظر از آن
+                          ژورنال را مشخص میکند
+                        </div>
+                      </div>
+                    </div>
+                    <div data-name="springer-issue" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">issue</span> مناسب از ناشر
+                        Springer
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            link.springer.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            journal/11356
+                          </span>
+                          <span class="--svu-path-- --svu-part--"
+                            >/volumes-and-issues/31-32</span
+                          >
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">link.springer.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس با عبارت journal و بعد شناسه آن ژورنال آغاز
+                          می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          در انتهای مسیر نیز شماره
+                          <span class="en-in-fa">Volume (عدد 31)</span> و شماره
+                          <span class="en-in-fa">Issue (عدد 32)</span> مورد نظر
+                          از آن ژورنال را مشخص میکند.
+                          <span class="--svu-hint--"
+                            >انتخاب آخرین issue اهمیت دارد چراکه اگر آدرس issue
+                            های دیگر را وارد کنید از آن issue شروع به پردازش
+                            میکند و به issue های قبلتر میرود</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div data-name="springer-articles" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Articles</span> مناسب از ناشر
+                        Wiley
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            link.springer.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            /journal
+                          </span>
+                          <span class="--svu-path-- --svu-part--">/22</span>
+                          <span class="--svu-path-- --svu-part--"
+                            >/articles</span
+                          >
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">link.springer.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس با عبارت journal آغاز می‌شود
+                        </div>
+                        <div class="--svu-info-item--">سپس شناسه ژورنال</div>
+                        <div class="--svu-info-item--">
+                          و در آخر هم عبارت articles
+                        </div>
+                        <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                      </div>
+                    </div>
+                    <div data-name="wiley-volume" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Volume</span> مناسب از ناشر Wiley
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            onlinelibrary.wiley.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            /loi/10991506
+                          </span>
+                          <span class="--svu-path-- --svu-part--"
+                            >/year/2024</span
+                          >
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">onlinelibrary.wiley.com</span>
+                          است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس نیز با loi و سپس شناسه ژورنال آغاز می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          در انتهای مسیر نیز عبارت year و سپس سال Volume قرار
+                          میگیرد
+                        </div>
+                      </div>
+                    </div>
+                    <div data-name="wiley-issue" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Issue</span> مناسب از ناشر Wiley
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            onlinelibrary.wiley.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            /toc/10991506
+                          </span>
+                          /2024
+                          <span class="--svu-path-- --svu-part--">/31</span>
+                          <span class="--svu-path-- --svu-part--">/4</span>
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">onlinelibrary.wiley.com</span>
+                          است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس نیز با toc و سپس شناسه ژورنال آغاز می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          بعد از آن شماره Volume مورد نظر قرار میگیرد
+                        </div>
+                        <div class="--svu-info-item--">
+                          و در آخر هم شماره Issue
+                        </div>
+                        <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                      </div>
+                    </div>
+                    <div data-name="wiley-articles" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Issue</span> مناسب از ناشر Wiley
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            onlinelibrary.wiley.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--"> /index</span>
+                          <span class="--svu-path-- --svu-part--">/5708</span>
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">onlinelibrary.wiley.com</span>
+                          است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس نیز با عبارت index آغاز می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          بعد از آن هم شناسه ژورنال قرار میگیرد
+                        </div>
+                        <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                      </div>
+                    </div>
+                    <div data-name="ws-issue" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">Issue</span> مناسب از ناشر World
+                        Scientific
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            worldscientific.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--"> /toc</span>
+                          <span class="--svu-path-- --svu-part--">/jaa</span>
+                          <span class="--svu-path-- --svu-part--">/23</span>
+                          <span class="--svu-path-- --svu-part--">/07</span>
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">worldscientific.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر با عبارت toc شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          بعد از آن هم عنوان ژورنال مورد نظر
+                        </div>
+                        <div class="--svu-info-item--">شماره Volume</div>
+                        <div class="--svu-info-item--">
+                          شماره Issue
+                          <div class="--svu-info-opt--">
+                            ممکن است برخی از ژورنال ها در یکسری از Volume ها
+                            تنها یک Issue داشته باشند که باعث میشود این قسمت در
+                            مسیر مشخص نشود
+                          </div>
+                        </div>
+                        <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                      </div>
+                    </div>
+                    <div data-name="ws-main-page" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">صفحه اصلی</span> مناسب از ناشر
+                        World Scientific
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            worldscientific.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--">
+                            /worldscinet</span
+                          >
+                          <span class="--svu-path-- --svu-part--">/jaa</span>
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">worldscientific.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر با عبارت worldscinet شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          بعد از آن هم عنوان ژورنال مورد نظر
+                        </div>
+
+                        <!-- <span class="--svu-hint--">اگر قسمت های 4 و 5 </span> -->
+                      </div>
+                    </div>
+                    <div data-name="tf-issue" class="hidden">
+                      <div class="--svu-title--">
+                        نمونه ای از یک آدرس
+                        <span class="en-in-fa">issue</span> مناسب از ناشر Taylor
+                        & Francis
+                      </div>
+                      <div class="sample-valid-url --svu-book--">
+                        <div class="--svu-url--">
+                          <span class="--svu-protocol-- --svu-part--"
+                            >https://</span
+                          >
+                          www.
+                          <span class="--svu-domain --svu-part--">
+                            tandfonline.com
+                          </span>
+                          <span class="--svu-path-- --svu-part--"
+                            >/toc/rrob20</span
+                          >
+                          <span class="--svu-path-- --svu-part--">/11</span>
+                          <span class="--svu-path-- --svu-part--">/4</span>
+                        </div>
+                      </div>
+                      <div class="--svu-more-info--">
+                        <div class="--svu-info-item--">
+                          آدرس با عبارت
+                          <span class="en-in-fa">https://</span> شروع می‌شود
+                        </div>
+                        <div class="--svu-info-item--">
+                          دامنه آدرس برابر با
+                          <span class="en-in-fa">tandfonline.com</span> است
+                        </div>
+                        <div class="--svu-info-item--">
+                          مسیر آدرس با عبارت toc و بعد شناسه آن ژورنال آغاز
+                          می‌شود
+                        </div>
+                        <div class="--svu-info-item--">شماره Volume</div>
+                        <div class="--svu-info-item--">شماره Issue</div>
+                      </div>
+                      <div class="--svu-hint--">
+                        با وارد کردن آدرس یک Issue، کل داده های Volume مربوط به
+                        آن Issue استخراج میشود
+                      </div>
+                    </div>
+                    <span class="--svu-plus--"
+                      >قسمت های <span class="--svu-part--">شماره دار</span> در
+                      آدرس نمونه، بخش های لازم و اجباری مسیر هستند و قسمت های
+                      بدون شماره که بصورت معمولی در مسیر نوشته شده اند، اختیاری
+                      هستند و میتوانند از مسیر حذف شوند</span
+                    >
+                  </div>
+                  <div class="extract-btn-wrapper">
+                    <form id="extraction-options">
+                      <div>
+                        <label for="only-main-author" class="btn">
+                          <input
+                            type="checkbox"
+                            id="only-main-author"
+                            name="only-main"
+                          />
+                          نویسنده اصلی مقاله
+                        </label>
+                      </div>
+                      <div>
+                        <label for="only-email" class="btn">
+                          <input
+                            id="only-email"
+                            type="checkbox"
+                            name="only-email"
+                          />
+                          نویسندگان دارای ایمیل
+                        </label>
+                      </div>
+                      <div>
+                        <label>اتمام جمع آوری پس از یافتن </label>
+                        <input
+                          dir="ltr"
+                          class="author-count"
+                          type="text"
+                          pattern="[\d]+"
+                          min="0"
+                          name="author-count"
+                          inputmode="numeric"
+                        />
+                        <label> نویسنده</label>
+                      </div>
+                      <div class="extract-speed-opt">
+                        <label>سرعت استخراج</label>
+                        <span
+                          id="what-is-extract-speed"
+                          data-name="extract-speed"
+                          data-mouse-move-sensitive
+                          class="what btn"
+                        ></span>
+                        <select name="extract-speed">
+                          <option>حداکثر</option>
+                          <option>زیاد</option>
+                          <option>متوسط</option>
+                          <option>بهینه</option>
+                          <option selected>کم</option>
+                        </select>
+                      </div>
+                      <button class="btn reset-form rip-btn" type="reset">
+                        <svg
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 17 20"
+                        >
+                          <defs>
+                            <style>
+                              .cls-1 {
+                                fill-rule: evenodd;
+                              }
+                            </style>
+                          </defs>
+                          <path
+                            class="cls-1"
+                            d="M10.71.3a1,1,0,0,1,0,1.41L9.22,3.18H10a8.41,8.41,0,1,1-8.5,8.41,1,1,0,0,1,2,0A6.5,6.5,0,1,0,10,5.18H9.22L10.7,6.64A1,1,0,1,1,9.3,8.06L6.08,4.89a1,1,0,0,1-.29-.71,1,1,0,0,1,.29-.71L9.3.29A1,1,0,0,1,10.71.3Z"
+                            transform="translate(-1.5)"
+                          />
+                        </svg>
+                      </button>
+                    </form>
+                    <button id="extract-btn" class="hidden btn">
+                      شروع استخراج
+                    </button>
+                  </div>
+                  <div id="extraction-hint hidden"></div>
+                  <form class="journal-form" name="journal-form"></form>
+                  <button id="add-new-url-btn" class="btn">
+                    افزودن ژورنال جدید
+                  </button>
                 </div>
-                <div>
-                  <label>اتمام جمع آوری پس از یافتن </label>
-                  <input
-                    dir="ltr"
-                    class="author-count"
-                    type="text"
-                    pattern="[\d]+"
-                    min="0"
-                    name="author-count"
-                    inputmode="numeric"
-                  />
-                  <label> نویسنده</label>
+              </div>
+              <div id="google-schobar-extractor" class="hidden">
+                <div class="scholar-logo">
+                  <img src="../../../assets/images/scholar.png" />
                 </div>
-                <div class="extract-speed-opt">
-                  <label>سرعت استخراج</label>
-                  <span
-                    id="what-is-extract-speed"
-                    data-name="extract-speed"
-                    data-mouse-move-sensitive
-                    class="what btn"
-                  ></span>
-                  <select name="extract-speed">
-                    <option>حداکثر</option>
-                    <option>زیاد</option>
-                    <option>متوسط</option>
-                    <option>بهینه</option>
-                    <option selected>کم</option>
-                  </select>
-                </div>
-                <button class="btn reset-form rip-btn" type="reset">
-                  <svg
-                    id="Layer_1"
-                    data-name="Layer 1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 17 20"
-                  >
-                    <defs>
-                      <style>
-                        .cls-1 {
-                          fill-rule: evenodd;
-                        }
-                      </style>
-                    </defs>
-                    <path
-                      class="cls-1"
-                      d="M10.71.3a1,1,0,0,1,0,1.41L9.22,3.18H10a8.41,8.41,0,1,1-8.5,8.41,1,1,0,0,1,2,0A6.5,6.5,0,1,0,10,5.18H9.22L10.7,6.64A1,1,0,1,1,9.3,8.06L6.08,4.89a1,1,0,0,1-.29-.71,1,1,0,0,1,.29-.71L9.3.29A1,1,0,0,1,10.71.3Z"
-                      transform="translate(-1.5)"
-                    />
-                  </svg>
-                </button>
-              </form>
-              <button id="extract-btn" class="hidden btn">شروع استخراج</button>
+                <form>
+                  <div class="scholar-input">
+                    <span class="scholar-search-ico">
+                      <svg
+                        id="Layer_1"
+                        data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 92.51 97.5"
+                      >
+                        <path
+                          d="M94.5,88.75,76.8,71.05a41.88,41.88,0,1,0-9,7.6l18.4,18.4a5.79,5.79,0,0,0,8.2,0A5.77,5.77,0,0,0,94.5,88.75ZM15.4,43.15a30.15,30.15,0,1,1,30.2,30.2A30.24,30.24,0,0,1,15.4,43.15Z"
+                          transform="translate(-3.7 -1.25)"
+                        />
+                      </svg>
+                    </span>
+                    <input type="text" dir="auto" />
+                  </div>
+                </form>
+              </div>
             </div>
-            <div id="extraction-hint hidden"></div>
-            <form class="journal-form" name="journal-form"></form>
-            <button id="add-new-url-btn" class="btn">افزودن ژورنال جدید</button>
           </div>
         </main>
         <footer>

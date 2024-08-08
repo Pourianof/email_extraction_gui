@@ -255,6 +255,8 @@ function generateOutputURL() {
     vol = Number.isNaN(vol) || !+vol ? 1 : vol;
     iss = Number.isNaN(iss) || !+iss ? 1 : iss;
 
+    if (isWiley) vol = `20${vol < 10 ? `0${vol}` : vol}`;
+
     if (type == 'issue') {
       if (isWiley) {
         targetURL = `https://www.onlinelibrary.wiley.com/toc/${journalId}/${vol}/${iss}`;
@@ -263,7 +265,6 @@ function generateOutputURL() {
       }
     } else if (type == 'volume') {
       if (isWiley) {
-        vol = `20${vol < 10 ? `0${vol}` : vol}`;
         targetURL = `https://www.onlinelibrary.wiley.com/loi/${journalId}/${vol}`;
       }
     }
