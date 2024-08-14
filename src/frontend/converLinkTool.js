@@ -91,8 +91,6 @@ function convertToolInitializer() {
           }
           target.value = inYear;
         }
-      } else {
-        return;
       }
 
       generateOutputURL();

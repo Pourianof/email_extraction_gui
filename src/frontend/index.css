@@ -370,7 +370,7 @@ main#main {
   padding: 10px;
 }
 
-#form-wrapper {
+.main-form {
   position: relative;
 }
 
@@ -390,14 +390,51 @@ main#main {
 }
 
 .display-extraction {
-  background-color: #73304e;
+  background-color: #252b55;
   cursor: pointer;
-  padding: 5px 10px;
+  position: absolute !important;
   border-radius: 3px;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
 }
 
 .display-extraction:hover {
-  background-color: #a32a60;
+  background-color: #2a3057;
+}
+#stop-extraction {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #cd6d6d;
+  padding: 5px 20px;
+}
+
+#stop-extraction::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #a53333;
+  transition: 0.2s;
+  top: 100%;
+}
+
+#stop-extraction:hover::before {
+  top: 0;
+}
+
+#stop-extraction img {
+  width: 20px;
+  vertical-align: middle;
+  aspect-ratio: 1;
 }
 
 .address-hints {
@@ -486,6 +523,7 @@ main#main {
 
 form.journal-form {
   margin: 10px auto;
+  margin-top: 0;
 }
 
 .journal-form-header {
@@ -879,6 +917,21 @@ form.journal-form {
 
 #extraction-options > div {
   margin: 5px 0;
+}
+
+.options-container {
+  position: relative;
+}
+
+#google-schobar-extractor #extraction-options {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#google-schobar-extractor #extraction-options > div {
+  margin: 5px 10px;
 }
 
 .what::before {

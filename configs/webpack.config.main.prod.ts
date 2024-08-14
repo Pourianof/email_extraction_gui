@@ -76,7 +76,7 @@ const configuration: webpack.Configuration = {
     new Copy({
       patterns: [
         {
-          from: path.join(BACKEND_PATH, 'authoractor', 'winHandler.exe'),
+          from: path.join(BACKEND_PATH, 'authoractor', 'win_handler.exe'),
           to: DEPENDENCIES_DIR,
         },
       ],

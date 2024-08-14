@@ -9,7 +9,7 @@ import {
   clipboard,
 } from 'electron';
 import { Events } from './events';
-import extractURLS, {
+import Extractor, {
   AuthorsProgressStateNotifier,
   ExtractSpeed,
 } from './authoractor';
@@ -69,6 +69,10 @@ export default class IPCEventHandler {
 
     ipcMain.addListener(Events.WIN_ACTIONS, (e, d) => {
       this.operateWindowActions(d);
+    });
+
+    ipcMain.addListener(Events.STOP_EXTRACTION, (e, d) => {
+      this.stopExtractor();
     });
   }
 
@@ -167,6 +171,15 @@ export default class IPCEventHandler {
     }
   }
 
+  private lastActiveExtractor?: Extractor;
+
+  private async stopExtractor() {
+    if (this.lastActiveExtractor && !this.lastActiveExtractor.isStopped) {
+      logInfo('Extractor has stopped');
+      this.lastActiveExtractor.stop();
+    }
+  }
+
   private async handleExtract(data: {
     urls: string[];
     options: {
@@ -174,6 +187,7 @@ export default class IPCEventHandler {
       isOnlyEmail: boolean;
       isOnlyMainAuthor: boolean;
       authorsCount?: number;
+      isGoogleScholar?: boolean;
     };
   }): Promise<IPCMessage> {
     let filePath: string | undefined;
@@ -227,12 +241,13 @@ export default class IPCEventHandler {
         )}]\nWith options: ${JSON.stringify(data.options)}`
       );
 
-      const extractResult = await extractURLS(data.urls, {
+      this.lastActiveExtractor = new Extractor(data.urls, {
         winHandlerPath: !app.isPackaged
-          ? path.join(__dirname, 'authoractor', 'winHandler.exe')
-          : path.join(DEPENDENCIES_DIR, 'winHandler.exe'),
+          ? path.join(__dirname, 'authoractor', 'win_handler.exe')
+          : path.join(DEPENDENCIES_DIR, 'win_handler.exe'),
         progressMonitor: progressListener,
         saveOnEveryItem: true,
+        isGoogleScholar: data.options.isGoogleScholar,
         ouputPath: async () => {
           const defaultName = `authors-${new DateObject().format(
             'YYYY-DD-MM-HH-mm-ss'
@@ -265,11 +280,18 @@ export default class IPCEventHandler {
         },
       });
 
+      const extractResult = await this.lastActiveExtractor.start();
+
       console.log('extraction finished');
 
       if (!filePath) {
+        if (this.lastActiveExtractor.isStopped) {
+          throw new ExtractError(
+            'بنظر میرسد قبل اینکه هیچ داده‌ای بدست بیاید، فرآیند استخراج متوقف شده است'
+          );
+        }
         logError('No file path registered.');
-        throw new Error(
+        throw new ExtractError(
           'مشکلی در فرآیند استخراج پیش آمده. ممکن است دلیل آن، عدم استخراج داده‌ای باشد.'
         );
       } else {
@@ -306,6 +328,8 @@ export default class IPCEventHandler {
         } else if (err.message.trim().includes('lock')) {
           message =
             'امکان ثبت فایل با مسیر داده شده وجود نداشت، ممکن است دلیل آن باز بودن فایل هم نام موجود در این مسیر باشد';
+        } else if (err instanceof ExtractError) {
+          message = err.message;
         } else {
           message =
             'خطایی رخ داده است. برای اطلاعات بیشتر فایل log را بررسی کنید ودر صورت رخ دادن مجدد فایل log را به پشتیبان ارسال کنید. یا دوباره اجرا کنید.';
@@ -323,3 +347,5 @@ export default class IPCEventHandler {
     }
   }
 }
+
+class ExtractError extends Error {}

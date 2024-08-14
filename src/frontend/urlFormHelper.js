@@ -16,12 +16,110 @@ import {
   isWorldScientificIssue,
   isWorldScientificMainPage,
 } from './urlValidator';
+import { getSettedOptions } from './extracterHelper';
 
 const journalForm = document.forms['journal-form'];
-const extractBtn =
-  journalForm.previousElementSibling.previousElementSibling.lastElementChild;
+const extractBtn = journalForm.firstElementChild.lastElementChild;
+
+export function handleInputBlur(inputElmnt) {
+  const val = inputElmnt.value.trim();
+  const hintElmnt = reachFromTemplateTo(
+    inputElmnt.parentElement.parentElement.parentElement,
+    'hint'
+  );
+  const placeHolderElmnt = inputElmnt.nextElementSibling;
+
+  console.log('VALUE : ', val);
+
+  if (!val) {
+    placeHolderElmnt.classList.remove('hidden');
+    hintElmnt.replaceChildren([]);
+  } else {
+    let hintMsg = [];
+    let url;
+
+    try {
+      url = new URL(val);
+      if (!url.protocol.startsWith('https')) {
+        hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
+      }
+
+      if (
+        !isElsevier(val) &&
+        !isSpringer(val) &&
+        !isWiley(val) &&
+        !isWorldScientific(val) &&
+        !isTandF(val)
+      ) {
+        hintMsg.push(
+          'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر یا T&F و یا World-Scientific و یا T&F نمیباشد.'
+        );
+      }
+
+      if (isElsevier(val) && !isElsevierIssue(val)) {
+        hintMsg.push(
+          'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک ژورنال اشاره نمیکند'
+        );
+      } else if (
+        isSpringer(val) &&
+        !isSpringerIssue(val) &&
+        !isSpringerArticles(val)
+      ) {
+        hintMsg.push(
+          'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
+        );
+      } else if (
+        isWiley(val) &&
+        !isWileyIssue(val) &&
+        !isWileyVolume(val) &&
+        !isWileyArticles(val)
+      ) {
+        hintMsg.push(
+          'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از ژورنال نمیباشد'
+        );
+      } else if (
+        isWorldScientific(val) &&
+        !isWorldScientificIssue(val) &&
+        !isWorldScientificMainPage(val)
+      ) {
+        hintMsg.push(
+          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات World-Scientific نمیباشد'
+        );
+      } else if (isTandF(val) && !isTandFIssue(val)) {
+        hintMsg.push(
+          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات T&F نمیباشد'
+        );
+      }
+    } catch (err) {
+      console.log(err);
+      hintMsg.push('آدرس وارد شده معتبر نمیباشد.');
+      if (!val.startsWith('https')) {
+        hintMsg.push('لطفا عبارت https:// را در ابتدای آدرس خود قرار دهید');
+      }
+    }
+
+    if (hintMsg.length) {
+      hintElmnt.replaceChildren([]);
+
+      hintMsg.forEach((h) => {
+        const el = document.createElement('span');
+        el.textContent = h;
+        hintElmnt.appendChild(el);
+      });
+      hintElmnt.classList.remove('hidden');
+    } else {
+      const oldHints = hintElmnt.textContent.trim();
+      if (oldHints) {
+        hintElmnt.classList.add('hidden');
+      }
+    }
+  }
+  delete inputElmnt.focused;
+  inputElmnt.removeEventListener('blur', handleInputBlur);
+}
 
 function focusOnURLInput(e) {
+  /** @type HTMLInputElement */
   const inputElmnt = this.firstElementChild;
   const placeHolderElmnt = this.lastElementChild;
 
@@ -32,103 +130,11 @@ function focusOnURLInput(e) {
   inputElmnt.focus();
   inputElmnt.focused = true;
 
-  function handleInputBlur() {
-    const val = inputElmnt.value.trim();
-    const hintElmnt = reachFromTemplateTo(
-      this.parentElement.parentElement.parentElement,
-      'hint'
-    );
-
-    if (!val) {
-      placeHolderElmnt.classList.remove('hidden');
-      hintElmnt.replaceChildren([]);
-    } else {
-      let hintMsg = [];
-      let url;
-
-      try {
-        url = new URL(val);
-        if (!url.protocol.startsWith('https')) {
-          hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
-        }
-
-        if (
-          !isElsevier(val) &&
-          !isSpringer(val) &&
-          !isWiley(val) &&
-          !isWorldScientific(val) &&
-          !isTandF(val)
-        ) {
-          hintMsg.push(
-            'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر یا T&F و یا World-Scientific و یا T&F نمیباشد.'
-          );
-        }
-
-        if (isElsevier(val) && !isElsevierIssue(val)) {
-          hintMsg.push(
-            'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک ژورنال اشاره نمیکند'
-          );
-        } else if (
-          isSpringer(val) &&
-          !isSpringerIssue(val) &&
-          !isSpringerArticles(val)
-        ) {
-          hintMsg.push(
-            'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
-          );
-        } else if (
-          isWiley(val) &&
-          !isWileyIssue(val) &&
-          !isWileyVolume(val) &&
-          !isWileyArticles(val)
-        ) {
-          hintMsg.push(
-            'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از ژورنال نمیباشد'
-          );
-        } else if (
-          isWorldScientific(val) &&
-          !isWorldScientificIssue(val) &&
-          !isWorldScientificMainPage(val)
-        ) {
-          hintMsg.push(
-            'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات World-Scientific نمیباشد'
-          );
-        } else if (isTandF(val) && !isTandFIssue(val)) {
-          hintMsg.push(
-            'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات T&F نمیباشد'
-          );
-        }
-      } catch (err) {
-        console.log(err);
-        hintMsg.push('آدرس وارد شده معتبر نمیباشد.');
-        if (!val.startsWith('https')) {
-          hintMsg.push('لطفا عبارت https:// را در ابتدای آدرس خود قرار دهید');
-        }
-      }
-
-      if (hintMsg.length) {
-        hintElmnt.replaceChildren([]);
-
-        hintMsg.forEach((h) => {
-          const el = document.createElement('span');
-          el.textContent = h;
-          hintElmnt.appendChild(el);
-        });
-        hintElmnt.classList.remove('hidden');
-      } else {
-        const oldHints = hintElmnt.textContent.trim();
-        if (oldHints) {
-          hintElmnt.classList.add('hidden');
-        }
-      }
-    }
-    delete inputElmnt.focused;
-    this.removeEventListener('blur', handleInputBlur);
-  }
-
   placeHolderElmnt.classList.add('hidden');
 
-  inputElmnt.addEventListener('blur', handleInputBlur);
+  inputElmnt.addEventListener('blur', (e) => handleInputBlur(inputElmnt));
+  inputElmnt.addEventListener('change', (e) => handleInputBlur(inputElmnt));
+  inputElmnt.addEventListener('reset', (e) => handleInputBlur(inputElmnt));
 }
 
 export function addNewURLInput() {
@@ -138,13 +144,17 @@ export function addNewURLInput() {
   // set index
   const indexElmnt = reachFromTemplateTo(tempNode.firstElementChild, 'index');
   const index =
-    +(reachFromTemplateTo(journalForm.lastElementChild, 'index')?.index ?? 0) +
-    1;
+    +(
+      reachFromTemplateTo(
+        journalForm.lastElementChild.lastElementChild,
+        'index'
+      )?.index ?? 0
+    ) + 1;
   indexElmnt.textContent = PN.convertEnToPe(index);
   indexElmnt.index = index;
 
   indexElmnt.nextElementSibling.addEventListener('click', focusOnURLInput);
-  journalForm.appendChild(tempNode);
+  journalForm.lastElementChild.appendChild(tempNode);
 
   extractBtn.classList.remove('hidden');
 
@@ -162,13 +172,13 @@ function handleScrollIfNeeded() {
   }
 }
 
-export /**
+/**
  *
  * @param {HTMLElement | null} templateElmnt Root template element
  * @param {'hint' | 'index' | 'URL' | 'input' | 'remove-btn'} target  Which subtree element must return.
  * @returns {HTMLElement | null} The target element which is desired
  */
-function reachFromTemplateTo(templateElmnt, target) {
+export function reachFromTemplateTo(templateElmnt, target) {
   if (!templateElmnt) {
     return null;
   }
@@ -204,7 +214,7 @@ function reachFromTemplateTo(templateElmnt, target) {
 function checkURLInValidation() {
   let isAllEmpty = true;
 
-  for (let child of journalForm.children) {
+  for (let child of journalForm.lastElementChild.children) {
     const hintsElmnt = reachFromTemplateTo(child, 'hint');
     if (
       !hintsElmnt.classList.contains('hidden') &&
@@ -224,7 +234,7 @@ function checkURLInValidation() {
   if (isAllEmpty) {
     return {
       type: 'empty',
-      elmnt: journalForm.firstElementChild,
+      elmnt: journalForm.lastElementChild.firstElementChild,
     };
   }
 
@@ -232,7 +242,7 @@ function checkURLInValidation() {
 }
 
 function startExtraction() {
-  if (!journalForm.firstElementChild) {
+  if (!journalForm.lastElementChild.firstElementChild) {
     return;
   }
   let invalidURL;
@@ -256,32 +266,18 @@ function startExtraction() {
 
   // If all is ok
   const urls = [];
-  for (let input of journalForm.children) {
+  for (let input of journalForm.lastElementChild.children) {
     const url = reachFromTemplateTo(input, 'URL').value.trim();
     if (url) urls.push(url);
   }
 
-  // Evaluate options
-  const options = {};
-  const extractOptionsForm = extractBtn.previousElementSibling;
-  const onlyMainOpt = extractOptionsForm['only-main'];
-  options.isOnlyMainAuthor = onlyMainOpt.checked;
-
-  const onlyEmailOpt = extractOptionsForm['only-email'];
-  options.isOnlyEmail = onlyEmailOpt.checked;
-
-  const authorCountOpt = extractOptionsForm['author-count'].value?.trim();
-  if (authorCountOpt) options.authorsCount = Number.parseInt(authorCountOpt);
-
-  options.extractSpeed = Array.from(
-    extractOptionsForm['extract-speed'].selectedOptions
-  )[0].value;
+  const options = getSettedOptions(journalForm);
 
   const extractionHandler = ExtractionHandler.start(urls, options);
 }
 
 export function handleExtractOptionsForm() {
-  const extractOptionsForm = extractBtn.previousElementSibling;
+  const extractOptionsForm = journalForm;
 
   extractOptionsForm['author-count'].addEventListener('keydown', function (e) {
     const newDigit = Number.parseInt(e.key);
@@ -294,5 +290,8 @@ export function handleExtractOptionsForm() {
     }
   });
 
-  extractBtn.addEventListener('click', () => startExtraction());
+  extractBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    startExtraction();
+  });
 }

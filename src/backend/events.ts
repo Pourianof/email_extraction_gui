@@ -7,4 +7,5 @@ export class Events {
   static readonly OPEN_LINK = 'openlink';
   static readonly WIN_ACTIONS = 'winaction';
   static readonly COPY_TEXT = 'copytext';
+  static readonly STOP_EXTRACTION = 'stopextraction';
 }

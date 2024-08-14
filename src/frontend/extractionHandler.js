@@ -25,6 +25,15 @@ function handleExtractedItemsListScroll(e) {
   }
 }
 
+function showExtractedItemListBtn() {
+  const displayLabel = waitingViewElmnt
+    .getElementsByClassName('display-extraction')
+    .item(0);
+
+  displayLabel.classList.remove('hidden');
+  displayLabel.addEventListener('click', displayExtractList);
+}
+
 function hideExtractList() {
   const extractListElmnt = waitingViewElmnt.lastElementChild;
   extractListElmnt.classList.add('hidden');
@@ -36,13 +45,11 @@ function hideExtractList() {
     'scroll',
     handleExtractedItemsListScroll
   );
-  const displayLabel = waitingViewElmnt
-    .getElementsByClassName('display-extraction')
-    .item(0);
-  if (displayLabel) {
-    displayLabel.addEventListener('click', displayExtractList);
-  }
+
+  showExtractedItemListBtn();
 }
+
+function lockExtractorTabs() {}
 
 function displayExtractList() {
   const extractListElmnt = document.querySelector('.extracted-list');
@@ -61,18 +68,23 @@ function displayExtractList() {
     .getElementsByClassName('display-extraction')
     .item(0);
   if (displayLabel) {
+    displayLabel.classList.add('hidden');
     displayLabel.removeEventListener('click', displayExtractList);
   }
 }
 
 function handleExtractionWaitingView(hide) {
-  const journalForm = document.forms['journal-form'];
-  const waitingViewElmnt = journalForm.parentElement.firstElementChild;
+  const waitingViewElmnt = document.querySelector('.waiting-view');
 
   if (hide) {
     waitingViewElmnt.classList.add('hidden');
   } else {
     waitingViewElmnt.classList.remove('hidden');
+    const stopBtn = waitingViewElmnt.querySelector('#stop-extraction');
+    stopBtn?.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.context.stopExtraction();
+    });
   }
 }
 
@@ -127,8 +139,7 @@ export default class ExtractionHandler {
     console.log(state);
     this.extractedCount = state.totalAuthorRecieved;
 
-    const journalForm = document.forms['journal-form'];
-    const waitingViewElmnt = journalForm.parentElement.firstElementChild;
+    const waitingViewElmnt = document.querySelector('.waiting-view');
     const extractedListElmnt = waitingViewElmnt;
 
     const { name, lastName, email, affiliations, address } = state.author;
@@ -329,6 +340,7 @@ function extractionFinishHandler(parent) {
     e.preventDefault();
     handleExtractionWaitingView(true);
     document.getElementById('extract-btn').classList.remove('hidden');
+    waitingViewElmnt.replaceChild(loadingImg, parent);
     const extractedListWrapperView =
       waitingViewElmnt.lastElementChild.lastElementChild;
     extractedListWrapperView.replaceChildren([]);

@@ -1,12 +1,14 @@
 export function backURLFormToInitialState() {
-  const journalForm = document.forms['journal-form'];
-  const extractBtn =
-    journalForm.previousElementSibling.previousElementSibling.lastElementChild;
+  const mainContent = document.querySelector(
+    '#extractor-views > div:not(.hidden)'
+  );
 
-  journalForm.replaceChildren([]);
-  const extractOptionsForm = extractBtn.previousElementSibling;
+  /** @type HTMLFormElement */
+  const form = mainContent.querySelector('.main-form form');
+  const extractBtn = form.querySelector('#extract-btn');
+  extractBtn?.classList.add('hidden');
 
-  extractOptionsForm['only-email'].checked = false;
-  extractOptionsForm['only-main'].checked = false;
-  extractOptionsForm['author-count'].value = '';
+  form.querySelector('#urls')?.replaceChildren([]);
+
+  form.reset();
 }

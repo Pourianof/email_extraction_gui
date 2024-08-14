@@ -97,3 +97,23 @@ export function createNewExtractedItem(
 
   return tempNode;
 }
+
+export function getSettedOptions(form) {
+  // Evaluate options
+  const options = {};
+  const extractOptionsForm = form;
+  const onlyMainOpt = extractOptionsForm['only-main'];
+  options.isOnlyMainAuthor = onlyMainOpt.checked;
+
+  const onlyEmailOpt = extractOptionsForm['only-email'];
+  options.isOnlyEmail = onlyEmailOpt.checked;
+
+  const authorCountOpt = extractOptionsForm['author-count'].value?.trim();
+  if (authorCountOpt) options.authorsCount = Number.parseInt(authorCountOpt);
+
+  options.extractSpeed = Array.from(
+    extractOptionsForm['extract-speed'].selectedOptions
+  )[0].value;
+
+  return options;
+}

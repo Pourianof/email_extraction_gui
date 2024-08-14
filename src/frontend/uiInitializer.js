@@ -1,5 +1,6 @@
 import { appendNewExtractedExcelItem } from './extracterHelper';
 import './validUrlMoreInfoHandler';
+import './googleScholarHandler';
 
 export async function displayExtractedItems() {
   try {
@@ -22,6 +23,20 @@ export async function displayExtractedItems() {
 
 let lastActiveMainContent;
 
+function moveSubPartsToNewExtractorView(activatedMainContent) {
+  const waitingView = document.getElementsByClassName('waiting-view')[0];
+  const optionsForm = document.getElementById('extraction-options');
+
+  /** @type HTMLElement */
+  const waitingViewParent = activatedMainContent.querySelector('.main-form');
+
+  const formOptionsParent =
+    activatedMainContent.querySelector('.options-container');
+
+  formOptionsParent.prepend(optionsForm);
+  waitingViewParent.prepend(waitingView);
+}
+
 function handleActiveMainContent() {
   const selectedClass = 'selected-extractor-item';
   const mainContentElmnt = document.getElementById('main-content');
@@ -35,19 +50,24 @@ function handleActiveMainContent() {
     e.preventDefault();
 
     const target = e.target;
-    if (!target.classList.contains(selectedClass)) {
+    if (
+      target.classList.contains('extracter-item-title') &&
+      !target.classList.contains(selectedClass)
+    ) {
       lastActiveMainContent.classList.remove(selectedClass);
       target.classList.add(selectedClass);
 
       const id = target.dataset.id;
       console.log(lastActiveMainContent, lastActiveMainContent.dataset.id);
+      const newExtractorView = document.getElementById(id);
 
       mainContentElmnt
         .querySelector(`#${lastActiveMainContent.dataset.id}`)
         .classList.add('hidden');
 
       lastActiveMainContent = target;
-      mainContentElmnt.querySelector(`#${id}`).classList.remove('hidden');
+      newExtractorView.classList.remove('hidden');
+      moveSubPartsToNewExtractorView(newExtractorView);
     }
   });
 }

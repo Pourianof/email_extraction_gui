@@ -4,6 +4,7 @@ import PN from 'persian-number';
 import {
   addNewURLInput,
   handleExtractOptionsForm,
+  handleInputBlur,
   reachFromTemplateTo,
 } from './urlFormHelper';
 import { availableWhatNotes } from './DATA';
@@ -15,8 +16,7 @@ import './rippleAnimation';
  * @type HTMLElement
  */
 const journalForm = document.forms['journal-form'];
-const extractBtn =
-  journalForm.previousElementSibling.previousElementSibling.lastElementChild;
+const extractBtn = journalForm.firstElementChild.lastElementChild;
 
 function handleRemoveIndexMofication(removedElmnt) {
   let index = +reachFromTemplateTo(removedElmnt, 'index').index;
@@ -41,10 +41,18 @@ function handleRemoveIndexMofication(removedElmnt) {
       e.preventDefault();
       const removingElmnt = target.parentElement.parentElement;
       handleRemoveIndexMofication(removingElmnt);
-      journalForm.removeChild(removingElmnt);
-      if (!journalForm.firstElementChild) {
+      journalForm.lastElementChild.removeChild(removingElmnt);
+      if (!journalForm.lastElementChild.firstElementChild) {
         extractBtn.classList.add('hidden');
       }
+    }
+  });
+  journalForm.addEventListener('reset', function (e) {
+    this.blur();
+    for (let urlInput of this.lastElementChild.children) {
+      const input = urlInput.querySelector('input');
+      input.value = '';
+      handleInputBlur(input);
     }
   });
   document.getElementById('extracted-excels').addEventListener('click', (e) => {

@@ -62,6 +62,9 @@ export const contextApi: ContextApi = {
   operateWindowActions: function (action: 'close' | 'max' | 'min'): void {
     ipcRenderer.send(Events.WIN_ACTIONS, action);
   },
+  stopExtraction: function (): void {
+    ipcRenderer.send(Events.STOP_EXTRACTION, {});
+  },
 };
 
 contextBridge.exposeInMainWorld('context', contextApi);
