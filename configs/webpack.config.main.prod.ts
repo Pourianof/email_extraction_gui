@@ -2,41 +2,41 @@
  * Webpack config for production electron main process
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import TerserPlugin from 'terser-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import Copy from 'copy-webpack-plugin';
-import baseConfig from './webpack.config.base';
-import checkNodeEnv from './scripts/check-node-env';
-import deleteSourceMaps from './scripts/delete-source-maps';
+import path from "path";
+import webpack from "webpack";
+import { merge } from "webpack-merge";
+import TerserPlugin from "terser-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import Copy from "copy-webpack-plugin";
+import baseConfig from "./webpack.config.base";
+import checkNodeEnv from "./scripts/check-node-env";
+import deleteSourceMaps from "./scripts/delete-source-maps";
 import {
   BACKEND_PATH,
   DEPENDENCIES_DIR,
   DIST_MAIN_PATH,
-} from './webpack.pathes';
+} from "./webpack.pathes";
 
-checkNodeEnv('production');
+checkNodeEnv("production");
 deleteSourceMaps();
 
 const configuration: webpack.Configuration = {
-  externals: ['fsevents', 'crypto-browserify'],
+  externals: ["fsevents", "crypto-browserify"],
 
-  mode: 'production',
+  mode: "production",
 
-  target: 'electron-main',
+  target: "electron-main",
 
   entry: {
-    main: path.join(BACKEND_PATH, 'main.ts'),
-    preload: path.join(BACKEND_PATH, 'preload.ts'),
+    main: path.join(BACKEND_PATH, "main.ts"),
+    preload: path.join(BACKEND_PATH, "preload.ts"),
   },
 
   output: {
     path: DIST_MAIN_PATH,
-    filename: '[name].js',
+    filename: "[name].js",
     library: {
-      type: 'umd',
+      type: "umd",
     },
   },
 
@@ -50,7 +50,7 @@ const configuration: webpack.Configuration = {
 
   plugins: [
     new BundleAnalyzerPlugin({
-      analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerMode: process.env.ANALYZE === "true" ? "server" : "disabled",
       analyzerPort: 8888,
     }),
 
@@ -64,19 +64,19 @@ const configuration: webpack.Configuration = {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
+      NODE_ENV: "production",
       DEBUG_PROD: false,
       START_MINIMIZED: false,
     }),
 
     new webpack.DefinePlugin({
-      'process.type': '"browser"',
+      "process.type": '"browser"',
     }),
 
     new Copy({
       patterns: [
         {
-          from: path.join(BACKEND_PATH, 'authoractor', 'win_handler.exe'),
+          from: path.join(BACKEND_PATH, "authoractor", "win_handler.exe"),
           to: DEPENDENCIES_DIR,
         },
       ],

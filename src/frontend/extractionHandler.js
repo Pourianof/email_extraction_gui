@@ -251,7 +251,7 @@ function succefulExtractionHandler(result, extractedCount) {
   statusSubHint.textContent = `در مجموعه ${extractedCount} آیتم بدست آمده است`;
   waitingResultElement.appendChild(statusSubHint);
 
-  createResultCommonPart(waitingResultElement);
+  createResultCommonPart(waitingResultElement, filePath);
 
   extractionFinishHandler(waitingResultElement);
 
@@ -277,7 +277,7 @@ function failedExtractionHandler(message, filePath, extractedCount) {
     statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها ساخته شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
     waitingResultElement.appendChild(statusSubHint);
 
-    createResultCommonPart(waitingResultElement);
+    createResultCommonPart(waitingResultElement, filePath);
   }
 
   extractionFinishHandler(waitingResultElement);
@@ -285,15 +285,15 @@ function failedExtractionHandler(message, filePath, extractedCount) {
   waitingViewElmnt.replaceChild(waitingResultElement, loadingImg);
 }
 
-function createResultCommonPart(parent) {
+function createResultCommonPart(parent, filePath) {
   const itemsRelatedButtonsWrapper = document.createElement('div');
   itemsRelatedButtonsWrapper.classList.add('--ser-buttons-container--');
 
   const displayExtractedItemsListBtn = document.createElement('button');
   displayExtractedItemsListBtn.classList.add('display-extraction');
-  displayExtractedItemsListBtn.append(
-    document.createTextNode('نمایش آیتم های بدست آمده')
-  );
+  // displayExtractedItemsListBtn.append(
+  //   document.createTextNode('نمایش آیتم های بدست آمده')
+  // );
 
   displayExtractedItemsListBtn.classList.remove('hidden');
   displayExtractedItemsListBtn.addEventListener('click', displayExtractList);
