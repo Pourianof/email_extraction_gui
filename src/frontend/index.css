@@ -101,7 +101,7 @@ html {
 
 body {
   direction: rtl;
-  font-family: sahel, '2 Yekan', 'b nazanin', 'Times New Roman', Times, serif;
+  font-family: sahel, "2 Yekan", "b nazanin", "Times New Roman", Times, serif;
   color: rgb(214, 214, 214);
   background-color: var(--bg-color);
   overflow: hidden;
@@ -337,23 +337,61 @@ header#header {
   margin: 20px 0;
 }
 
+.publisher-search-hint {
+  text-align: center;
+  font-size: 14px;
+  margin: 20px 0;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: 80%;
+  background-color: #101427;
+}
+
 .scholar-logo img {
   max-width: 350px;
 }
 
-.scholar-input {
-  background-color: #dbdbdb;
+.search-container {
   width: 80%;
   margin: 0 auto;
   padding: 10px;
-  border-radius: 50px;
   display: flex;
   color: black;
-  height: 50px;
   flex-direction: row-reverse;
+  align-items: center;
+  align-items: stretch;
 }
 
-.scholar-input input {
+.search-input-wrapper {
+  flex-grow: 80;
+  background-color: #dbdbdb;
+  display: flex;
+  flex-direction: row-reverse;
+  border-radius: 50px 0 0 50px;
+  align-items: center;
+  height: 50px;
+}
+
+.search-submit-btn {
+  flex-grow: 20;
+  border-radius: 0 50px 50px 0;
+  background-color: #8495b9;
+  margin-left: 5px;
+  font-size: 1.2em;
+  text-align: center;
+  color: #101722;
+  font-weight: bold;
+}
+
+.search-submit-btn:hover {
+  cursor: pointer;
+  background-color: #23365e;
+  color: rgb(219, 213, 213);
+}
+
+.search-container input {
   flex-grow: 1;
   align-items: stretch;
   font-weight: bold;
@@ -415,7 +453,7 @@ main#main {
 }
 
 #stop-extraction::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   bottom: 0;
@@ -451,7 +489,7 @@ main#main {
 }
 
 .en-in-fa::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   bottom: 0;
@@ -538,7 +576,7 @@ form.journal-form {
 
 .journal-form-header::after {
   display: block;
-  content: '';
+  content: "";
   background-color: #111522;
   height: 5px;
   border-radius: 10px;
@@ -637,7 +675,7 @@ form.journal-form {
 .btn::after,
 *[data-open]::after {
   display: block;
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   top: 0;
@@ -733,7 +771,7 @@ form.journal-form {
 }
 
 .output-url:hover::after {
-  content: 'کپی کنید';
+  content: "کپی کنید";
   position: absolute;
   top: 0;
   left: 0;
@@ -757,7 +795,7 @@ form.journal-form {
   position: relative;
 }
 .extracter-name::after {
-  content: ':';
+  content: ":";
   display: inline;
   margin-right: 5px;
   position: absolute;
@@ -839,7 +877,7 @@ form.journal-form {
 }
 
 .--svu-url--::before {
-  content: 'آدرس نمونه';
+  content: "آدرس نمونه";
   position: absolute;
   right: 0;
   top: 0;
@@ -923,19 +961,19 @@ form.journal-form {
   position: relative;
 }
 
-#google-schobar-extractor #extraction-options {
+.search-base-form #extraction-options {
   margin: 20px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-#google-schobar-extractor #extraction-options > div {
+#search-base-form #extraction-options > div {
   margin: 5px 10px;
 }
 
 .what::before {
-  content: '؟';
+  content: "؟";
   display: block;
   position: absolute;
   top: 50%;
@@ -1166,7 +1204,7 @@ form.journal-form {
   margin: 0 5px;
 }
 .author-info .--ai-lbl--::after {
-  content: ':';
+  content: ":";
 }
 
 .author-fname {
@@ -1298,7 +1336,7 @@ form.journal-form {
 
 .--ser-oc-btn--::before {
   display: block;
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   height: 5px;
@@ -1347,4 +1385,58 @@ span.ripple {
     transform: scale(4);
     opacity: 0;
   }
+}
+
+/*
+  ===================== publishers search ================
+*/
+
+.publisher-options {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.publisher-option-wrapper {
+  width: 20%;
+  height: 100px;
+  background-color: rgb(235, 235, 235);
+  padding: 10px;
+  margin-right: 1px;
+  position: relative;
+}
+
+.publisher-options img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.publisher-option-wrapper.selected-publisher {
+  border: 3px solid green;
+  background-color: rgb(139 225 177);
+}
+
+.publisher-option-wrapper.selected-publisher .publisher-option-name {
+  border: 3px solid green;
+  background-color: rgb(139 225 177);
+  border-bottom: none;
+}
+
+.publisher-options .publisher-option-name {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  text-align: center;
+  background-color: rgb(235, 235, 235);
+  color: #323232;
+  padding: 5px 10px;
+  border-radius: 5px 5px 0 0;
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.publisher-options {
+  margin-top: 50px;
 }

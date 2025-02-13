@@ -273,15 +273,6 @@
               Elsevier - Springer - John Wiley - World Scientific - Taylor &
               Francis
             </div>
-            <div class="ausmt-love">
-              ولی هیچکدوم
-              <img
-                data-open="ausmt"
-                src="../../../assets/images/icons/ausmt.png"
-                title="Amol University Special Modern Technologies"
-              />
-              نمیشه
-            </div>
           </div>
         </header>
 
@@ -387,10 +378,6 @@
                 </div>
                 <div style="font-size: 0.9em; color: #e6f39c">
                   <div>
-                    <span class="about-info-key">طراح و برنامه نویس: </span>
-                    <span class="about-info-val">پوریا امینی</span>
-                  </div>
-                  <div>
                     <div class="about-app-sub-info-item">
                       <img
                         class="about-app-icon"
@@ -416,7 +403,13 @@
                 data-id="pub-extractor"
                 class="extracter-item-title flex-50 selected-extractor-item covered"
               >
-                <span>ناشران</span><span>Publishers</span>
+                <span>آدرس مستقیم ناشران</span><span>Publishers with Direct URL</span>
+              </div>
+              <div
+                data-id="publisher-search-extractor"
+                class="extracter-item-title flex-50 covered"
+              >
+                <span>جستجو در ناشران</span><span>Search at Publishers</span>
               </div>
               <div
                 data-id="google-schobar-extractor"
@@ -1250,27 +1243,81 @@
                   </button>
                 </div>
               </div>
-              <div id="google-schobar-extractor" class="hidden">
+              <div id="publisher-search-extractor" class="hidden search-base-form">
+                <div class="publisher-search-hint">
+                  در این قسمت شما میتوانید عبارتی که میخواهید در سایت ناشر مورد نظر جستجو شود را وارد کنید، تا برنامه نتایج حاصل از جستجو را استخراج کند
+                </div>
+                <div class="main-form">
+                  <form id="google-scholar-form">
+                    <div class="publisher-options ">
+                      <div data-id="elsevier" class="btn publisher-option-wrapper">
+                        <div class="publisher-option-name">Elsevier</div>
+                        <img src="../../assets/images/elsevier.png" />
+                      </div>
+                      <div data-id="springer" class="btn publisher-option-wrapper btn">
+                        <div class="publisher-option-name">Springer</div>
+                        <img src="../../assets/images/springer.png" />
+                      </div>
+                      <div data-id="john-wiley" class="btn publisher-option-wrapper btn">
+                        <div class="publisher-option-name">Joh Wiley</div>
+                        <img src="../../assets/images/wiley.png" />
+                      </div>
+                      <div data-id="ws" class="btn publisher-option-wrapper btn">
+                        <div class="publisher-option-name">World Scientific</div>
+                        <img src="../../assets/images/ws.png" />
+                      </div>
+                      <div data-id="t&f" class="btn publisher-option-wrapper btn">
+                        <div class="publisher-option-name">Taylor & Francis</div>
+                        <img src="../../assets/images/TFO.png" />
+                      </div>
+                    </div>
+                    <div class="search-container">
+                      <div class="search-input-wrapper">
+                        <button class="scholar-search-ico btn" type="submit">
+                          <svg
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 92.51 97.5"
+                          >
+                            <path
+                              d="M94.5,88.75,76.8,71.05a41.88,41.88,0,1,0-9,7.6l18.4,18.4a5.79,5.79,0,0,0,8.2,0A5.77,5.77,0,0,0,94.5,88.75ZM15.4,43.15a30.15,30.15,0,1,1,30.2,30.2A30.24,30.24,0,0,1,15.4,43.15Z"
+                              transform="translate(-3.7 -1.25)"
+                            />
+                          </svg>
+                        </button>
+                        <input type="text" dir="auto" />
+                      </div>
+                      <button class="search-submit-btn">Search</button>
+                    </div>
+                    <div class="options-container"></div>
+                  </form>
+                </div>
+              </div>
+              <div id="google-schobar-extractor" class="hidden search-base-form">
                 <div class="scholar-logo">
                   <img src="../../../assets/images/scholar.png" />
                 </div>
                 <div class="main-form">
                   <form id="google-scholar-form">
-                    <div class="scholar-input">
-                      <button class="scholar-search-ico btn" type="submit">
-                        <svg
-                          id="Layer_1"
-                          data-name="Layer 1"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 92.51 97.5"
-                        >
-                          <path
-                            d="M94.5,88.75,76.8,71.05a41.88,41.88,0,1,0-9,7.6l18.4,18.4a5.79,5.79,0,0,0,8.2,0A5.77,5.77,0,0,0,94.5,88.75ZM15.4,43.15a30.15,30.15,0,1,1,30.2,30.2A30.24,30.24,0,0,1,15.4,43.15Z"
-                            transform="translate(-3.7 -1.25)"
-                          />
-                        </svg>
-                      </button>
-                      <input type="text" dir="auto" />
+                    <div class="search-container">
+                      <div class="search-input-wrapper">
+                        <button class="scholar-search-ico btn" type="submit">
+                          <svg
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 92.51 97.5"
+                          >
+                            <path
+                              d="M94.5,88.75,76.8,71.05a41.88,41.88,0,1,0-9,7.6l18.4,18.4a5.79,5.79,0,0,0,8.2,0A5.77,5.77,0,0,0,94.5,88.75ZM15.4,43.15a30.15,30.15,0,1,1,30.2,30.2A30.24,30.24,0,0,1,15.4,43.15Z"
+                              transform="translate(-3.7 -1.25)"
+                            />
+                          </svg>
+                        </button>
+                        <input type="text" dir="auto" />
+                      </div>
+                      <button class="search-submit-btn">Search</button>
                     </div>
                     <div class="options-container"></div>
                   </form>
@@ -1283,23 +1330,21 @@
           <div class="ack">
             ساخته شده در دانشگاه
             <a data-open="ausmt" title="دانشگاه فناوری های نوین آمل"
-              >فناوری های نوین آمل</a
+              >تخصصی فناوری های نوین آمل</a
             >
-            <br />
-            تحت نظارت دکتر محمدعلی حسین زاده<br />
           </div>
-          <div class="copy-right">
-            <div title="صفحه گیت‌هاب" data-open="github">
+          <div dir="ltr" class="copy-right">
+            <!-- <div title="صفحه گیت‌هاب" data-open="github">
               <span>طراح و برنامه نویس: </span>
               پوریا امینی
-              <!-- <div class="my-links">
+              <div class="my-links">
                 <span> گیت‌هاب </span>
                 <span>ایمیل</span>
-              </div> -->
-            </div>
+              </div>
+            </div> -->
             <div class="cp">
               &#169; Copyright Amol University of Special Modern Technologies
-              2024
+              2025
             </div>
           </div>
         </footer>
