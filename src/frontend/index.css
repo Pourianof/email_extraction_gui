@@ -101,7 +101,7 @@ html {
 
 body {
   direction: rtl;
-  font-family: sahel, "2 Yekan", "b nazanin", "Times New Roman", Times, serif;
+  font-family: sahel, '2 Yekan', 'b nazanin', 'Times New Roman', Times, serif;
   color: rgb(214, 214, 214);
   background-color: var(--bg-color);
   overflow: hidden;
@@ -453,7 +453,7 @@ main#main {
 }
 
 #stop-extraction::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   bottom: 0;
@@ -489,7 +489,7 @@ main#main {
 }
 
 .en-in-fa::before {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   bottom: 0;
@@ -576,7 +576,7 @@ form.journal-form {
 
 .journal-form-header::after {
   display: block;
-  content: "";
+  content: '';
   background-color: #111522;
   height: 5px;
   border-radius: 10px;
@@ -675,7 +675,7 @@ form.journal-form {
 .btn::after,
 *[data-open]::after {
   display: block;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   top: 0;
@@ -771,7 +771,7 @@ form.journal-form {
 }
 
 .output-url:hover::after {
-  content: "کپی کنید";
+  content: 'کپی کنید';
   position: absolute;
   top: 0;
   left: 0;
@@ -795,7 +795,7 @@ form.journal-form {
   position: relative;
 }
 .extracter-name::after {
-  content: ":";
+  content: ':';
   display: inline;
   margin-right: 5px;
   position: absolute;
@@ -877,7 +877,7 @@ form.journal-form {
 }
 
 .--svu-url--::before {
-  content: "آدرس نمونه";
+  content: 'آدرس نمونه';
   position: absolute;
   right: 0;
   top: 0;
@@ -973,7 +973,7 @@ form.journal-form {
 }
 
 .what::before {
-  content: "؟";
+  content: '؟';
   display: block;
   position: absolute;
   top: 50%;
@@ -1204,7 +1204,7 @@ form.journal-form {
   margin: 0 5px;
 }
 .author-info .--ai-lbl--::after {
-  content: ":";
+  content: ':';
 }
 
 .author-fname {
@@ -1336,7 +1336,7 @@ form.journal-form {
 
 .--ser-oc-btn--::before {
   display: block;
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   height: 5px;
@@ -1420,20 +1420,21 @@ span.ripple {
   border: 3px solid green;
   background-color: rgb(139 225 177);
   border-bottom: none;
+  left: -3px;
 }
 
 .publisher-options .publisher-option-name {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translate(-50%, -100%);
+  left: 0;
+  transform: translateY(-100%);
   text-align: center;
   background-color: rgb(235, 235, 235);
   color: #323232;
   padding: 5px 10px;
   border-radius: 5px 5px 0 0;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
