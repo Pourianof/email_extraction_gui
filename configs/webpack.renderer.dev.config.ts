@@ -14,6 +14,7 @@ import {
   DLL_PATH,
   FRONTEND_PATH,
   STATIC_PATH,
+  VIEWS_PATH,
 } from './webpack.pathes';
 import checkNodeEnv from './scripts/check-node-env';
 
@@ -69,6 +70,15 @@ const configuration: webpack.Configuration = {
 
   module: {
     rules: [
+      {
+        test: /\.ejs$/,
+        use: [
+          {
+            loader: 'ejs-webpack-loader',
+            options: {},
+          },
+        ],
+      },
       {
         test: /\.s?(c|a)ss$/,
         use: [
@@ -155,7 +165,7 @@ const configuration: webpack.Configuration = {
 
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
-      template: path.join(FRONTEND_PATH, 'index.html'),
+      template: path.join(VIEWS_PATH, 'index.ejs'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

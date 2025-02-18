@@ -34,7 +34,7 @@ export default class WindowHandler {
       modal: true,
       show: false,
     });
-    this.window.loadURL(resolveHtmlPath('index.html'));
+    this.window.loadURL(await resolveHtmlPath('index.html'));
 
     this.window.on('ready-to-show', () => {
       this.window.show();

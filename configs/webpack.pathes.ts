@@ -22,6 +22,7 @@ export const HTML_TEMPLATE_PATH = path.join(STATIC_PATH, 'index.html');
 export const BACKEND_PATH = path.join(SRC_PATH, 'backend');
 
 export const FRONTEND_PATH = path.join(SRC_PATH, 'frontend');
+export const VIEWS_PATH = path.join(APP_PATH, 'views');
 
 export const RELEAS_PATH = path.join(APP_PATH, 'release');
 export const RELEASE_APP_PATH = path.join(RELEAS_PATH, 'app');

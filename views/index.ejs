@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline'"
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>استخراج کننده اطلاعات نویسندگان جورنال های معتبر جهانی</title>
+  </head>
+
+  <body>
+    <%- include components/journal_url_template %>
+    <%- include components/extracted_excel_item_template %>
+    <%- include components/extracted_author_info_template %>
+
+    <div id="root">
+      <div class="wrapper">
+        <%- include components/title_bar %>
+        <%- include components/header %>
+        
+
+        <main id="main">
+          <h4>آخرین فایل های ثبت شده:</h4>
+          <div id="extracted-excels"></div>
+          <%- include components/about %>
+          <%- include components/main_content %>
+          
+        </main>
+        <%- include components/footer %>
+        
+      </div>
+    </div>
+  </body>
+</html>

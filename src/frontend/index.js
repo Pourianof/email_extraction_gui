@@ -1,29 +1,29 @@
-import "./index.css";
-import PN from "persian-number";
+import './index.css';
+import PN from 'persian-number';
 
 import {
   addNewURLInput,
   handleExtractOptionsForm,
   handleInputBlur,
   reachFromTemplateTo,
-} from "./urlFormHelper";
-import { availableWhatNotes } from "./DATA";
-import "./uiInitializer";
-import "./rippleAnimation";
-import "./publisherSearchHandler";
+} from './urlFormHelper';
+import { availableWhatNotes } from './DATA';
+import './uiInitializer';
+import './rippleAnimation';
+import './publisherSearchHandler';
 
 /**
  * @type HTMLElement
  */
-const journalForm = document.forms["journal-form"];
+const journalForm = document.forms['journal-form'];
 const extractBtn = journalForm.firstElementChild.lastElementChild;
 
 function handleRemoveIndexMofication(removedElmnt) {
-  let index = +reachFromTemplateTo(removedElmnt, "index").index;
+  let index = +reachFromTemplateTo(removedElmnt, 'index').index;
 
   let sib = removedElmnt;
   while ((sib = sib.nextElementSibling)) {
-    const indexElemnt = reachFromTemplateTo(sib, "index");
+    const indexElemnt = reachFromTemplateTo(sib, 'index');
     const i = index++;
     indexElemnt.index = i;
     indexElemnt.textContent = PN.convertEnToPe(i);
@@ -31,37 +31,37 @@ function handleRemoveIndexMofication(removedElmnt) {
 }
 
 (function () {
-  const addBtn = document.getElementById("add-new-url-btn");
+  const addBtn = document.getElementById('add-new-url-btn');
 
-  addBtn.addEventListener("click", addNewURLInput);
+  addBtn.addEventListener('click', addNewURLInput);
 
-  journalForm.addEventListener("click", (e) => {
+  journalForm.addEventListener('click', (e) => {
     const { target } = e;
-    if (target.classList.contains("remove-url-btn")) {
+    if (target.classList.contains('remove-url-btn')) {
       e.preventDefault();
       const removingElmnt = target.parentElement.parentElement;
       handleRemoveIndexMofication(removingElmnt);
       journalForm.lastElementChild.removeChild(removingElmnt);
       if (!journalForm.lastElementChild.firstElementChild) {
-        extractBtn.classList.add("hidden");
+        extractBtn.classList.add('hidden');
       }
     }
   });
-  journalForm.addEventListener("reset", function (e) {
+  journalForm.addEventListener('reset', function (e) {
     this.blur();
     for (let urlInput of this.lastElementChild.children) {
-      const input = urlInput.querySelector("input");
-      input.value = "";
+      const input = urlInput.querySelector('input');
+      input.value = '';
       handleInputBlur(input);
     }
   });
-  document.getElementById("extracted-excels").addEventListener("click", (e) => {
+  document.getElementById('extracted-excels').addEventListener('click', (e) => {
     e.preventDefault();
     const target = e.target;
-    if (!target.classList.contains("newly-extracted")) {
+    if (!target.classList.contains('newly-extracted')) {
       return;
     }
-    const path = target.querySelector(".--eed-path--").textContent?.trim();
+    const path = target.querySelector('.--eed-path--').textContent?.trim();
     if (path) {
       window.context.openExcelFile(JSON.stringify({ filePath: path }));
     }
@@ -71,15 +71,15 @@ function handleRemoveIndexMofication(removedElmnt) {
 
   let initialBtnPosition;
 
-  document.getElementById("title-bar").addEventListener("click", (e) => {
+  document.getElementById('title-bar').addEventListener('click', (e) => {
     e.preventDefault();
     const target = e.target;
-    if ("action" in target.dataset) {
+    if ('action' in target.dataset) {
       window.context.operateWindowActions(target.dataset.action);
     }
   });
 
-  document.getElementById("root").addEventListener("scroll", function (e) {
+  document.getElementById('root').addEventListener('scroll', function (e) {
     const extractBtnWrapper = extractBtn.parentElement;
 
     const { top } = extractBtnWrapper.getBoundingClientRect();
@@ -113,23 +113,23 @@ function handleRemoveIndexMofication(removedElmnt) {
 let activeDialogBox;
 
 function uxHandler() {
-  const whatElmnts = document.querySelectorAll(".what");
+  const whatElmnts = document.querySelectorAll('.what');
 
-  window.addEventListener("mousemove", (e) => {
+  window.addEventListener('mousemove', (e) => {
     const target = e.target;
-    if (!("mouseMoveSensitive" in target.dataset)) {
-      activeDialogBox?.classList.add("hidden");
+    if (!('mouseMoveSensitive' in target.dataset)) {
+      activeDialogBox?.classList.add('hidden');
       return;
     }
   });
-  window.addEventListener("click", (e) => {
+  window.addEventListener('click', (e) => {
     const target = e.target;
-    if ("open" in target.dataset) {
+    if ('open' in target.dataset) {
       e.preventDefault();
       window.context.openLink(target.dataset.open);
     }
   });
-  whatElmnts.forEach((we) => we.addEventListener("mouseover", whatHandler));
+  whatElmnts.forEach((we) => we.addEventListener('mouseover', whatHandler));
 }
 
 function whatHandler(e) {
@@ -153,11 +153,11 @@ function openWhatDialogBox(id, bindedElement) {
    */
   let dialogBoxElement = targetWhat.cachedDB;
   if (!dialogBoxElement) {
-    dialogBoxElement = document.createElement("div");
+    dialogBoxElement = document.createElement('div');
     dialogBoxElement.replaceChildren([]);
     // dialogBoxElement.dataset['mouse-move-sesitive'] = true;
 
-    dialogBoxElement.classList.add("what-db");
+    dialogBoxElement.classList.add('what-db');
 
     const descriptionParts = processWhatDBDescriptions(targetWhat.description);
 
@@ -174,7 +174,7 @@ function openWhatDialogBox(id, bindedElement) {
   // dialogBoxElement.style.top = `${top + 10}px`;
 
   activeDialogBox = dialogBoxElement;
-  activeDialogBox.classList.remove("hidden");
+  activeDialogBox.classList.remove('hidden');
 }
 
 /**
@@ -187,21 +187,21 @@ function processWhatDBDescriptions(description, level = 0) {
     if (desc instanceof Array) {
       const childWrapper = processWhatDBDescriptions(desc, level + 1);
       wrapper.appendChild(childWrapper);
-    } else if (typeof desc == "object") {
-      const descElm = document.createElement("div");
-      const title = document.createElement("span");
+    } else if (typeof desc == 'object') {
+      const descElm = document.createElement('div');
+      const title = document.createElement('span');
       title.textContent = desc.title;
-      title.classList.add("what-db-title");
+      title.classList.add('what-db-title');
 
-      const detail = document.createElement("span");
+      const detail = document.createElement('span');
       detail.textContent = desc.detail;
-      detail.classList.add("what-db-detail");
+      detail.classList.add('what-db-detail');
 
       descElm.replaceChildren(...[title, detail]);
       descElm.style.paddingRight = `${level * 10}px`;
       wrapper.appendChild(descElm);
-    } else if (typeof desc == "string") {
-      const descElm = document.createElement("div");
+    } else if (typeof desc == 'string') {
+      const descElm = document.createElement('div');
       descElm.textContent = desc;
 
       descElm.style.marginRight = `${level * 5}px`;

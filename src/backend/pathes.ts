@@ -4,6 +4,7 @@ import path from "path";
 export const APP_DIR = app.isPackaged
   ? path.join(__dirname, "..", "..", "..")
   : path.join(__dirname, "..", "..");
+export const VIEW_DIR = path.join(APP_DIR, "views");
 export const STATIC_FILES = path.join(APP_DIR, "static");
 export const TEMP_FILES = path.join(
   app.getPath("temp"),

@@ -1,4 +1,3 @@
-import { URL } from 'url';
 import path from 'path';
 import { Readable } from 'stream';
 

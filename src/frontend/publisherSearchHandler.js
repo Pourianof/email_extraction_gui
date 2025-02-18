@@ -1,11 +1,11 @@
 /**
  * @type HTMLElement
  */
-const optionsWrapper = document.querySelector(".publisher-options");
+const optionsWrapper = document.querySelector('.publisher-options');
 
 let lastSelected;
 
-optionsWrapper.addEventListener("click", (e) => {
+optionsWrapper.addEventListener('click', (e) => {
   e.preventDefault();
 
   const target = e.target;
@@ -15,8 +15,8 @@ optionsWrapper.addEventListener("click", (e) => {
     return;
   }
 
-  lastSelected?.classList.remove("selected-publisher");
-  target.classList.add("selected-publisher");
+  lastSelected?.classList.remove('selected-publisher');
+  target.classList.add('selected-publisher');
 
   lastSelected = target;
 });
