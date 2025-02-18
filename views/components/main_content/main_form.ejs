@@ -1,0 +1,168 @@
+<div id="form-wrapper" class="main-form">
+    <div class="waiting-view hidden">
+      <div class="waiting-to-end">
+        <img src="../../../assets/images/loading.gif" />
+        <button id="stop-extraction" class="btn">
+          <img src="../../../assets/images/icons/stop.svg" />
+          <span> توقف </span>
+          <img src="../../../assets/images/icons/stop.svg" />
+        </button>
+      </div>
+      <div class="display-extraction hidden btn">
+        <img src="../../../assets/images/icons/list.svg" />
+      </div>
+      <div class="extracted-list">
+        <div class="extracted-list-header">
+          <div class="extracted-list-header-title">
+            <span
+              class="close-extracted-list-btn extracted-items-icon"
+            >
+              <svg
+                id="Layer_1"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 863.65 863.65"
+              >
+                <path
+                  d="M75.08,863.65A75.08,75.08,0,0,1,22,735.48L735.48,22A75.08,75.08,0,0,1,841.66,128.17L128.16,841.66a74.84,74.84,0,0,1-53.09,22Zm713.49,0a74.91,74.91,0,0,1-53.09-22L22,128.17A75.08,75.08,0,0,1,128.16,22l713.5,713.49a75.08,75.08,0,0,1-53.09,128.17Z"
+                />
+              </svg>
+            </span>
+            <span class="extracted-items-icon">
+              <svg
+                id="Layer_1"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 87.5 75"
+              >
+                <path
+                  d="M85.94,15.63H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,1,0,0-3.12Z"
+                />
+                <path
+                  d="M28.12,12.5H85.94a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,1,0,0,3.12Z"
+                />
+                <path
+                  d="M28.12,6.25H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
+                />
+                <path
+                  d="M85.94,42.19H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
+                />
+                <path
+                  d="M85.94,35.94H28.13a1.56,1.56,0,1,0,0,3.12H85.94a1.56,1.56,0,0,0,0-3.12Z"
+                />
+                <path
+                  d="M28.12,32.81H68.75a1.56,1.56,0,1,0,0-3.12H28.12a1.56,1.56,0,0,0,0,3.12Z"
+                />
+                <path
+                  d="M85.94,68.75H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
+                />
+                <path
+                  d="M85.94,62.5H28.13a1.57,1.57,0,1,0,0,3.13H85.94a1.57,1.57,0,0,0,0-3.13Z"
+                />
+                <path
+                  d="M28.12,59.38H68.75a1.57,1.57,0,0,0,0-3.13H28.12a1.57,1.57,0,0,0,0,3.13Z"
+                />
+                <path
+                  d="M4.69,0h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,17.19V4.69A4.69,4.69,0,0,1,4.69,0Z"
+                />
+                <path
+                  d="M4.69,26.56h12.5a5,5,0,0,1,4.69,4.69v12.5a4.69,4.69,0,0,1-4.69,4.69H4.69A5,5,0,0,1,0,43.75V31.25A4.69,4.69,0,0,1,4.69,26.56Z"
+                />
+                <path
+                  d="M4.69,53.13h12.5a5,5,0,0,1,4.69,4.68v12.5A4.69,4.69,0,0,1,17.19,75H4.69A5,5,0,0,1,0,70.31V57.81A4.68,4.68,0,0,1,4.69,53.13Z"
+                />
+              </svg>
+            </span>
+            <h3>لیست نویسندگان بدست آمده</h3>
+          </div>
+          <span>فقط ۵۰ آیتم آخر نمایش داده می‌شود</span>
+        </div>
+        <div class="extracted-list-view"></div>
+      </div>
+    </div>
+
+    <div id="extraction-hint hidden"></div>
+    <form class="journal-form" name="journal-form">
+      <div class="extract-btn-wrapper options-container">
+        <div id="extraction-options">
+          <div>
+            <label for="only-main-author" class="btn">
+              <input
+                type="checkbox"
+                id="only-main-author"
+                name="only-main"
+              />
+              نویسنده اصلی مقاله
+            </label>
+          </div>
+          <div>
+            <label for="only-email" class="btn">
+              <input
+                id="only-email"
+                type="checkbox"
+                name="only-email"
+              />
+              نویسندگان دارای ایمیل
+            </label>
+          </div>
+          <div>
+            <label>اتمام جمع آوری پس از یافتن </label>
+            <input
+              dir="ltr"
+              class="author-count"
+              type="text"
+              pattern="[\d]+"
+              min="0"
+              name="author-count"
+              inputmode="numeric"
+            />
+            <label> نویسنده</label>
+          </div>
+          <div class="extract-speed-opt">
+            <label>سرعت استخراج</label>
+            <span
+              id="what-is-extract-speed"
+              data-name="extract-speed"
+              data-mouse-move-sensitive
+              class="what btn"
+            ></span>
+            <select name="extract-speed">
+              <option>حداکثر</option>
+              <option>زیاد</option>
+              <option>متوسط</option>
+              <option>بهینه</option>
+              <option selected>کم</option>
+            </select>
+          </div>
+          <button class="btn reset-form rip-btn" type="reset">
+            <svg
+              id="Layer_1"
+              data-name="Layer 1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 17 20"
+            >
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill-rule: evenodd;
+                  }
+                </style>
+              </defs>
+              <path
+                class="cls-1"
+                d="M10.71.3a1,1,0,0,1,0,1.41L9.22,3.18H10a8.41,8.41,0,1,1-8.5,8.41,1,1,0,0,1,2,0A6.5,6.5,0,1,0,10,5.18H9.22L10.7,6.64A1,1,0,1,1,9.3,8.06L6.08,4.89a1,1,0,0,1-.29-.71,1,1,0,0,1,.29-.71L9.3.29A1,1,0,0,1,10.71.3Z"
+                transform="translate(-1.5)"
+              />
+            </svg>
+          </button>
+        </div>
+        <button id="extract-btn" class="hidden btn">
+          شروع استخراج
+        </button>
+      </div>
+      <div id="urls"></div>
+    </form>
+    <button id="add-new-url-btn" class="btn">
+      افزودن ژورنال جدید
+    </button>
+  </div>

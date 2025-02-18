@@ -1,0 +1,27 @@
+<div id="main-content">
+  <div id="extractor-items" class="flex">
+    <div
+      data-id="pub-extractor"
+      class="extracter-item-title flex-50 selected-extractor-item covered"
+    >
+      <span>آدرس مستقیم ناشران</span><span>Publishers with Direct URL</span>
+    </div>
+    <div
+      data-id="publisher-search-extractor"
+      class="extracter-item-title flex-50 covered"
+    >
+      <span>جستجو در ناشران</span><span>Search at Publishers</span>
+    </div>
+    <div
+      data-id="google-schobar-extractor"
+      class="extracter-item-title flex-50 covered"
+    >
+      <span>گوگل اسکولار</span><span>Google Scholar</span>
+    </div>
+  </div>
+  <div id="extractor-views">
+    <%- include url_base_extractor %>
+    <%- include search_pub %>
+    <%- include scholar %>
+  </div>
+</div>
