@@ -9,7 +9,6 @@ import {
 } from "./urlFormHelper";
 import { availableWhatNotes } from "./DATA";
 import "./uiInitializer";
-import "./converLinkTool";
 import "./rippleAnimation";
 import "./publisherSearchHandler";
 
