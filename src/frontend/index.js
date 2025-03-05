@@ -11,6 +11,7 @@ import { availableWhatNotes } from './DATA';
 import './uiInitializer';
 import './rippleAnimation';
 import './publisherSearchHandler';
+import { selectedTab } from './helpers';
 
 /**
  * @type HTMLElement
@@ -80,6 +81,9 @@ function handleRemoveIndexMofication(removedElmnt) {
   });
 
   document.getElementById('root').addEventListener('scroll', function (e) {
+    if (selectedTab() != 'pub-extractor') {
+      return;
+    }
     const extractBtnWrapper = extractBtn.parentElement;
 
     const { top } = extractBtnWrapper.getBoundingClientRect();

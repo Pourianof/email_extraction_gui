@@ -1,7 +1,13 @@
+import { type ExtractResource } from '../backend/authoractor/authoractor';
+import { type ExtractOptions } from './extractOptions';
 import { IPCMessage } from './IPCMessage';
 import ExtractionProgressState from './extractionsProgressState';
+
 export default interface ContextApi {
-  extractURLs: (urls: string[]) => Promise<IPCMessage>;
+  extractURLs: (options: {
+    urls: ExtractResource[];
+    options: ExtractOptions;
+  }) => Promise<IPCMessage>;
   listenToExtractionProgress: (
     cb: (state: ExtractionProgressState) => any
   ) => void;

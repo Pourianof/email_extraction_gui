@@ -58,7 +58,6 @@ function handleActiveMainContent() {
       target.classList.add(selectedClass);
 
       const id = target.dataset.id;
-      console.log(lastActiveMainContent, lastActiveMainContent.dataset.id);
       const newExtractorView = document.getElementById(id);
 
       mainContentElmnt

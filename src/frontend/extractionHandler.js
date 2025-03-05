@@ -91,14 +91,21 @@ function handleExtractionWaitingView(hide) {
 export default class ExtractionHandler {
   static isExtractionOnProgress = false;
 
-  static async start(urls, options) {
+  /**
+   *
+   * @param {import('../backend/authoractor/authoractor').ExtractResource[]} urls
+   * @param {import('../shared/extractOptions').ExtractOptions} options
+   * @param {*} searchMode
+   * @returns
+   */
+  static async start(urls, options, searchMode) {
     if (this.isExtractionOnProgress) {
       throw new Error(
         'Currently another extraction is on progress.\nYou must either cancel the previous one and start a new or wait to previous get finish.'
       );
     }
 
-    const handler = new ExtractionHandler(urls, options);
+    const handler = new ExtractionHandler(urls, options, searchMode);
     this.listenToExtractionProgress = true;
     handler.extract().then(() => {
       this.listenToExtractionProgress = false;
@@ -107,9 +114,10 @@ export default class ExtractionHandler {
   }
 
   _state = ExtractionState.IDOL;
-  constructor(urls, options) {
+  constructor(urls, options, searchMode = false) {
     this.urls = urls;
     this.options = options;
+    this.searchMode = searchMode;
   }
 
   async extract() {
@@ -184,6 +192,7 @@ export default class ExtractionHandler {
     displayExtractList();
   }
 }
+
 function handleExtractListItemBounds() {
   const extractListViewElmnt = document.querySelector('.extracted-list-view');
 

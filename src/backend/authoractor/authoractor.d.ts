@@ -49,6 +49,7 @@ declare abstract class BaseBrowser implements ConstrainedBrowser {
     stop(): void;
     private openedTabs;
     newPage(): Promise<TabAsResource>;
+    protected applyPlugins(tab: Tab): Promise<void>;
     abstract provideTab(): Promise<Tab>;
     getRawBrowser(): Browser;
     isClosed(): boolean;
@@ -63,6 +64,19 @@ interface Author {
     affiliations?: string[];
     address?: string[];
     isMain?: boolean;
+}
+
+interface SearchConfigs {
+    expression: string;
+    target: Extractors;
+}
+interface ExtractResource {
+    url?: string;
+    search?: SearchConfigs;
+}
+interface ExtractorHandler {
+    whenExtractionEnd(): Promise<void>;
+    queueForExtract(config: ExtractResource): void;
 }
 
 declare class LinkedListHandler<T extends {}> {
@@ -92,8 +106,11 @@ declare class ExtractorHolder {
     constructor(extractorState: ExtractorCenteralState);
     private extracters;
     private provideUtilAPI;
-    getExtractor(url: string): ArticleExtractor;
-    getAllExtractors(): ArticleExtractor[];
+    getExtractor(params: {
+        url?: string;
+        name?: string;
+    }): BaseExtracter<{}>;
+    getAllExtractors(): BaseExtracter<{}>[];
 }
 
 interface ExtractorState {
@@ -101,6 +118,7 @@ interface ExtractorState {
     filters: ExtractionFilters;
     browser: ConstrainedBrowser;
     tempPath: string;
+    extractorHandler: ExtractorHandler;
 }
 interface ExtractorCenteralState extends ExtractorState {
     excelAPI: ExcelManager;
@@ -115,31 +133,28 @@ declare abstract class BaseExtracter<T extends {} = {}> {
     private extractorState;
     private excelApi;
     protected extractorOptions?: T | undefined;
-    protected urlsToExtract: LinkedListHandler<string>;
-    constructor(extractorState: ExtractorState, excelApi: ExcelExtracterAPI, extractorOptions?: T | undefined, urls?: string[]);
+    protected resources: LinkedListHandler<ExtractResource>;
+    constructor(extractorState: ExtractorState, excelApi: ExcelExtracterAPI, extractorOptions?: T | undefined, urls?: ExtractResource[]);
     protected get extractionFilters(): ExtractionFilters;
     protected get browser(): ConstrainedBrowser;
     protected get utilsAPI(): ExcelExtracterAPI;
+    protected get extractorHandler(): ExtractorHandler;
     private state;
     private waiter?;
+    protected abstract search(expression: string): Promise<void>;
     extract(): Promise<void>;
+    private extractURL;
     protected get isCanceled(): boolean;
     protected checkState(): Promise<void>;
     protected cancelBoundedProcess(cb: () => any): Promise<void>;
     cancel(): void;
     waitForExtraction(): Promise<void> | undefined;
     protected abstract extractSingleURL(url: string): Promise<void>;
-    addURL(url: string[]): void;
-    addURL(url: string): void;
+    addURL(resource: ExtractResource[]): void;
+    addURL(resource: ExtractResource): void;
     abstract urlValidation(url: string): void;
     private _add;
     private addAll;
-}
-declare abstract class ArticleExtractor extends BaseExtracter {
-    protected processArticle(url: string, tab: Tab): Promise<void>;
-    urlValidation(u: string): void;
-    protected abstract validateURL(url: URL): void;
-    abstract extractArticlePage(url: string, tab: Tab): Promise<Author[]>;
 }
 
 type ExcelPath = string | (() => string | Promise<string>);
@@ -220,6 +235,14 @@ declare enum ExtractSpeed {
     OPTIMIZED = 3500,
     LOW = 5000
 }
+declare enum Extractors {
+    ELSEVIER = "elsevier",
+    SPRINGER = "springer",
+    WILEY = "wiley",
+    TF = "tf",
+    WS = "ws",
+    GOOGLE = "google"
+}
 interface ExtractionOption {
     ouputPath: string | (() => string | Promise<string>);
     tempPath: string;
@@ -233,7 +256,6 @@ interface ExtractionOption {
         boundary?: number;
         extractSpeed?: ExtractSpeed;
     } & ExtractionFilters;
-    isGoogleScholar?: boolean;
     gsOptions?: {
         maxPage?: number;
     };
@@ -252,15 +274,16 @@ declare class Extractor implements ExtractorCenteralState {
     get filters(): ExtractionFilters;
     get holder(): ExtractorHolder;
     private state;
-    constructor(urls: string[], options: ExtractionOption);
+    constructor(urls: ExtractResource[], options: ExtractionOption);
     start(): Promise<{
         elapsedTime: number;
         numberOfExtractedAuthors: number;
     }>;
-    private extractorHandler;
+    private _extractorHandler;
+    get extractorHandler(): ExtractorHandler;
     private _extract;
     get isStopped(): boolean;
     stop(): void;
 }
 
-export { AuthorsProgressStateNotifier, ExtractSpeed, type NewDataNotifier, Extractor as default };
+export { AuthorsProgressStateNotifier, type ExtractResource, ExtractSpeed, Extractors, type NewDataNotifier, type SearchConfigs, Extractor as default };

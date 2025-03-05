@@ -14,7 +14,10 @@ function init() {
     if (value) {
       const options = getSettedOptions(scholarForm);
       options.isGoogleScholar = true;
-      ExtractionHandler.start([value], options);
+      ExtractionHandler.start(
+        [{ search: { expression: value, target: 'google' } }],
+        options
+      );
     }
   });
 }

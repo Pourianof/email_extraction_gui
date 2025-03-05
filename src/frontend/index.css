@@ -45,6 +45,10 @@ summary {
   cursor: pointer;
 }
 
+svg {
+  vertical-align: middle;
+}
+
 div::-webkit-scrollbar {
   background-color: transparent;
   width: 3px;
@@ -347,6 +351,11 @@ header#header {
   margin: 20px auto;
   width: 80%;
   background-color: #101427;
+}
+
+.publisher-search-hint span {
+  color: rgb(139, 225, 177);
+  font-weight: normal;
 }
 
 .scholar-logo img {
@@ -1439,5 +1448,7 @@ span.ripple {
 }
 
 .publisher-options {
+  margin: 0 auto;
   margin-top: 50px;
+  width: 80%;
 }

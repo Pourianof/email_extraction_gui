@@ -27,3 +27,7 @@ export function formatUnixInterval(interval) {
 
   return format.join(' و ');
 }
+
+export function selectedTab() {
+  return document.querySelector('.selected-extractor-item').dataset.id;
+}
