@@ -11,7 +11,11 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
-import { DIST_RENDERER_PATH, FRONTEND_PATH } from './webpack.pathes';
+import {
+  DIST_RENDERER_PATH,
+  FRONTEND_PATH,
+  VIEWS_PATH,
+} from './webpack.pathes';
 import deleteSourceMaps from './scripts/delete-source-maps';
 
 deleteSourceMaps();
@@ -34,6 +38,15 @@ const configuration: webpack.Configuration = {
 
   module: {
     rules: [
+      {
+        test: /\.ejs$/,
+        use: [
+          {
+            loader: 'ejs-webpack-loader',
+            options: {},
+          },
+        ],
+      },
       {
         test: /\.s?(a|c)ss$/,
         use: [
@@ -118,7 +131,7 @@ const configuration: webpack.Configuration = {
 
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.join(FRONTEND_PATH, 'index.html'),
+      template: path.join(VIEWS_PATH, 'index.ejs'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
