@@ -1020,6 +1020,7 @@ form.journal-form {
   top: 0;
   transform: translateY(-100%);
   z-index: 1000;
+  white-space: wrap !important;
 }
 
 .extract-speed-opt select {
@@ -1458,4 +1459,22 @@ span.ripple {
   margin: 0 auto;
   margin-top: 50px;
   width: 80%;
+}
+
+#extraction-options:not(#pub-extractor #extraction-options) {
+  margin: 20px 0;
+  display: grid;
+  column-gap: 50px;
+  grid-template-columns: auto auto auto;
+  row-gap: 10px;
+  padding: 10px;
+}
+
+#extraction-options:not(#pub-extractor #extraction-options) > * {
+  white-space: nowrap;
+  background-color: #00000056;
+  padding: 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
 }

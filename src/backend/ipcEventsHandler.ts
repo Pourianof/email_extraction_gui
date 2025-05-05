@@ -11,6 +11,7 @@ import {
 import { Events } from './events';
 import Extractor, {
   AuthorsProgressStateNotifier,
+  ExtractorType,
   ExtractResource,
   ExtractSpeed,
 } from './authoractor';
@@ -233,6 +234,11 @@ export default class IPCEventHandler {
         }
       }
 
+      const extractorType =
+        data.options.extractorType == 'puppet'
+          ? ExtractorType.PUPPET
+          : ExtractorType.CHROWSER;
+
       logInfo(
         `Try to extract urls: [${data.urls
           .map(
@@ -249,6 +255,7 @@ export default class IPCEventHandler {
           ? path.join(__dirname, 'authoractor', 'win_handler.exe')
           : path.join(DEPENDENCIES_DIR, 'win_handler.exe'),
         progressMonitor: progressListener,
+        extractorType,
         saveOnEveryItem: true,
         ouputPath: async () => {
           const defaultName = `authors-${new DateObject().format(

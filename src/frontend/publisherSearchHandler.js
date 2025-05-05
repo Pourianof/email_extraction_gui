@@ -31,7 +31,6 @@ const searchOnPubView = document.getElementById('publisher-search-extractor');
  * @type HTMLFormElement
  */
 const form = document.getElementById('google-scholar-form');
-console.log(form);
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   debugger;

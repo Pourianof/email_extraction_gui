@@ -243,6 +243,10 @@ declare enum Extractors {
     WS = "ws",
     GOOGLE = "google"
 }
+declare enum ExtractorType {
+    CHROWSER = 1,
+    PUPPET = 2
+}
 interface ExtractionOption {
     ouputPath: string | (() => string | Promise<string>);
     tempPath: string;
@@ -252,6 +256,7 @@ interface ExtractionOption {
     progressMonitor?: AuthorsProgressStateNotifier;
     saveOnEveryItem?: boolean;
     winHandlerPath: string;
+    extractorType?: ExtractorType;
     extractionConf?: {
         boundary?: number;
         extractSpeed?: ExtractSpeed;
@@ -286,4 +291,4 @@ declare class Extractor implements ExtractorCenteralState {
     stop(): void;
 }
 
-export { AuthorsProgressStateNotifier, type ExtractResource, ExtractSpeed, Extractors, type NewDataNotifier, type SearchConfigs, Extractor as default };
+export { AuthorsProgressStateNotifier, type ExtractResource, ExtractSpeed, ExtractorType, Extractors, type NewDataNotifier, type SearchConfigs, Extractor as default };

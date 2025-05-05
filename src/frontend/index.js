@@ -1,6 +1,7 @@
 import './index.css';
 import PN from 'persian-number';
 
+import './faNumHandler';
 import {
   addNewURLInput,
   handleExtractOptionsForm,

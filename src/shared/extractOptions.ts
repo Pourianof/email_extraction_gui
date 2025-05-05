@@ -4,4 +4,5 @@ export interface ExtractOptions {
   isOnlyMainAuthor: boolean;
   authorsCount?: number;
   isGoogleScholar?: boolean;
+  extractorType: 'chrowser' | 'puppet';
 }

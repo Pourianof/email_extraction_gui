@@ -111,6 +111,8 @@ export function getSettedOptions(form) {
   const authorCountOpt = extractOptionsForm['author-count'].value?.trim();
   if (authorCountOpt) options.authorsCount = Number.parseInt(authorCountOpt);
 
+  options.extractorType = extractOptionsForm['extractor-type'].value;
+
   options.extractSpeed = Array.from(
     extractOptionsForm['extract-speed'].selectedOptions
   )[0].value;
