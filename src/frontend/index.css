@@ -492,6 +492,13 @@ main#main {
   margin: 0 auto;
 }
 
+.url-hint {
+  padding: 15px;
+  text-align: center;
+  background-color: #0000008c;
+  font-weight: bold;
+}
+
 .en-in-fa {
   position: relative;
   font-weight: bold;
