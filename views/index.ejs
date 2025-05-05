@@ -12,22 +12,19 @@
   </head>
 
   <body>
-    <%- include components/journal_url_template %>
-    <%- include components/extracted_excel_item_template %>
-    <%- include components/extracted_author_info_template %>
+    <%- include components/journal_url_template %> <%- include
+    components/extracted_excel_item_template %> <%- include
+    components/extracted_author_info_template %>
 
     <div id="root">
       <div class="wrapper">
-        <%- include components/title_bar %>
-        <%- include components/header %>
-        
+        <%- include components/title_bar %> <%- include components/header %>
 
         <main id="main">
           <h4>آخرین فایل های ثبت شده:</h4>
           <div id="extracted-excels"></div>
-          <%- include components/about %>
-          <%- include components/main_content/main_content %>
-          
+          <%- include components/about %> <%- include
+          components/main_content/main_content %>
         </main>
         <%- include components/footer %>
       </div>

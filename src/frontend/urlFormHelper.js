@@ -29,8 +29,6 @@ export function handleInputBlur(inputElmnt) {
   );
   const placeHolderElmnt = inputElmnt.nextElementSibling;
 
-  console.log('VALUE : ', val);
-
   if (!val) {
     placeHolderElmnt.classList.remove('hidden');
     hintElmnt.replaceChildren([]);
@@ -41,7 +39,7 @@ export function handleInputBlur(inputElmnt) {
     try {
       url = new URL(val);
       if (!url.protocol.startsWith('https')) {
-        hintMsg.push('آدرس ژورنال میبایست با https:// شروع بشود.');
+        hintMsg.push('آدرس نشریه میبایست با https:// شروع بشود.');
       }
 
       if (
@@ -58,7 +56,7 @@ export function handleInputBlur(inputElmnt) {
 
       if (isElsevier(val) && !isElsevierIssue(val)) {
         hintMsg.push(
-          'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک ژورنال اشاره نمیکند'
+          'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک نشریه اشاره نمیکند'
         );
       } else if (
         isSpringer(val) &&
@@ -66,7 +64,7 @@ export function handleInputBlur(inputElmnt) {
         !isSpringerArticles(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به ژورنال اشاره نمیکند (ترجیحا آخرین issue)'
+          'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به نشریه اشاره نمیکند (ترجیحا آخرین issue)'
         );
       } else if (
         isWiley(val) &&
@@ -75,7 +73,7 @@ export function handleInputBlur(inputElmnt) {
         !isWileyArticles(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از ژورنال نمیباشد'
+          'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از نشریه نمیباشد'
         );
       } else if (
         isWorldScientific(val) &&

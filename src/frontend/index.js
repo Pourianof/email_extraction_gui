@@ -32,6 +32,7 @@ function handleRemoveIndexMofication(removedElmnt) {
 }
 
 (function () {
+  addNewURLInput();
   const addBtn = document.getElementById('add-new-url-btn');
 
   addBtn.addEventListener('click', addNewURLInput);
@@ -41,6 +42,10 @@ function handleRemoveIndexMofication(removedElmnt) {
     if (target.classList.contains('remove-url-btn')) {
       e.preventDefault();
       const removingElmnt = target.parentElement.parentElement;
+      // dont let remove last single input
+      if (journalForm.lastElementChild.children.length == 1) {
+        return;
+      }
       handleRemoveIndexMofication(removingElmnt);
       journalForm.lastElementChild.removeChild(removingElmnt);
       if (!journalForm.lastElementChild.firstElementChild) {

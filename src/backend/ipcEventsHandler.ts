@@ -234,9 +234,14 @@ export default class IPCEventHandler {
       }
 
       logInfo(
-        `Try to extract urls: [${data.urls.join(
-          ' , '
-        )}]\nWith options: ${JSON.stringify(data.options)}`
+        `Try to extract urls: [${data.urls
+          .map(
+            (u) =>
+              `${u.url ? 'Search' : 'Link'}-> ++${
+                u.url ?? `${u.search?.expression}~~${u.search?.target}`
+              }++ `
+          )
+          .join(' , ')}]\nWith options: ${JSON.stringify(data.options)}`
       );
 
       this.lastActiveExtractor = new Extractor(data.urls, {
