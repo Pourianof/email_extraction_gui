@@ -39,11 +39,11 @@ function hideExtractList() {
   extractListElmnt.classList.add('hidden');
   extractListElmnt.firstElementChild.firstElementChild.removeEventListener(
     'click',
-    hideExtractList
+    hideExtractList,
   );
   extractListElmnt.lastElementChild.removeEventListener(
     'scroll',
-    handleExtractedItemsListScroll
+    handleExtractedItemsListScroll,
   );
 
   showExtractedItemListBtn();
@@ -56,12 +56,12 @@ function displayExtractList() {
   extractListElmnt.classList.remove('hidden');
   extractListElmnt.firstElementChild.firstElementChild.addEventListener(
     'click',
-    hideExtractList
+    hideExtractList,
   );
 
   extractListElmnt.lastElementChild.addEventListener(
     'scroll',
-    handleExtractedItemsListScroll
+    handleExtractedItemsListScroll,
   );
 
   const displayLabel = waitingViewElmnt
@@ -101,7 +101,7 @@ export default class ExtractionHandler {
   static async start(urls, options, searchMode) {
     if (this.isExtractionOnProgress) {
       throw new Error(
-        'Currently another extraction is on progress.\nYou must either cancel the previous one and start a new or wait to previous get finish.'
+        'Currently another extraction is on progress.\nYou must either cancel the previous one and start a new or wait to previous get finish.',
       );
     }
 
@@ -123,7 +123,7 @@ export default class ExtractionHandler {
   async extract() {
     if (this._state === ExtractionState.FINISHED) {
       throw new Error(
-        'This handler finished it extraction.\nYou must use new handler to extracting...'
+        'This handler finished it extraction.\nYou must use new handler to extracting...',
       );
     }
 
@@ -134,7 +134,7 @@ export default class ExtractionHandler {
       await window.context.extractURLs({
         urls: this.urls,
         options: this.options,
-      })
+      }),
     );
 
     this._state = ExtractionState.FINISHED;
@@ -144,7 +144,6 @@ export default class ExtractionHandler {
   extractedCount = 0;
   stopScrollingDown = false;
   _onNewProgressState = (state) => {
-    console.log(state);
     this.extractedCount = state.totalAuthorRecieved;
 
     const waitingViewElmnt = document.querySelector('.waiting-view');
@@ -157,7 +156,7 @@ export default class ExtractionHandler {
       lastName,
       affiliations,
       address,
-      email
+      email,
     );
 
     /**
@@ -176,7 +175,7 @@ export default class ExtractionHandler {
     ) {
       extractedListWrapperView.scrollTo(
         0,
-        extractedListWrapperView.scrollHeight
+        extractedListWrapperView.scrollHeight,
       );
     }
   };
@@ -201,7 +200,7 @@ function handleExtractListItemBounds() {
   if (!isExtractListScrollAway && availableItemsCount > itemBound) {
     if (availableItemsCount > itemBound + 1) {
       const newChildren = Array.from(extractListViewElmnt.children).slice(
-        availableItemsCount - itemBound
+        availableItemsCount - itemBound,
       );
       extractListViewElmnt.replaceChildren(...newChildren);
     } else {
@@ -223,7 +222,7 @@ function handleExtractionResult(result, extractedCount) {
     failedExtractionHandler(
       result.status.message,
       result.data.filePath,
-      extractedCount
+      extractedCount,
     );
   }
 }
@@ -237,7 +236,7 @@ function succefulExtractionHandler(result, extractedCount) {
     filePath,
     date,
     numberOfExtractedAuthors,
-    fileName
+    fileName,
   );
 
   let loadingImg = waitingViewElmnt.firstElementChild;
@@ -252,12 +251,20 @@ function succefulExtractionHandler(result, extractedCount) {
   statusHint.classList.add('--ser-message--');
   const formatedElapsed = formatUnixInterval(elapsedTime);
 
-  statusHint.textContent = `فرآیند جمع آوری با موفقیت در طول ${formatedElapsed} به اتمام رسید.`;
+  const lang = window.i18n?.language || 'fa';
+  if (lang === 'fa') {
+    statusHint.textContent = `فرآیند جمع آوری با موفقیت در طول ${formatedElapsed} به اتمام رسید.`;
+  } else {
+    statusHint.textContent = `Collection process completed successfully in ${formatedElapsed}.`;
+  }
   waitingResultElement.appendChild(statusHint);
 
   const statusSubHint = document.createElement('span');
   statusSubHint.classList.add('--ser-sub-message--');
-  statusSubHint.textContent = `در مجموعه ${extractedCount} آیتم بدست آمده است`;
+  statusSubHint.textContent =
+    lang === 'fa'
+      ? `در مجموعه ${extractedCount} آیتم بدست آمده است`
+      : `Total ${extractedCount} items were collected`;
   waitingResultElement.appendChild(statusSubHint);
 
   createResultCommonPart(waitingResultElement, filePath);
@@ -277,13 +284,20 @@ function failedExtractionHandler(message, filePath, extractedCount) {
 
   const statusHint = document.createElement('span');
   statusHint.classList.add('--fer-message--');
-  statusHint.textContent = `فرآیند گردآوری باشکست روبرو شد. پیام شکست :\n${message}`;
+  const lang = window.i18n?.language || 'fa';
+  statusHint.textContent =
+    lang === 'fa'
+      ? `فرآیند گردآوری باشکست روبرو شد. پیام شکست :\n${message}`
+      : `Collection process failed. Error message:\n${message}`;
   waitingResultElement.appendChild(statusHint);
 
   if (extractedCount > 0) {
     const statusSubHint = document.createElement('span');
     statusSubHint.classList.add('--ser-sub-message--');
-    statusSubHint.textContent = `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها ساخته شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`;
+    statusSubHint.textContent =
+      lang === 'fa'
+        ? `از آنجایی که ${extractedCount} آیتم بدست آمده، امکان دارد فایل اکسل حاوی این آیتم ها ساخته شده باشد. از دکمه زیر برای دسترسی استفاده کنید.`
+        : `Since ${extractedCount} items were collected, an Excel file may have been created. Use the button below to access it.`;
     waitingResultElement.appendChild(statusSubHint);
 
     createResultCommonPart(waitingResultElement, filePath);
@@ -300,9 +314,6 @@ function createResultCommonPart(parent, filePath) {
 
   const displayExtractedItemsListBtn = document.createElement('button');
   displayExtractedItemsListBtn.classList.add('display-extraction');
-  // displayExtractedItemsListBtn.append(
-  //   document.createTextNode('نمایش آیتم های بدست آمده')
-  // );
 
   displayExtractedItemsListBtn.classList.remove('hidden');
   displayExtractedItemsListBtn.addEventListener('click', displayExtractList);
@@ -310,7 +321,9 @@ function createResultCommonPart(parent, filePath) {
   const openExtractedExcelBtn = document.createElement('button');
   openExtractedExcelBtn.classList.add('--ser-btn--');
   openExtractedExcelBtn.classList.add('--ser-open-btn--');
-  openExtractedExcelBtn.textContent = 'نمایش فایل ساخته شده';
+  const lang = window.i18n?.language || 'fa';
+  openExtractedExcelBtn.textContent =
+    lang === 'fa' ? 'نمایش فایل ساخته شده' : 'Display created file';
   openExtractedExcelBtn.addEventListener('click', (e) => {
     e.preventDefault();
     window.context.openExcelFile(JSON.stringify({ filePath: filePath }));
@@ -318,7 +331,7 @@ function createResultCommonPart(parent, filePath) {
 
   itemsRelatedButtonsWrapper.append(
     openExtractedExcelBtn,
-    displayExtractedItemsListBtn
+    displayExtractedItemsListBtn,
   );
 
   parent.appendChild(itemsRelatedButtonsWrapper);
@@ -329,16 +342,19 @@ function extractionFinishHandler(parent) {
 
   const returnToViewBtn = document.createElement('button');
   returnToViewBtn.classList.add('--ser-btn--', '--rv-btn--', '--ser-oc-btn--');
-  returnToViewBtn.textContent = 'بازگشت به فرم قبلی';
+  const lang = window.i18n?.language || 'fa';
+  returnToViewBtn.textContent =
+    lang === 'fa' ? 'بازگشت به فرم قبلی' : 'Back to previous form';
 
   const closeResultViewBtn = document.createElement('button');
   closeResultViewBtn.classList.add('--ser-btn--', '--ser-oc-btn--');
-  closeResultViewBtn.textContent = 'اتمام و نمایش فرم جدید';
+  closeResultViewBtn.textContent =
+    lang === 'fa' ? 'اتمام و نمایش فرم جدید' : 'Finish and show new form';
 
   const buttonsContainer = document.createElement('div');
   buttonsContainer.classList.add(
     '--ser-buttons-container--',
-    '--ser-result-form-action-btns-wrapper--'
+    '--ser-result-form-action-btns-wrapper--',
   );
   buttonsContainer.appendChild(returnToViewBtn);
   buttonsContainer.appendChild(closeResultViewBtn);

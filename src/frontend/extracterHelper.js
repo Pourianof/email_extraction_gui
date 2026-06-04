@@ -2,6 +2,7 @@ import PN from 'persian-number';
 import DateObject from 'react-date-object';
 import persian from 'react-date-object/calendars/persian';
 import persian_fa from 'react-date-object/locales/persian_fa';
+import { localeNumber } from './renderers/helpers/localeNumber';
 
 export function createNewExtractedAuthorItem(
   index,
@@ -9,15 +10,15 @@ export function createNewExtractedAuthorItem(
   lastName,
   affiliations,
   address,
-  emails
+  emails,
 ) {
   const itemTemplate = document.getElementById(
-    'extracted-author-info-template'
+    'extracted-author-info-template',
   );
   const node = document.importNode(itemTemplate, true).content;
 
   const indexElmnt = node.querySelector('.author-index');
-  indexElmnt.textContent = PN.convertEnToPe(index);
+  indexElmnt.textContent = localeNumber(index);
 
   const nameElmnt = node.querySelector('.author-fname');
   nameElmnt.firstElementChild.textContent = firstName;
@@ -52,7 +53,7 @@ export function appendNewExtractedExcelItem(
   filePath,
   date,
   numberOfExtractedAuthors,
-  fileName
+  fileName,
 ) {
   const extractedContainer = document.getElementById('extracted-excels');
 
@@ -60,7 +61,7 @@ export function appendNewExtractedExcelItem(
     filePath,
     date,
     numberOfExtractedAuthors,
-    fileName
+    fileName,
   );
 
   extractedContainer.appendChild(newExtracted);
@@ -70,7 +71,7 @@ export function createNewExtractedItem(
   extractedPath,
   date,
   numberOfExtractedAuthors,
-  fileName
+  fileName,
 ) {
   const temp = document.getElementById('extracted-excel-item-template');
   const tempNode = document.importNode(temp, true).content.firstElementChild;
@@ -114,7 +115,7 @@ export function getSettedOptions(form) {
   options.extractorType = extractOptionsForm['extractor-type'].value;
 
   options.extractSpeed = Array.from(
-    extractOptionsForm['extract-speed'].selectedOptions
+    extractOptionsForm['extract-speed'].selectedOptions,
   )[0].value;
 
   return options;

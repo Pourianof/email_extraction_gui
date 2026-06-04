@@ -8,7 +8,9 @@
       content="script-src 'self' 'unsafe-inline'"
     />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>استخراج کننده اطلاعات نویسندگان جورنال های معتبر جهانی</title>
+    <title data-i18n="app.title">
+      استخراج کننده اطلاعات نویسندگان جورنال های معتبر جهانی
+    </title>
   </head>
 
   <body>
@@ -21,7 +23,7 @@
         <%- include components/title_bar %> <%- include components/header %>
 
         <main id="main">
-          <h4>آخرین فایل های ثبت شده:</h4>
+          <h4 data-i18n="main.recentFiles"></h4>
           <div id="extracted-excels"></div>
           <%- include components/about %> <%- include
           components/main_content/main_content %>

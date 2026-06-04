@@ -1,4 +1,5 @@
 import './index.css';
+import './language-switcher.css';
 import PN from 'persian-number';
 
 import './faNumHandler';
@@ -13,6 +14,10 @@ import './uiInitializer';
 import './rippleAnimation';
 import './publisherSearchHandler';
 import { selectedTab } from './helpers';
+import { initLanguageSwitcher } from './i18n-init';
+import { renderHints } from './renderers/addressHints/renderHints';
+import { dynamicRender } from './renderers/dynamicRender';
+import { localeNumber } from './renderers/helpers/localeNumber';
 
 /**
  * @type HTMLElement
@@ -28,7 +33,7 @@ function handleRemoveIndexMofication(removedElmnt) {
     const indexElemnt = reachFromTemplateTo(sib, 'index');
     const i = index++;
     indexElemnt.index = i;
-    indexElemnt.textContent = PN.convertEnToPe(i);
+    indexElemnt.textContent = localeNumber(i);
   }
 }
 
@@ -118,6 +123,8 @@ function handleRemoveIndexMofication(removedElmnt) {
   });
 
   handleExtractOptionsForm();
+  initLanguageSwitcher();
+  dynamicRender();
 })();
 
 let activeDialogBox;

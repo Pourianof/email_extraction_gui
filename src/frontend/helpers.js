@@ -1,4 +1,5 @@
 import pn from 'persian-number';
+import { localeNumber } from './renderers/helpers/localeNumber';
 
 export function parseUnixInterval(interval) {
   const totalSeconds = interval / 1000;
@@ -16,13 +17,13 @@ export function formatUnixInterval(interval) {
   let format = [];
 
   if (hours != 0) {
-    format.push(`${pn.convertEnToPe(~~hours)} ساعت`);
+    format.push(`${localeNumber(~~hours)} ساعت`);
   }
   if (minutes != 0) {
-    format.push(`${pn.convertEnToPe(~~minutes)} دقیقه`);
+    format.push(`${localeNumber(~~minutes)} دقیقه`);
   }
   if (seconds != 0) {
-    format.push(`${pn.convertEnToPe(~~seconds)} ثانیه`);
+    format.push(`${localeNumber(~~seconds)} ثانیه`);
   }
 
   return format.join(' و ');

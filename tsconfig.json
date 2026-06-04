@@ -9,7 +9,7 @@
     "lib": ["dom", "es2021", "es6", "es2016"],
     "strict": true,
     "sourceMap": true,
-    "baseUrl": "./src",
+    "rootDir": "./src",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

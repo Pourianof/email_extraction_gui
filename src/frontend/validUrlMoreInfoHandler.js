@@ -12,16 +12,26 @@ function handle() {
   addressHintsElmnt.addEventListener('click', (e) => {
     /**@type HTMLElement */
     const target = e.target;
+
     if (target.attributes && 'sample-btn' in target.attributes) {
       const id = target.dataset.sampleId;
+      console.log(
+        target,
+        target.attributes,
+        target.attributes && 'sample-btn' in target.attributes,
+        id,
+      );
       if (id.trim()) {
         sampleBoxBtn.parentElement.classList.remove('hidden');
+
         if (openedSampleBox) {
           openedSampleBox.classList.add('hidden');
         }
         openedSampleBox = document.querySelector(
-          `.sample-valid-hints div[data-name="${id}"]`
+          `.sample-valid-hints section[data-name="${id}"]`,
         );
+
+        console.log(openedSampleBox);
 
         if (openedSampleBox) {
           openedSampleBox.classList.remove('hidden');

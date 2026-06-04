@@ -209,7 +209,9 @@ header#header {
 .logos {
   display: flex;
   justify-content: space-around;
+  direction: rtl;
 }
+
 .logos:first-child {
   border-bottom: 1px solid black;
 }
@@ -339,6 +341,7 @@ header#header {
 .scholar-logo {
   text-align: center;
   margin: 20px 0;
+  direction: ltr;
 }
 
 .publisher-search-hint {
@@ -371,6 +374,7 @@ header#header {
   flex-direction: row-reverse;
   align-items: center;
   align-items: stretch;
+  direction: rtl;
 }
 
 .search-input-wrapper {
@@ -482,6 +486,10 @@ main#main {
   width: 20px;
   vertical-align: middle;
   aspect-ratio: 1;
+}
+
+#url-valid-address-help {
+  direction: ltr;
 }
 
 .address-hints {
@@ -806,16 +814,16 @@ form.journal-form {
   text-align: center;
   font-weight: bold;
   width: 100px;
-  margin-left: 10px;
+  margin-right: 10px;
   color: rgb(209 140 146);
   position: relative;
 }
 .extracter-name::after {
   content: ':';
   display: inline;
-  margin-right: 5px;
+  margin-left: 5px;
   position: absolute;
-  left: -5px;
+  right: -5px;
 }
 
 .sample-valid-hints {
@@ -1464,7 +1472,7 @@ span.ripple {
 #extraction-options:not(#pub-extractor #extraction-options) {
   margin: 20px 0;
   display: grid;
-  column-gap: 50px;
+  column-gap: 10px;
   grid-template-columns: auto auto auto;
   row-gap: 10px;
   padding: 10px;

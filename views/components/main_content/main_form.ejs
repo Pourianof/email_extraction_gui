@@ -4,7 +4,7 @@
       <img src="../../../assets/images/loading.gif" />
       <button id="stop-extraction" class="btn">
         <img src="../../../assets/images/icons/stop.svg" />
-        <span> توقف </span>
+        <span data-i18n="main.stopExtraction"> توقف </span>
         <img src="../../../assets/images/icons/stop.svg" />
       </button>
     </div>
@@ -71,9 +71,11 @@
               />
             </svg>
           </span>
-          <h3>لیست نویسندگان بدست آمده</h3>
+          <h3 data-i18n="results.extractedList">لیست نویسندگان بدست آمده</h3>
         </div>
-        <span>فقط ۵۰ آیتم آخر نمایش داده می‌شود</span>
+        <span data-i18n="results.lastFifty"
+          >فقط ۵۰ آیتم آخر نمایش داده می‌شود</span
+        >
       </div>
       <div class="extracted-list-view"></div>
     </div>
@@ -86,17 +88,19 @@
         <div>
           <label for="only-main-author" class="btn">
             <input type="checkbox" id="only-main-author" name="only-main" />
-            نویسنده اصلی مقاله
+            <span data-i18n="options.mainAuthorOnly">نویسنده اصلی مقاله</span>
           </label>
         </div>
         <div>
           <label for="only-email" class="btn">
             <input id="only-email" type="checkbox" name="only-email" />
-            نویسندگان دارای ایمیل
+            <span data-i18n="options.emailOnly">نویسندگان دارای ایمیل</span>
           </label>
         </div>
         <div>
-          <label>اتمام جمع آوری پس از یافتن </label>
+          <label data-i18n="options.stopAfterFind"
+            >اتمام جمع آوری پس از یافتن
+          </label>
           <input
             dir="ltr"
             class="author-count"
@@ -106,10 +110,10 @@
             name="author-count"
             inputmode="numeric"
           />
-          <label> نویسنده</label>
+          <label data-i18n="options.author"> نویسنده</label>
         </div>
         <div class="extractor-type">
-          <label>استخراج کننده</label>
+          <label data-i18n="options.extractorType">استخراج کننده</label>
           <span
             id="what-is-extractor-type"
             data-name="extractor-type"
@@ -117,18 +121,18 @@
             class="what btn"
           ></span>
           <label>
-            نوع <fa-num style="padding: 0 5px">1</fa-num>
+            <fa-num style="padding: 0 5px">1</fa-num>
             <span style="font-size: 0.8em">(chrowser)</span>
             <input checked type="radio" name="extractor-type" value="puppet" />
           </label>
           <label fa-num>
-            نوع <fa-num style="padding: 0 5px"> 2 </fa-num>
+            <fa-num style="padding: 0 5px"> 2 </fa-num>
             <span style="font-size: 0.8em">(puppet)</span>
             <input type="radio" name="extractor-type" value="chrowser" />
           </label>
         </div>
         <div class="extract-speed-opt">
-          <label>سرعت استخراج</label>
+          <label data-i18n="options.extractSpeed">سرعت استخراج</label>
           <span
             id="what-is-extract-speed"
             data-name="extract-speed"
@@ -136,11 +140,11 @@
             class="what btn"
           ></span>
           <select name="extract-speed">
-            <option>حداکثر</option>
-            <option>زیاد</option>
-            <option>متوسط</option>
-            <option>بهینه</option>
-            <option selected>کم</option>
+            <option data-i18n="extractSpeed.maximum">حداکثر</option>
+            <option data-i18n="extractSpeed.high">زیاد</option>
+            <option data-i18n="extractSpeed.medium">متوسط</option>
+            <option data-i18n="extractSpeed.optimal">بهینه</option>
+            <option selected data-i18n="extractSpeed.low">کم</option>
           </select>
         </div>
         <button class="btn reset-form rip-btn" type="reset">
@@ -165,9 +169,17 @@
           </svg>
         </button>
       </div>
-      <button id="extract-btn" class="hidden btn">شروع استخراج</button>
+      <button
+        id="extract-btn"
+        class="hidden btn"
+        data-i18n="main.startExtraction"
+      >
+        شروع استخراج
+      </button>
     </div>
     <div id="urls"></div>
   </form>
-  <button id="add-new-url-btn" class="btn">افزودن آدرس نشریه جدید</button>
+  <button id="add-new-url-btn" class="btn" data-i18n="main.addNewUrl">
+    افزودن آدرس نشریه جدید
+  </button>
 </div>

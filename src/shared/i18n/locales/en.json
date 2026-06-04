@@ -1,0 +1,227 @@
+{
+  "app": {
+    "title": "Author Information Extraction from World's Most Prestigious Journals",
+    "description": "Collect author information from prestigious international publishers' journals"
+  },
+  "header": {
+    "title": "Author Information Collector",
+    "subtitle": "From prestigious international publishers' journals",
+    "publishers": "Elsevier - Springer - John Wiley - World Scientific - Taylor & Francis"
+  },
+  "main": {
+    "recentFiles": "Recently saved files:",
+    "startExtraction": "Start Extraction",
+    "addNewUrl": "Add New Journal URL",
+    "stopExtraction": "Stop"
+  },
+  "options": {
+    "mainAuthorOnly": "Main article author only",
+    "emailOnly": "Authors with email",
+    "stopAfterFind": "Stop collection after finding",
+    "author": "author",
+    "extractorType": "Extractor Type",
+    "extractSpeed": "Extraction Speed"
+  },
+  "extractorTypes": {
+    "type1": "Type 1 (chrowser)",
+    "type2": "Type 2 (puppet)"
+  },
+  "extractSpeed": {
+    "maximum": "Maximum",
+    "high": "High",
+    "medium": "Medium",
+    "optimal": "Optimal",
+    "low": "Low"
+  },
+  "results": {
+    "extractedList": "Extracted Authors List",
+    "lastFifty": "Only the last 50 items are displayed",
+    "displayExtracted": "Display created file",
+    "backToForm": "Back to previous form",
+    "finishAndShowForm": "Finish and show new form"
+  },
+  "errors": {
+    "invalidUrl": "The entered URL is not valid."
+  },
+  "about": {
+    "title": "About",
+    "description": "The purpose of this application is to collect author information from 5 prestigious international publishers namely Elsevier, Springer, John Wiley, World Scientific and Taylor & Francis. In fact, this application automates the collection process.",
+    "importantNotes": "Important notes to consider when using the application:",
+    "note1": "To use this application, make sure that Google Chrome browser is installed on your system.",
+    "note2": "When the collection process starts, Chrome browser opens. If you close the browser, the collection process will end. So be careful.",
+    "note3": "It is recommended not to use the opened browser. It may cause uncontrollable changes. (Using the Chrome browser that you opened yourself is fine)",
+    "note4": "It is recommended to use an internet with appropriate speed.",
+    "note5": "It is recommended that each time you use the application, if possible, use IP change software or proxies to prevent detection as a bot as much as possible.",
+    "supervisor": "Project Supervisor & Manager:",
+    "supervisor_name": "Dr. Mohammad Ali Hosseinzadeh",
+    "supervisor_email": "ma.hosseinzadeh@yahoo.com",
+    "university": "Amol University of Special Modern Technologies",
+    "website": "Website",
+    "phone": "011-444-2137",
+    "address": "Amol, Talghani St., Abazar 35",
+    "createdAt": "Created at"
+  },
+  "footer": {
+    "copyright": "© Copyright Amol University of Special Modern Technologies 2025"
+  },
+  "whatIs": {
+    "extractSpeed": {
+      "title": "Extraction Speed",
+      "description": "Extraction speed refers to the time the program waits between navigating pages and then enters the new address process. The purpose of this section is to prevent detection by bot detection and automated systems as a bot.",
+      "options": "Available options:",
+      "maximum_desc": "In this mode, the program does not apply any speed restrictions and proceeds with maximum speed collection.",
+      "high_desc": "In this mode, page navigation occurs every 1 second. For example, moving from the volume page to the issue page, etc.",
+      "medium_desc": "In this mode, navigation occurs every 2 seconds.",
+      "optimal_desc": "In this mode, navigation occurs every 3.5 seconds. A middle ground that is likely to be suitable.",
+      "low_desc": "In this mode, page navigation occurs every 5 seconds. This prevents the target site's monitoring systems from identifying us as a bot.",
+      "recommendation": "If you are not in a hurry, it is recommended to use the \"Low\" option."
+    },
+    "extractorType": {
+      "title": "Extractor Type",
+      "description": "The extractor is the part of the software responsible for searching pages and extracting information. In this application, 2 types of extractors are defined that can be used interchangeably depending on need and situation. For example, if your system has not yet encountered \"I am not a robot\" problems, we recommend the first option.",
+      "type1_title": "Type 1 (chrowser):",
+      "type1_desc": "This type, which is the default mode, is a stable and reliable mode that can perform searches with greater stability and less error. However, this type is helpless against robot detection methods like Cloudflare, and if you encounter \"I am not a robot\" challenges, you will need to manually solve the problem.",
+      "type2_title": "Type 2 (puppet):",
+      "type2_desc": "This type works better against \"I am not a robot\" challenges and tries to solve them, but due to technical limitations, the likelihood of encountering errors is higher than type 1, and it may encounter problems in some challenge resolution scenarios."
+    }
+  },
+  "addressHelper": {
+    "common": {
+      "footer": {
+        "0": "The",
+        "1": "highlighted",
+        "2": "parts in the sample URL are required components of the path. Parts that are not highlighted and appear as regular text are optional and may be removed from the URL."
+      }
+    },
+
+    "elsevierBook": {
+      "title": "An example of a valid Elsevier Book URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is ScienceDirect.com",
+        "The URL path points to a book"
+      ]
+    },
+
+    "elsevierVolume": {
+      "title": "An example of a valid Elsevier Volume URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is ScienceDirect.com",
+        "The URL path points to a journal",
+        "The Volume number is specified at the end of the path"
+      ]
+    },
+
+    "springerIssue": {
+      "title": "An example of a valid Springer Issue URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is link.springer.com",
+        "The path begins with journal followed by the journal identifier",
+        "The Volume and Issue numbers are specified at the end of the path"
+      ],
+      "hint": "It is recommended to select the latest Issue."
+    },
+
+    "springerArticles": {
+      "title": "An example of a valid Springer Articles URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is link.springer.com",
+        "The path begins with journal",
+        "It is followed by the journal identifier",
+        "The path ends with articles"
+      ]
+    },
+
+    "wileyIssue": {
+      "title": "An example of a valid Wiley Issue URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is onlinelibrary.wiley.com",
+        "The path begins with toc followed by the journal identifier",
+        "The desired Volume number comes next",
+        "The Issue number appears at the end of the path"
+      ]
+    },
+
+    "wileyArticles": {
+      "title": "An example of a valid Wiley Articles URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is onlinelibrary.wiley.com",
+        "The path begins with index",
+        "It is followed by the journal identifier"
+      ]
+    },
+
+    "wileyVolume": {
+      "title": "An example of a valid Wiley Volume URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is onlinelibrary.wiley.com",
+        "The path begins with loi followed by the journal identifier",
+        "The path ends with year followed by the Volume year"
+      ]
+    },
+
+    "wsIssue": {
+      "title": "An example of a valid World Scientific Issue URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is worldscientific.com",
+        "The path begins with toc",
+        "It is followed by the journal abbreviation",
+        "The Volume number is specified"
+      ],
+      "hint": "The Issue number may not appear in the URL for journals that publish only one Issue within a particular Volume."
+    },
+
+    "wsMainPage": {
+      "title": "An example of a valid World Scientific Main Page URL",
+      "items": [
+        "The URL starts with https://",
+        "The domain is worldscientific.com",
+        "The path begins with worldscinet",
+        "It is followed by the journal abbreviation"
+      ],
+      "hint": "The Issue number may not appear in the URL for journals that publish only one Issue within a particular Volume."
+    },
+
+    "tfIssue": {
+      "title": "An example of a valid Taylor & Francis Issue URL",
+      "items": [
+        "The path begins with toc followed by the journal identifier",
+        "The Volume number is specified",
+        "The Issue number is specified",
+        "Providing an Issue URL will retrieve all Volume data associated with that Issue"
+      ]
+    }
+  },
+  "extractor": {
+    "directUrl": {
+      "headTitle": "Extract Author Information from URL",
+      "description": "To extract author information from articles, enter the URL of a volume, issue, or article page. The correct URL formats for different publishers are described in the guide below.",
+      "noteList": {
+        "title": "Important notes about URLs:",
+        "notes": [
+          "URLs must begin with [_ul_]https://[_/ul_]",
+          "The valid URL format for each publisher is shown below. (Click on the [_ul_]underlined[_/ul_] items to view more details.)"
+        ]
+      }
+    },
+
+    "publisherSearch": {
+      "title": "Please enter keywords related to your topic in the search field. The application will search the selected publishers' databases using these keywords, extract information about authors of relevant articles, and present the results. Using precise and relevant keywords is recommended to obtain more accurate results.",
+      "note": "(Click on the desired publisher)"
+    },
+
+    "googleScholar": {
+      "title": "Enter your desired keywords to search the publisher and extract information about authors of relevant articles."
+    }
+  },
+  "language": "Language",
+  "persian": "فارسی",
+  "english": "English"
+}

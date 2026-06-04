@@ -1,0 +1,77 @@
+#multi-lang-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  direction: rtl;
+}
+
+.language-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 6px 12px;
+
+  background: rgb(30, 39, 70);
+
+  border: 1px solid rgba(235, 235, 235, 0.18);
+
+  border-radius: 999px;
+
+  color: rgb(235, 235, 235);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+
+  user-select: none;
+}
+
+.language-toggle:hover {
+  border-color: rgba(235, 235, 235, 0.35);
+
+  background: rgb(35, 45, 80);
+}
+
+.language-toggle:active {
+  transform: scale(0.97);
+}
+
+.lang-option {
+  opacity: 0.45;
+
+  transition: opacity 0.2s ease;
+}
+
+.lang-option.active {
+  opacity: 1;
+}
+
+.lang-divider {
+  width: 1px;
+  height: 14px;
+
+  background: rgba(235, 235, 235, 0.25);
+}
+/* RTL adjustments for language switcher */
+body[data-language='fa'] .language-switcher {
+  right: auto;
+  left: 1rem;
+}
+
+/* Ensure proper text direction */
+body[data-language='fa'] {
+  direction: rtl;
+}
+
+body[data-language='en'] {
+  direction: ltr;
+}

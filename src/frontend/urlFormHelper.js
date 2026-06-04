@@ -17,6 +17,7 @@ import {
   isWorldScientificMainPage,
 } from './urlValidator';
 import { getSettedOptions } from './extracterHelper';
+import { localeNumber } from './renderers/helpers/localeNumber';
 
 const journalForm = document.forms['journal-form'];
 const extractBtn = journalForm.firstElementChild.lastElementChild;
@@ -25,7 +26,7 @@ export function handleInputBlur(inputElmnt) {
   const val = inputElmnt.value.trim();
   const hintElmnt = reachFromTemplateTo(
     inputElmnt.parentElement.parentElement.parentElement,
-    'hint'
+    'hint',
   );
   const placeHolderElmnt = inputElmnt.nextElementSibling;
 
@@ -50,13 +51,13 @@ export function handleInputBlur(inputElmnt) {
         !isTandF(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر یا T&F و یا World-Scientific و یا T&F نمیباشد.'
+          'آدرس وارد شده مربوط به هیچکدام از سایت های الزویر(Sciencedirect) یا وایلی یا اشپرینگر یا T&F و یا World-Scientific و یا T&F نمیباشد.',
         );
       }
 
       if (isElsevier(val) && !isElsevierIssue(val)) {
         hintMsg.push(
-          'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک نشریه اشاره نمیکند'
+          'آدرس وارد شده از ساینس دایرک به صفحه Volume یا کتاب از یک نشریه اشاره نمیکند',
         );
       } else if (
         isSpringer(val) &&
@@ -64,7 +65,7 @@ export function handleInputBlur(inputElmnt) {
         !isSpringerArticles(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به نشریه اشاره نمیکند (ترجیحا آخرین issue)'
+          'آدرس وارد شده به یک صفحه از Issue یا صفحه مقالات مربوط به نشریه اشاره نمیکند (ترجیحا آخرین issue)',
         );
       } else if (
         isWiley(val) &&
@@ -73,7 +74,7 @@ export function handleInputBlur(inputElmnt) {
         !isWileyArticles(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از نشریه نمیباشد'
+          'آدرس وارد شده مربوط به آدرس یک Volume یا Issue یا صفحه مقالات از نشریه نمیباشد',
         );
       } else if (
         isWorldScientific(val) &&
@@ -81,18 +82,27 @@ export function handleInputBlur(inputElmnt) {
         !isWorldScientificMainPage(val)
       ) {
         hintMsg.push(
-          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات World-Scientific نمیباشد'
+          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات World-Scientific نمیباشد',
         );
       } else if (isTandF(val) && !isTandFIssue(val)) {
         hintMsg.push(
-          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات T&F نمیباشد'
+          'آدرس وارد شده، یک آدرس معتبر مربوط به انتشارات T&F نمیباشد',
         );
       }
     } catch (err) {
       console.log(err);
-      hintMsg.push('آدرس وارد شده معتبر نمیباشد.');
+      const lang = window.i18n?.language || 'fa';
+      hintMsg.push(
+        lang === 'fa'
+          ? 'آدرس وارد شده معتبر نمیباشد.'
+          : 'The entered URL is not valid.',
+      );
       if (!val.startsWith('https')) {
-        hintMsg.push('لطفا عبارت https:// را در ابتدای آدرس خود قرار دهید');
+        hintMsg.push(
+          lang === 'fa'
+            ? 'لطفا عبارت https:// را در ابتدای آدرس خود قرار دهید'
+            : 'Please add https:// at the beginning of your URL',
+        );
       }
     }
 
@@ -145,10 +155,10 @@ export function addNewURLInput() {
     +(
       reachFromTemplateTo(
         journalForm.lastElementChild.lastElementChild,
-        'index'
+        'index',
       )?.index ?? 0
     ) + 1;
-  indexElmnt.textContent = PN.convertEnToPe(index);
+  indexElmnt.textContent = localeNumber(index);
   indexElmnt.index = index;
 
   indexElmnt.nextElementSibling.addEventListener('click', focusOnURLInput);
